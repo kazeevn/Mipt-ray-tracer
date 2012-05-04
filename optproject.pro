@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     core/ray3d.cpp \
     core/virtual3dobject.cpp \
     core/trianglepolygon.cpp \
-    core/plane3d.cpp
+    core/plane3d.cpp \
+    core/scene.cpp
 
 HEADERS  += mainwindow.h \
     core/vector3d.h \
@@ -25,6 +26,7 @@ HEADERS  += mainwindow.h \
     core/ray3d.h \
     core/virtual3dobject.h \
     core/trianglepolygon.h \
-    core/plane3d.h
+    core/plane3d.h \
+    core/scene.h
 
 FORMS    += mainwindow.ui

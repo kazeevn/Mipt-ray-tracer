@@ -1,5 +1,6 @@
 #include "plane3d.h"
 #include <cmath>
+#include <cfloat>
 
 Plane3D::Plane3D(const Point3D &p1, const Point3D &p2, const Point3D &p3)
 {
@@ -27,10 +28,11 @@ Point3D *Plane3D::intercrossWithRay(const Ray3D &ray)
     const Point3D& p = ray.getp();
     const Vector3D& v = ray.getv();
     double denom = A*v.getx() + B*v.gety() + C*v.getz();
-    if (fabs(denom) < 1E-6)
+    if (fabs(denom) < DBL_EPSILON)
         return 0;
     double t = -(A*p.x + B*p.y + C*p.z + D)/denom;
-    if (t < 0)
+    // Do not intercross with plane if the starting point is already on the plane
+    if (t < DBL_EPSILON)
         return 0;
     return new Point3D(p.x + t*v.getx(), p.y + t*v.gety(), p.z + t*v.getz());
 }
