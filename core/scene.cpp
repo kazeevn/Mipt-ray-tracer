@@ -11,7 +11,6 @@ Scene::~Scene()
 {
     qDeleteAll(m_objects);
     m_objects.clear();
-
 }
 
 void Scene::addObject(Virtual3DObject *object)
@@ -39,8 +38,10 @@ void Scene::traceRay(const Ray3D& ray)
                 delete point;
         }
     }
-    if (nearestObj)
+    if (nearestObj) {
         nearestObj->processIntersection(ray, *point);
+        delete point;
+    }
     // TODO: in other case, ray came to infinity
     // Should process this case somehow too
 }

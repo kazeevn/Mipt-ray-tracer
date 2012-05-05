@@ -1,1 +1,2 @@
-.optproject.pro.user
+*.pro.user*
+build/
