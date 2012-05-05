@@ -13,9 +13,6 @@ public:
                     double x2, double y2, double z2,
                     double x3, double y3, double z3);
     Point3D *intercrossWithRay(const Ray3D &ray);
-    /* This will return point calculated by intercrossing
-     * the ray in last isIntercrossWithRay() call with plane of this polygon
-     */
     static bool isPointInTriangle2D(double x1, double y1,
                                     double x2, double y2,
                                     double x3, double y3,
