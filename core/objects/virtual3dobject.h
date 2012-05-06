@@ -1,7 +1,7 @@
 #ifndef VIRTUAL3DOBJECT_H
 #define VIRTUAL3DOBJECT_H
 
-#include "core/ray3d.h"
+#include "core/geometry/ray3d.h"
 #include <QtGlobal>
 
 class Virtual3DObject

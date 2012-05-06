@@ -1,5 +1,5 @@
 #include "scene.h"
-#include "point3d.h"
+#include "core/geometry/point3d.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),

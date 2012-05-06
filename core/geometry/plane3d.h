@@ -1,8 +1,8 @@
 #ifndef PLANE3D_H
 #define PLANE3D_H
 
-#include "core/point3d.h"
-#include "core/ray3d.h"
+#include "core/geometry/point3d.h"
+#include "core/geometry/ray3d.h"
 
 class Plane3D
 {

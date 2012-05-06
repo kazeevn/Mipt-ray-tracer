@@ -1,7 +1,7 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
-#include "core/point3d.h"
+#include "core/geometry/point3d.h"
 
 class Vector3D
 {

@@ -1,8 +1,8 @@
 #ifndef RAY3D_H
 #define RAY3D_H
 
-#include "core/point3d.h"
-#include "core/vector3d.h"
+#include "core/geometry/point3d.h"
+#include "core/geometry/vector3d.h"
 
 /* Class represents a geometric ray starting from point p
  * and running in the direction of vector v

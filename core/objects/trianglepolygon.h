@@ -1,9 +1,9 @@
 #ifndef TRIANGLEPOLYGON_H
 #define TRIANGLEPOLYGON_H
 
-#include "core/virtual3dobject.h"
-#include "core/point3d.h"
-#include "core/plane3d.h"
+#include "core/objects/virtual3dobject.h"
+#include "core/geometry/point3d.h"
+#include "core/geometry/plane3d.h"
 
 class TrianglePolygon : public Virtual3DObject
 {
