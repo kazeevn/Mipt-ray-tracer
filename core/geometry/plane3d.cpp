@@ -27,12 +27,12 @@ Point3D *Plane3D::intercrossWithRay(const Ray3D &ray)
 {
     const Point3D& p = ray.getp();
     const Vector3D& v = ray.getv();
-    double denom = A*v.getx() + B*v.gety() + C*v.getz();
+    double denom = A*v.x + B*v.y + C*v.z;
     if (fabs(denom) < DBL_EPSILON)
         return 0;
     double t = -(A*p.x + B*p.y + C*p.z + D)/denom;
     // Do not intercross with plane if the starting point is already on the plane
     if (t < DBL_EPSILON)
         return 0;
-    return new Point3D(p.x + t*v.getx(), p.y + t*v.gety(), p.z + t*v.getz());
+    return new Point3D(p.x + t*v.x, p.y + t*v.y, p.z + t*v.z);
 }

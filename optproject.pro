@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     core/tracer/scene.cpp \
     core/tracer/raypool.cpp \
     core/tracer/workerthread.cpp \
-    core/objects/pictureobject.cpp
+    core/objects/pictureobject.cpp \
+    core/geometry/transformationmatrix.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
