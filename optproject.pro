@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     core/tracer/raypool.cpp \
     core/tracer/workerthread.cpp \
     core/objects/pictureobject.cpp \
-    core/geometry/transformationmatrix.cpp
+    core/geometry/transformationmatrix.cpp \
+    core/tracer/renderedimage.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
@@ -34,6 +35,7 @@ HEADERS  += mainwindow.h \
     core/tracer/scene.h \
     core/tracer/raypool.h \
     core/tracer/workerthread.h \
-    core/objects/pictureobject.h
+    core/objects/pictureobject.h \
+    core/tracer/renderedimage.h
 
 FORMS    += mainwindow.ui

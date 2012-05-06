@@ -1,4 +1,5 @@
 #include "pictureobject.h"
+#include "core/tracer/renderedimage.h"
 
 PictureObject::PictureObject(QImage &pixmap, Point3D &point, Vector3D &v1, Vector3D &v2)
     : m_image(pixmap),
@@ -25,7 +26,7 @@ void PictureObject::processIntersection(const Ray3D &ray, const Point3D &point)
     Vector3D newvector = m_matrix.transformVector(oldvector);
     QRgb color = m_image.pixel(newvector.x*m_image.width(),
                                newvector.y*m_image.height());
-    // TODO: луч уперся в точку. нужно сохранить результат
+    RenderedImage::Instance().rayTraceResult(ray, color);
 }
 
 

@@ -1,5 +1,8 @@
 #include "scene.h"
+
 #include "core/geometry/point3d.h"
+#include "core/tracer/renderedimage.h"
+#include <QColor>
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -42,6 +45,5 @@ void Scene::traceRay(Ray3D *ray)
         nearestObj->processIntersection(*ray, *minpoint);
         delete minpoint;
     }
-    // TODO: in other case, ray came to infinity
-    // Should process this case somehow too
+    RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
 }
