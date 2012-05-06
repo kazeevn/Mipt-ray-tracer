@@ -18,7 +18,7 @@ void Scene::addObject(Virtual3DObject *object)
     m_objects.append(object);
 }
 
-void Scene::traceRay(const Ray3D& ray)
+void Scene::traceRay(Ray3D *ray)
 {
     Point3D *point = 0, *minpoint = 0;
     Virtual3DObject *nearestObj = 0;
@@ -26,8 +26,8 @@ void Scene::traceRay(const Ray3D& ray)
     // Searching for nearest collision with any object
     Q_FOREACH(Virtual3DObject* obj, m_objects)
     {
-        if ((point = obj->intercrossWithRay(ray)) != NULL) {
-            double dist = point->dist(ray.getp());
+        if ((point = obj->intercrossWithRay(*ray)) != NULL) {
+            double dist = point->dist(ray->getp());
             if ((minpoint == NULL) || (dist < mindist)) {
                 if (minpoint != NULL)
                     delete minpoint;
@@ -39,8 +39,8 @@ void Scene::traceRay(const Ray3D& ray)
         }
     }
     if (nearestObj) {
-        nearestObj->processIntersection(ray, *point);
-        delete point;
+        nearestObj->processIntersection(*ray, *minpoint);
+        delete minpoint;
     }
     // TODO: in other case, ray came to infinity
     // Should process this case somehow too

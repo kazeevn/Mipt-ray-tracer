@@ -16,7 +16,7 @@ public:
         return theInstance;
     }
     void addObject(Virtual3DObject* object);
-    void traceRay(const Ray3D &ray);
+    void traceRay(Ray3D *ray);
 private:
     Scene(QObject *parent = 0);
     ~Scene();

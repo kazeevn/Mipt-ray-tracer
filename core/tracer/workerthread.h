@@ -11,10 +11,6 @@ class WorkerThread : public QThread
 public:
     WorkerThread(QObject *parent = 0);
     void start();
-signals:
-    
-public slots:
-    
 };
 
 #endif // WORKERTHREAD_H

@@ -8,8 +8,8 @@ WorkerThread::WorkerThread(QObject *parent) :
 void WorkerThread::start()
 {
     Ray3D* curRay = 0;
-    while (curRay = RayPool::Instance().popRay()) {
-        Scene::Instance().traceRay(*curRay);
+    while ((curRay = RayPool::Instance().popRay()) != NULL) {
+        Scene::Instance().traceRay(curRay);
         delete curRay;
     }
 }
