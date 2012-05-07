@@ -9,7 +9,7 @@ double Point3D::dist(const Point3D &point)
                 (point.z - z)*(point.z - z));
 }
 
-Point3D Point3D::operator +(const Vector3D& v)
+Point3D Point3D::operator +(const Vector3D& v) const
 {
     Point3D p(x+v.x, y+v.y, z+v.z);
     return p;

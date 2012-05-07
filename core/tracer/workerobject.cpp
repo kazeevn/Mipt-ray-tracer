@@ -1,11 +1,12 @@
-#include "workerthread.h"
+#include "workerobject.h"
 
-WorkerThread::WorkerThread(QObject *parent) :
-    QThread(parent)
+
+WorkerObject::WorkerObject()
+    : QRunnable()
 {
 }
 
-void WorkerThread::start()
+void WorkerObject::run()
 {
     Ray3D* curRay = 0;
     while ((curRay = RayPool::Instance().popRay()) != NULL) {

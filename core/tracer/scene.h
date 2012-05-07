@@ -3,8 +3,10 @@
 
 #include <QObject>
 #include <QList>
+#include <QSize>
 #include "core/objects/virtual3dobject.h"
 #include "core/geometry/ray3d.h"
+#include "core/geometry/rectangle3d.h"
 
 // Singletone object
 class Scene : public QObject
@@ -17,6 +19,8 @@ public:
     }
     void addObject(Virtual3DObject* object);
     void traceRay(Ray3D *ray);
+    /* Начало рендеринга тоже нужно запускать в потоке! */
+    void startRendering(const Point3D& cameraPos, const Rectangle3D& screen, const QSize& picsize);
 private:
     Scene(QObject *parent = 0);
     ~Scene();

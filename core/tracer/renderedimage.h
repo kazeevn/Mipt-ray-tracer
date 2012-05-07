@@ -2,6 +2,7 @@
 #define RENDEREDIMAGE_H
 
 #include <QImage>
+#include <QSize>
 #include "core/geometry/ray3d.h"
 
 /* TODO: thread-safety
@@ -19,6 +20,8 @@ public:
     static RenderedImage& Instance() {
         return *theInstance;
     }
+
+    const QSize size() const { return m_image.size(); }
 
     void rayTraceResult(const Ray3D& ray, QRgb color);
 private:

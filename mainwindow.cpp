@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     RenderedImage::init(QSize(100, 100));
 
     Scene::Instance().addObject(new PictureObject(image, p, v1, v2));
-    Scene::Instance().traceRay(new Ray3D(0, 0, 0, 1, 1.5, 0.5));
+    Scene::Instance().traceRay(new Ray3D(0, 0, 0, 1, 0.1, 0.5));
     Scene::Instance().traceRay(new Ray3D(0, 0, 0, -1, 1.5, 0.5));
 }
 

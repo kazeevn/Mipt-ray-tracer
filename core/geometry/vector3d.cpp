@@ -18,3 +18,13 @@ Vector3D Vector3D::crossProduct(const Vector3D &v)
                  x*v.y - y*v.x);
     return res;
 }
+
+Vector3D Vector3D::operator *(const double mult) const {
+    Vector3D result(x*mult, y*mult, z*mult);
+    return result;
+}
+
+Vector3D Vector3D::operator/(const double mult) const {
+    Vector3D result(x/mult, y/mult, z/mult);
+    return result;
+}

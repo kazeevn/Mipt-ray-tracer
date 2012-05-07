@@ -30,8 +30,8 @@ void Plane3D::calcPlaneCoef(const Point3D &p1, const Point3D &p2, const Point3D 
 
 Point3D *Plane3D::intercrossWithRay(const Ray3D &ray)
 {
-    const Point3D& p = ray.getp();
-    const Vector3D& v = ray.getv();
+    const Point3D& p = ray.point();
+    const Vector3D& v = ray.direction();
     double denom = A*v.x + B*v.y + C*v.z;
     if (fabs(denom) < DBL_EPSILON)
         return 0;

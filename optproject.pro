@@ -20,10 +20,12 @@ SOURCES += main.cpp\
     core/geometry/plane3d.cpp \
     core/tracer/scene.cpp \
     core/tracer/raypool.cpp \
-    core/tracer/workerthread.cpp \
     core/objects/pictureobject.cpp \
     core/geometry/transformationmatrix.cpp \
-    core/tracer/renderedimage.cpp
+    core/tracer/renderedimage.cpp \
+    core/tracer/physicalray.cpp \
+    core/geometry/rectangle3d.cpp \
+    core/tracer/workerobject.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
@@ -34,8 +36,10 @@ HEADERS  += mainwindow.h \
     core/geometry/plane3d.h \
     core/tracer/scene.h \
     core/tracer/raypool.h \
-    core/tracer/workerthread.h \
     core/objects/pictureobject.h \
-    core/tracer/renderedimage.h
+    core/tracer/renderedimage.h \
+    core/tracer/physicalray.h \
+    core/geometry/rectangle3d.h \
+    core/tracer/workerobject.h
 
 FORMS    += mainwindow.ui

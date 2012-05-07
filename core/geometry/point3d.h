@@ -11,7 +11,7 @@ public:
     Point3D(double x = 0, double y = 0, double z = 0) { this->x = x; this->y = y; this->z = z; }
     double dist(const Point3D& point);
 
-    Point3D operator+(const Vector3D& v);
+    Point3D operator+(const Vector3D& v) const;
     double x, y, z;
 };
 

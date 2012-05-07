@@ -2,7 +2,8 @@
 
 #include "core/geometry/point3d.h"
 #include "core/tracer/renderedimage.h"
-
+#include "core/tracer/physicalray.h"
+#include "core/tracer/raypool.h"
 #include "core/objects/pictureobject.h"
 #include <QColor>
 #include <QDebug>
@@ -38,7 +39,7 @@ void Scene::traceRay(Ray3D *ray)
         else
             point = NULL;
         if (point != NULL) {
-            double dist = point->dist(ray->getp());
+            double dist = point->dist(ray->point());
             if ((minpoint == NULL) || (dist < mindist)) {
                 if (minpoint != NULL)
                     delete minpoint;
@@ -54,4 +55,16 @@ void Scene::traceRay(Ray3D *ray)
         delete minpoint;
     } else
         RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
+}
+
+void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, const QSize &picsize)
+{
+    RenderedImage::Instance().init(picsize);
+
+    Vector3D dx = screen.horizontalVect() / picsize.width();
+    Vector3D dy = screen.verticalVect() / picsize.height();
+    for (int i = 0; i < picsize.width(); i++)
+        for (int j = 0; j < picsize.height(); j++)
+            RayPool::Instance().pushRay(new PhysicalRay(cameraPos, screen.point()+dx*i+dy*j, i, j, 1.0f));
+
 }

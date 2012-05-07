@@ -3,7 +3,7 @@
 
 PictureObject::PictureObject(QImage &image, Point3D &point, Vector3D &v1, Vector3D &v2)
     : m_image(image),
-      m_point(point), m_v1(v1), m_v2(v2),
+      m_rectangle(point, v1, v2),
       m_poly1(point, point+v1, point+v2),
       m_poly2(point+v1, point+v2, point+v1+v2),
       m_matrix(v1, v2, v1.crossProduct(v2))
@@ -20,7 +20,7 @@ Point3D* PictureObject::intercrossWithRay(const Ray3D &ray) {
 void PictureObject::processIntersection(const Ray3D &ray, const Point3D &point)
 {
     Q_UNUSED(ray);
-    Vector3D oldvector(m_point, point);
+    Vector3D oldvector(m_rectangle.point(), point);
     // На самом деле это двумерный вектор, с координатами от 0 до 1
     // где точка (0, 0) - нижняя левая для картинки, а (1, 0) - нижняя правая
     Vector3D newvector = m_matrix.transformVector(oldvector);
