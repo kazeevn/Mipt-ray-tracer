@@ -1,5 +1,6 @@
 #include "pictureobject.h"
 #include "core/tracer/renderedimage.h"
+#include <QDebug>
 
 PictureObject::PictureObject(QImage &image, Point3D &point, Vector3D &v1, Vector3D &v2)
     : m_image(image),

@@ -19,15 +19,20 @@ public:
         Q_UNUSED(ray);
         Q_UNUSED(point);
     }
-    static bool isPointInTriangle2D(double x1, double y1,
-                                    double x2, double y2,
-                                    double x3, double y3,
-                                    double cx, double cy);
 private:
     // Points
     Point3D p1, p2, p3;
     // Plane
     Plane3D plane;
+    // Helper functions
+    static bool isPointInTriangle2D(double x1, double y1,
+                                    double x2, double y2,
+                                    double x3, double y3,
+                                    double cx, double cy);
+    static bool isPointsInSamePlanePart(double x1, double y1,
+                                        double x2, double y2,
+                                        double cx1, double cy1,
+                                        double cx2, double cy2);
 };
 
 #endif // TRIANGLEPOLYGON_H

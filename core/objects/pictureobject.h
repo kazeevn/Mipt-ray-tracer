@@ -18,7 +18,7 @@ public:
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const Ray3D &ray, const Point3D &point);
 private:
-    QImage& m_image;
+    QImage m_image;
     Rectangle3D m_rectangle;
     /* Прямоугольная картинка для удобства бьётся на два треугольных полигона
      * Бьется по диагонали, которая не включает нижний левый угол

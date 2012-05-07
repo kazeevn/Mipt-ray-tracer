@@ -2,17 +2,16 @@
 #include <QDebug>
 #include <QMutexLocker>
 
-RayPool::RayPool(QObject *parent) :
-    QObject(parent),
-    m_rays(),
-    m_mutex()
+RayPool::RayPool(QObject *parent)
+    : QObject(parent),
+      m_rays(),
+      m_mutex()
 {
 }
 
 void RayPool::pushRay(Ray3D* ray)
 {
     QMutexLocker locker(&m_mutex);
-    qDebug() << "Ray added";
     m_rays.append(ray);
     m_mutex.unlock();
 }
@@ -20,7 +19,6 @@ void RayPool::pushRay(Ray3D* ray)
 Ray3D* RayPool::popRay()
 {
     QMutexLocker locker(&m_mutex);
-    qDebug() << "Ray removed";
     if (m_rays.isEmpty())
         return NULL;
     return m_rays.takeFirst();

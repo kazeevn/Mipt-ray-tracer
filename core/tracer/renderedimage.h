@@ -7,7 +7,6 @@
 #include "core/geometry/ray3d.h"
 
 /* Класс, собирающий информацию о всех лучах, пришедших куда-либо откуда-либо */
-
 class RenderedImage
 {
 public:
@@ -22,13 +21,15 @@ public:
     }
 
     const QSize size() const { return m_image.size(); }
+    const QImage image() const { return m_image; }
 
-    void rayTraceResult(const Ray3D& ray, QRgb color);
+    void rayTraceResult(const Ray3D &ray, QRgb color);
 private:
+    RenderedImage(QSize size);
+
     static RenderedImage *theInstance;
 
     QMutex m_mutex;
-    RenderedImage(QSize size);
     QImage m_image;
 };
 
