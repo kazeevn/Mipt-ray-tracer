@@ -14,7 +14,7 @@ Scene::Scene(QObject *parent) :
     m_objects(),
     m_workerThreadPool(this)
 {
-    m_workerThreadPool.setMaxThreadCount(1);
+    m_workerThreadPool.setMaxThreadCount(4);
 }
 
 Scene::~Scene()

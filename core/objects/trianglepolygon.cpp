@@ -1,5 +1,4 @@
 #include "trianglepolygon.h"
-#include <QDebug>
 
 TrianglePolygon::TrianglePolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3)
     : p1(p1), p2(p2), p3(p3), plane(p1, p2, p3)
@@ -37,9 +36,6 @@ Point3D* TrianglePolygon::intercrossWithRay(const Ray3D &ray)
             && isPointInTriangle2D(p1.x, p1.z, p2.x, p2.z, p3.x, p3.z, intP->x, intP->z)
             && isPointInTriangle2D(p1.y, p1.z, p2.y, p2.z, p3.y, p3.z, intP->y, intP->z))
     {
-        qDebug() << "Ray" << ray.direction().x << ray.direction().y << ray.direction().z << "intercrossing with triangle polygon" << \
-                    "got point" << intP->x << intP->y << intP->z;
-        qDebug() << "Polygon: (" << p1.x << p1.y << p1.z << ") (" << p2.x << p2.y << p2.z << ") (" << p3.x << p3.y << p3.z << ")";
         return intP;
     }
     else {

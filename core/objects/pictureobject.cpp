@@ -1,8 +1,7 @@
 #include "pictureobject.h"
 #include "core/tracer/renderedimage.h"
-#include <QDebug>
 
-PictureObject::PictureObject(QImage &image, Point3D &point, Vector3D &v1, Vector3D &v2)
+PictureObject::PictureObject(const QImage &image, const Point3D &point, const Vector3D &v1, const Vector3D &v2)
     : m_image(image),
       m_rectangle(point, v1, v2),
       m_poly1(point, point+v1, point+v2),

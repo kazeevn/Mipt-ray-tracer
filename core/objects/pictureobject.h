@@ -13,7 +13,7 @@ class PictureObject : public Virtual3DObject
 {
 public:
     /* Положение задается как у Rectangle3D */
-    PictureObject(QImage &image, Point3D &point, Vector3D &v1, Vector3D &v2);
+    PictureObject(const QImage &image, const Point3D& point, const Vector3D& v1, const Vector3D& v2);
 
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const Ray3D &ray, const Point3D &point);

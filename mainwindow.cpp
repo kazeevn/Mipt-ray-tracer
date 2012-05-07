@@ -17,14 +17,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage image;
     image.load("google.png");
-    Point3D p(1, 0, 0);
-    Vector3D v1(1, 3, 1);
-    Vector3D v2(0, 0, 1);
-
-    Scene::Instance().addObject(new PictureObject(image, p, v1, v2));
-
+    Scene::Instance().addObject(new PictureObject(image, Point3D(1, 0, 1), Vector3D(1, 3, -1), Vector3D(0, 0, -1)));
     Scene::Instance().startRendering(Point3D(0, 0, 0),
-                                     Rectangle3D(Point3D(1, -1, -1), Vector3D(0, 5, 0), Vector3D(0, 0, 3)),
+                                     Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
                                      QSize(500, 300));
 }
 

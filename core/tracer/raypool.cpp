@@ -1,5 +1,4 @@
 #include "raypool.h"
-#include <QDebug>
 #include <QMutexLocker>
 
 RayPool::RayPool(QObject *parent)
