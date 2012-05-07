@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QList>
 #include <QSize>
+#include <QThreadPool>
 #include "core/objects/virtual3dobject.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/rectangle3d.h"
@@ -26,6 +27,7 @@ private:
     ~Scene();
 
     QList<Virtual3DObject*> m_objects;
+    QThreadPool m_workerThreadPool;
 };
 
 #endif // SCENE_H

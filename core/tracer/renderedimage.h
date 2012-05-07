@@ -3,10 +3,10 @@
 
 #include <QImage>
 #include <QSize>
+#include <QMutex>
 #include "core/geometry/ray3d.h"
 
-/* TODO: thread-safety
- * Класс, собирающий информацию о всех лучах, пришедших куда-либо откуда-либо */
+/* Класс, собирающий информацию о всех лучах, пришедших куда-либо откуда-либо */
 
 class RenderedImage
 {
@@ -27,6 +27,7 @@ public:
 private:
     static RenderedImage *theInstance;
 
+    QMutex m_mutex;
     RenderedImage(QSize size);
     QImage m_image;
 };

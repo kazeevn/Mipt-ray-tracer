@@ -3,10 +3,12 @@
 
 #include <QObject>
 #include <QList>
+#include <QMutex>
 #include "core/geometry/ray3d.h"
 
-// Singletone object
-// XXX: thread safety! (mutex, etc)
+/* Пул лучей, откуда WorkerObject'ы достают лучи чтобы их оттрассировать
+ * и куда объекты добавляют новые (в случае, если в результате взаимодействия
+ * с объектом возник новый луч - как, например, с линзой) */
 class RayPool : public QObject
 {
     Q_OBJECT
@@ -21,6 +23,7 @@ public:
 private:
     RayPool(QObject *parent = 0);
     QList<Ray3D*> m_rays;
+    QMutex m_mutex;
 };
 
 #endif // RAYPOOL_H

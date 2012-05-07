@@ -6,6 +6,7 @@
 #include "core/objects/pictureobject.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
+#include "core/geometry/rectangle3d.h"
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -20,11 +21,13 @@ MainWindow::MainWindow(QWidget *parent) :
     Vector3D v1(0, 3, 0);
     Vector3D v2(0, 0, 1);
 
-    RenderedImage::init(QSize(100, 100));
-
     Scene::Instance().addObject(new PictureObject(image, p, v1, v2));
-    Scene::Instance().traceRay(new Ray3D(0, 0, 0, 1, 0.1, 0.5));
-    Scene::Instance().traceRay(new Ray3D(0, 0, 0, -1, 1.5, 0.5));
+
+    Scene::Instance().startRendering(Point3D(0, 0, 0),
+                                     Rectangle3D(Point3D(1, -1, -1), Vector3D(0, 5, 0), Vector3D(0, 0, 3)),
+                                     QSize(500, 300));
+//    Scene::Instance().traceRay(new Ray3D(0, 0, 0, 1, 0.1, 0.5));
+//    Scene::Instance().traceRay(new Ray3D(0, 0, 0, -1, 1.5, 0.5));
 }
 
 MainWindow::~MainWindow()

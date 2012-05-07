@@ -4,14 +4,17 @@
 #include "core/tracer/renderedimage.h"
 #include "core/tracer/physicalray.h"
 #include "core/tracer/raypool.h"
+#include "core/tracer/workerobject.h"
 #include "core/objects/pictureobject.h"
 #include <QColor>
 #include <QDebug>
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
-    m_objects()
+    m_objects(),
+    m_workerThreadPool(this)
 {
+    m_workerThreadPool.setMaxThreadCount(4);
 }
 
 Scene::~Scene()
@@ -67,4 +70,6 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
         for (int j = 0; j < picsize.height(); j++)
             RayPool::Instance().pushRay(new PhysicalRay(cameraPos, screen.point()+dx*i+dy*j, i, j, 1.0f));
 
+    for (int i = 0; i < m_workerThreadPool.maxThreadCount(); i++)
+        m_workerThreadPool.start(new WorkerObject());
 }
