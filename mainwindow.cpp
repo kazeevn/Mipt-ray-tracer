@@ -6,8 +6,8 @@
 #include "core/objects/pictureobject.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
-#include "core/geometry/rectangle3d.h"
-#include <QDebug>
+
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,14 +18,15 @@ MainWindow::MainWindow(QWidget *parent) :
     QImage image;
     image.load("google.png");
     Scene::Instance().addObject(new PictureObject(image, Point3D(1, 0, 1), Vector3D(1, 3, -1), Vector3D(0, 0, -1)));
+    connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
     Scene::Instance().startRendering(Point3D(0, 0, 0),
                                      Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
                                      QSize(500, 300));
 }
 
 void MainWindow::savePic() {
-    qDebug() << "SAVE";
     RenderedImage::Instance().image().save("result.png");
+    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
 }
 
 MainWindow::~MainWindow()

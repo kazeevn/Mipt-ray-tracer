@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     core/tracer/renderedimage.cpp \
     core/tracer/physicalray.cpp \
     core/geometry/rectangle3d.cpp \
-    core/tracer/workerobject.cpp
+    core/tracer/workerobject.cpp \
+    core/tracer/renderinghelper.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
@@ -40,6 +41,7 @@ HEADERS  += mainwindow.h \
     core/tracer/renderedimage.h \
     core/tracer/physicalray.h \
     core/geometry/rectangle3d.h \
-    core/tracer/workerobject.h
+    core/tracer/workerobject.h \
+    core/tracer/renderinghelper.h
 
 FORMS    += mainwindow.ui

@@ -14,15 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>Save</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -46,24 +38,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>savePic()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>357</x>
-     <y>38</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>332</x>
-     <y>109</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>savePic()</slot>
  </slots>

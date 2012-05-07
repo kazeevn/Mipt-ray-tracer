@@ -17,4 +17,5 @@ void WorkerObject::run()
         Scene::Instance().traceRay(curRay);
         delete curRay;
     }
+    qDebug() << "Worker object" << QThread::currentThreadId() << "finished working";
 }
