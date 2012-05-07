@@ -15,7 +15,7 @@ public:
      * На два вектора (желательно ортогональных) натягивается картинка
      * Первый соответствует "ширине", второй - "высоте"
      */
-    PictureObject(QImage &pixmap, Point3D &point, Vector3D &v1, Vector3D &v2);
+    PictureObject(QImage &image, Point3D &point, Vector3D &v1, Vector3D &v2);
 
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const Ray3D &ray, const Point3D &point);

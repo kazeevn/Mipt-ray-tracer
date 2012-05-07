@@ -26,9 +26,9 @@ Point3D* TrianglePolygon::intercrossWithRay(const Ray3D &ray)
     if (isPointInTriangle2D(p1.x, p1.y, p2.x, p2.y, p3.x, p3.y, intP->x, intP->y)
             && isPointInTriangle2D(p1.x, p1.z, p2.x, p2.z, p3.x, p3.z, intP->x, intP->z)
             && isPointInTriangle2D(p1.y, p1.z, p2.y, p2.z, p3.y, p3.z, intP->y, intP->z))
-    {
+        return intP;
+    else {
         delete intP;
         return 0;
-    } else
-        return intP;
+    }
 }

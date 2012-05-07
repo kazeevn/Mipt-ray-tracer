@@ -2,7 +2,10 @@
 
 #include "core/geometry/point3d.h"
 #include "core/tracer/renderedimage.h"
+
+#include "core/objects/pictureobject.h"
 #include <QColor>
+#include <QDebug>
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -29,7 +32,12 @@ void Scene::traceRay(Ray3D *ray)
     // Searching for nearest collision with any object
     Q_FOREACH(Virtual3DObject* obj, m_objects)
     {
-        if ((point = obj->intercrossWithRay(*ray)) != NULL) {
+        PictureObject* picobj = dynamic_cast<PictureObject*>(obj);
+        if (picobj)
+            point = picobj->intercrossWithRay(*ray);
+        else
+            point = NULL;
+        if (point != NULL) {
             double dist = point->dist(ray->getp());
             if ((minpoint == NULL) || (dist < mindist)) {
                 if (minpoint != NULL)
@@ -44,6 +52,6 @@ void Scene::traceRay(Ray3D *ray)
     if (nearestObj) {
         nearestObj->processIntersection(*ray, *minpoint);
         delete minpoint;
-    }
-    RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
+    } else
+        RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
 }

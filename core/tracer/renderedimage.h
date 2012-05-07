@@ -11,6 +11,8 @@ class RenderedImage
 {
 public:
     static void init(QSize size) {
+        if (theInstance)
+            delete theInstance;
         theInstance = new RenderedImage(size);
     }
 
