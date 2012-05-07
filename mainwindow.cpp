@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Scene::Instance().addObject(new PictureObject(image, p, v1, v2));
     Scene::Instance().traceRay(new Ray3D(0, 0, 0, 1, 1.5, 0.5));
+    Scene::Instance().traceRay(new Ray3D(0, 0, 0, -1, 1.5, 0.5));
 }
 
 MainWindow::~MainWindow()
