@@ -29,12 +29,12 @@ public:
     void processIntersection(const Ray3D &ray, const Point3D &point);
 private:
     Rectangle3D m_rectangle;
-    Vector3D m_perpendicular;
-
     QImage m_heightMap1, m_heightMap2;
     double m_height, m_refractiveIndex;
+    Vector3D m_perpendicular;
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
-    RectanglePolygon m_frontPolygon, m_backPolygon, m_topPolygon, m_bottomPolygon, m_leftPolygon, m_rightPolygon;
+    RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
+    RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
 };
 
 #endif // LENSOBJECT_H
