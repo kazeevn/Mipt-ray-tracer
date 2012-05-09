@@ -17,16 +17,17 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_backTopPolygon(point, v1, m_perpendicular*(-1)),
       m_backBottomPolygon(point+v2, m_perpendicular*(-1), v1)
 {
+    /* TODO: вот тут-то нам нужно побить поверхность на полигоны. */
 }
 
 Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
 {
     Point3D* p1 = 0;
     p1 = m_frontPolygon.intercrossWithRay(ray);
-    p1 = p1 == 0 ? m_frontLeftPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_frontRightPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_frontTopPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_frontBottomPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_frontLeftPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_frontRightPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_frontTopPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_frontBottomPolygon.intercrossWithRay(ray) : p1;
     if (!p1) {
         delete p1;
         // TODO: Скорее всего, мы пересеклись с одним из "передних" полигонов
@@ -34,10 +35,10 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
         return NULL;
     }
     p1 = m_backPolygon.intercrossWithRay(ray);
-    p1 = p1 == 0 ? m_backLeftPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_backRightPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_backTopPolygon.intercrossWithRay(ray) : p1;
-    p1 = p1 == 0 ? m_backBottomPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_backLeftPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_backRightPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_backTopPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_backBottomPolygon.intercrossWithRay(ray) : p1;
     if (!p1) {
         delete p1;
         // TODO: аналогично, только с "задними"

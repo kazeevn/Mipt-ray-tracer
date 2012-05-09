@@ -3,8 +3,7 @@
 
 PictureObject::PictureObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &image)
     : RectanglePolygon(point, v1, v2),
-      m_image(image),
-      m_matrix(v1, v2, v1.crossProduct(v2))
+      m_image(image)
 {
 }
 

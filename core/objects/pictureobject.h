@@ -6,7 +6,6 @@
 #include "core/objects/rectanglepolygon.h"
 #include "core/geometry/vector3d.h"
 #include "core/geometry/point3d.h"
-#include "core/geometry/transformationmatrix.h"
 
 class PictureObject : public RectanglePolygon
 {
@@ -17,8 +16,6 @@ public:
     void processIntersection(const Ray3D &ray, const Point3D &point);
 private:
     QImage m_image;
-    /* Матрица перехода к локальному базису картинки */
-    TransformationMatrix m_matrix;
 };
 
 #endif // PICTUREOBJECT_H

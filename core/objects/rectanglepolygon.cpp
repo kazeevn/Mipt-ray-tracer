@@ -3,7 +3,8 @@
 RectanglePolygon::RectanglePolygon(const Point3D &point, const Vector3D &v1, const Vector3D &v2)
     : m_rectangle(point, v1, v2),
       m_poly1(point, point+v1, point+v2),
-      m_poly2(point+v1, point+v2, point+v1+v2)
+      m_poly2(point+v1, point+v2, point+v1+v2),
+      m_matrix(v1, v2, v1.crossProduct(v2))
 {
 }
 

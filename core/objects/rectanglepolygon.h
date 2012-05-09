@@ -4,6 +4,7 @@
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "core/geometry/rectangle3d.h"
+#include "core/geometry/transformationmatrix.h"
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/trianglepolygon.h"
 
@@ -28,6 +29,8 @@ protected:
      * Бьется по диагонали, которая не включает верхний левый угол
      */
     TrianglePolygon m_poly1, m_poly2;
+    /* Матрица перехода к локальному базису прямоугольника*/
+    TransformationMatrix m_matrix;
 };
 
 #endif // RECTANGLEPOLYGON_H
