@@ -24,9 +24,11 @@ SOURCES += main.cpp\
     core/geometry/transformationmatrix.cpp \
     core/tracer/renderedimage.cpp \
     core/tracer/physicalray.cpp \
-    core/geometry/rectangle3d.cpp \
     core/tracer/workerobject.cpp \
-    core/tracer/renderinghelper.cpp
+    core/tracer/renderinghelper.cpp \
+    core/objects/lensobject.cpp \
+    core/objects/rectanglepolygon.cpp \
+    core/geometry/rectangle3d.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
@@ -40,8 +42,10 @@ HEADERS  += mainwindow.h \
     core/objects/pictureobject.h \
     core/tracer/renderedimage.h \
     core/tracer/physicalray.h \
-    core/geometry/rectangle3d.h \
     core/tracer/workerobject.h \
-    core/tracer/renderinghelper.h
+    core/tracer/renderinghelper.h \
+    core/objects/lensobject.h \
+    core/objects/rectanglepolygon.h \
+    core/geometry/rectangle3d.h
 
 FORMS    += mainwindow.ui

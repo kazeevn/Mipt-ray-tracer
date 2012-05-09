@@ -1,8 +1,6 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
-#include <cmath>
-
 class Vector3D;
 
 class Point3D
@@ -12,6 +10,7 @@ public:
     double dist(const Point3D& point);
 
     Point3D operator+(const Vector3D& v) const;
+    Point3D operator-(const Vector3D& v) const;
     double x, y, z;
 };
 

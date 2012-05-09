@@ -7,7 +7,6 @@
 #include <QThreadPool>
 #include "core/objects/virtual3dobject.h"
 #include "core/geometry/ray3d.h"
-#include "core/geometry/rectangle3d.h"
 #include "core/tracer/renderinghelper.h"
 
 // Singletone object
