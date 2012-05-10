@@ -1,17 +1,12 @@
-#-------------------------------------------------
-#
+# -------------------------------------------------
 # Project created by QtCreator 2012-02-21T18:05:04
-#
-#-------------------------------------------------
-
-QT       += core gui
-
+# -------------------------------------------------
+QT += core \
+    gui
 TARGET = optproject
 TEMPLATE = app
-
-
-SOURCES += main.cpp\
-        mainwindow.cpp \
+SOURCES += main.cpp \
+    mainwindow.cpp \
     core/geometry/vector3d.cpp \
     core/geometry/point3d.cpp \
     core/geometry/ray3d.cpp \
@@ -26,9 +21,9 @@ SOURCES += main.cpp\
     core/tracer/physicalray.cpp \
     core/geometry/rectangle3d.cpp \
     core/tracer/workerobject.cpp \
-    core/tracer/renderinghelper.cpp
-
-HEADERS  += mainwindow.h \
+    core/tracer/renderinghelper.cpp \
+    model.cpp
+HEADERS += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
     core/geometry/ray3d.h \
@@ -42,6 +37,6 @@ HEADERS  += mainwindow.h \
     core/tracer/physicalray.h \
     core/geometry/rectangle3d.h \
     core/tracer/workerobject.h \
-    core/tracer/renderinghelper.h
-
-FORMS    += mainwindow.ui
+    core/tracer/renderinghelper.h \
+    model.h
+FORMS += mainwindow.ui

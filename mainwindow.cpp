@@ -6,8 +6,12 @@
 #include "core/objects/pictureobject.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
+#include "model.h"
 
 #include <QMessageBox>
+#include <QTreeView>
+#include <QStandardItemModel>
+#include <QStandardItem>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,11 +23,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage image;
     image.load("google.png");
-    Scene::Instance().addObject(new PictureObject(image, Point3D(1, 0, 1), Vector3D(1, 3, -1), Vector3D(0, 0, -1)));
+    Scene::Instance().addObject(new PictureObject(image, Point3D(1, 0, 1), Vector3D(1, 10, -1), Vector3D(0, 0, -1)));
     Scene::Instance().addObject(new PictureObject(image, Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1)));
-    Scene::Instance().startRendering(Point3D(0, 0, 0),
+
+    SceneModel *model=new SceneModel;
+    //QMessageBox::information(this,"dd",QString("%1").arg(model.rowCount()));
+    ui->listView->setModel(model);
+    /*Scene::Instance().startRendering(Point3D(0, 0, 0),
                                      Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
-                                     QSize(500, 300));
+                                     QSize(500, 300));*/
 }
 
 void MainWindow::savePic() {

@@ -22,6 +22,8 @@ public:
     void addObject(Virtual3DObject* object);
     void traceRay(Ray3D *ray);
     void startRendering(const Point3D& cameraPos, const Rectangle3D& screen, const QSize& picsize);
+    QList<Virtual3DObject*> ListObjects() {return m_objects;}
+    int length() {return m_objects.length();}
 signals:
     void renderingFinished();
 private:
