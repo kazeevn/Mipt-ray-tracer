@@ -28,22 +28,31 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     p1 = (p1 == 0) ? m_frontRightPolygon.intercrossWithRay(ray) : p1;
     p1 = (p1 == 0) ? m_frontTopPolygon.intercrossWithRay(ray) : p1;
     p1 = (p1 == 0) ? m_frontBottomPolygon.intercrossWithRay(ray) : p1;
-    if (!p1) {
+
+    Point3D* p2 = 0;
+    p2 = m_backPolygon.intercrossWithRay(ray);
+    p2 = (p2 == 0) ? m_backLeftPolygon.intercrossWithRay(ray) : p2;
+    p2 = (p2 == 0) ? m_backRightPolygon.intercrossWithRay(ray) : p2;
+    p2 = (p2 == 0) ? m_backTopPolygon.intercrossWithRay(ray) : p2;
+    p2 = (p2 == 0) ? m_backBottomPolygon.intercrossWithRay(ray) : p2;
+
+    bool back = false, front = false;
+
+    if ((p1 != NULL) && (p2 != NULL)) {
+        if (p1->dist(ray.point()) > p2->dist(ray.point()))
+            back = true;
+        else
+            front = true;
         delete p1;
-        // TODO: Скорее всего, мы пересеклись с одним из "передних" полигонов
-        // НАЙТИ И УНИЧТОЖИТЬ!
-        return NULL;
-    }
-    p1 = m_backPolygon.intercrossWithRay(ray);
-    p1 = (p1 == 0) ? m_backLeftPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_backRightPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_backTopPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_backBottomPolygon.intercrossWithRay(ray) : p1;
-    if (!p1) {
+        delete p2;
+    } else if (p1 != NULL) {
         delete p1;
-        // TODO: аналогично, только с "задними"
-        return NULL;
+        front = true;
+    } else if (p2 != NULL) {
+        delete p2;
+        back = true;
     }
+    // TODO: do something
     return NULL;
 }
 

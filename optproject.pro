@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     core/tracer/renderinghelper.cpp \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
-    core/geometry/rectangle3d.cpp
+    core/geometry/rectangle3d.cpp \
+    core/objects/physicaltrianglepolygon.cpp
 
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
@@ -46,6 +47,7 @@ HEADERS  += mainwindow.h \
     core/tracer/renderinghelper.h \
     core/objects/lensobject.h \
     core/objects/rectanglepolygon.h \
-    core/geometry/rectangle3d.h
+    core/geometry/rectangle3d.h \
+    core/objects/physicaltrianglepolygon.h
 
 FORMS    += mainwindow.ui
