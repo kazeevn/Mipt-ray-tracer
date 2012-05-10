@@ -7,6 +7,7 @@ TARGET = optproject
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
+    model.cpp \
     core/geometry/vector3d.cpp \
     core/geometry/point3d.cpp \
     core/geometry/ray3d.cpp \
@@ -21,13 +22,12 @@ SOURCES += main.cpp \
     core/tracer/physicalray.cpp \
     core/tracer/workerobject.cpp \
     core/tracer/renderinghelper.cpp \
-    model.cpp \
-
-HEADERS  += mainwindow.h \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
     core/objects/physicaltrianglepolygon.cpp
+
+HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
     core/geometry/ray3d.h \
@@ -44,6 +44,7 @@ HEADERS  += mainwindow.h \
     core/objects/lensobject.h \
     core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
-    core/objects/physicaltrianglepolygon.h
+    core/objects/physicaltrianglepolygon.h \
     model.h
+
 FORMS    += mainwindow.ui
