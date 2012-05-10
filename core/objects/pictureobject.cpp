@@ -1,20 +1,10 @@
 #include "pictureobject.h"
 #include "core/tracer/renderedimage.h"
 
-PictureObject::PictureObject(const QImage &image, const Point3D &point, const Vector3D &v1, const Vector3D &v2)
-    : m_image(image),
-      m_rectangle(point, v1, v2),
-      m_poly1(point, point+v1, point+v2),
-      m_poly2(point+v1, point+v2, point+v1+v2),
-      m_matrix(v1, v2, v1.crossProduct(v2))
+PictureObject::PictureObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &image)
+    : RectanglePolygon(point, v1, v2),
+      m_image(image)
 {
-}
-
-Point3D* PictureObject::intercrossWithRay(const Ray3D &ray) {
-    Point3D* p = m_poly1.intercrossWithRay(ray);
-    if (p) return p;
-    p = m_poly2.intercrossWithRay(ray);
-    return p;
 }
 
 void PictureObject::processIntersection(const Ray3D &ray, const Point3D &point)

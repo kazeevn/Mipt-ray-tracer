@@ -4,7 +4,8 @@
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 
-/* Class represents a geometric ray starting from point p
+/*
+ * Class represents a geometric ray starting from point p
  * and running in the direction of vector v
  */
 class Ray3D

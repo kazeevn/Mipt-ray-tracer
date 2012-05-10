@@ -14,7 +14,7 @@ public:
                     double x3, double y3, double z3);
     Point3D *intercrossWithRay(const Ray3D &ray);
     // Just do nothing
-    void processIntersection(const Ray3D &ray, const Point3D &point)
+    virtual void processIntersection(const Ray3D &ray, const Point3D &point)
     {
         Q_UNUSED(ray);
         Q_UNUSED(point);
