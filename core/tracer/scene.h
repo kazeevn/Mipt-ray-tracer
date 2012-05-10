@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QList>
+#include <QString>
 #include <QSize>
 #include <QThreadPool>
 #include "core/objects/virtual3dobject.h"
@@ -18,11 +19,10 @@ public:
         static Scene theInstance;
         return theInstance;
     }
-    void addObject(Virtual3DObject* object);
+    void addObject(const QString& name, Virtual3DObject* object);
     void traceRay(Ray3D *ray);
     void startRendering(const Point3D& cameraPos, const Rectangle3D& screen, const QSize& picsize);
-    QList<Virtual3DObject*> ListObjects() {return m_objects;}
-    int length() {return m_objects.length();}
+    const QList<Virtual3DObject*>& objects() const {return m_objects;}
 signals:
     void renderingFinished();
 private:

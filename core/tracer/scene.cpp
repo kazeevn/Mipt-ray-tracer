@@ -20,8 +20,9 @@ Scene::~Scene()
     m_objects.clear();
 }
 
-void Scene::addObject(Virtual3DObject *object)
+void Scene::addObject(const QString& name, Virtual3DObject *object)
 {
+    object->setName(name);
     m_objects.append(object);
 }
 

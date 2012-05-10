@@ -7,10 +7,13 @@
 class Virtual3DObject
 {
 public:
-    Virtual3DObject() { }
+    Virtual3DObject() {}
     virtual Point3D* intercrossWithRay(const Ray3D &ray) = 0;
     virtual void processIntersection(const Ray3D &ray, const Point3D& point) = 0;
-    QString name;
+    const QString& name() const { return m_name; }
+    void setName(const QString& name) { m_name = name; }
+private:
+    QString m_name;
 };
 
 #endif // VIRTUAL3DOBJECT_H

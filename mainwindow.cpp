@@ -23,8 +23,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage image;
     image.load("google.png");
-//    Scene::Instance().addObject(new PictureObject(image, Point3D(1, 0, 1), Vector3D(1, 10, -1), Vector3D(0, 0, -1)));
-//    Scene::Instance().addObject(new PictureObject(image, Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1)));
+    Scene::Instance().addObject("tralala", new PictureObject(Point3D(1, 0, 1), Vector3D(1, 10, -1), Vector3D(0, 0, -1), image));
+    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
     SceneModel *model=new SceneModel;
     //QMessageBox::information(this,"dd",QString("%1").arg(model.rowCount()));

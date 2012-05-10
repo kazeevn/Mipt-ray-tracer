@@ -12,4 +12,6 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     const PhysicalRay* physray = dynamic_cast<const PhysicalRay*>(&ray);
     if (!physray)
         return;
+    double dotProduct = physray->direction().dotProduct(m_perpendicular);
+    // TODO...
 }

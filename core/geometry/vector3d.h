@@ -13,7 +13,9 @@ public:
 
     double length() const { return sqrt(x*x+y*y+z*z); }
 
+    double dotProduct(const Vector3D& v) const;
     Vector3D crossProduct(const Vector3D& v) const;
+
     Vector3D unit() const;
 
     Vector3D operator* (const double mult) const;

@@ -26,6 +26,11 @@ Vector3D Vector3D::unit() const
     return res;
 }
 
+double Vector3D::dotProduct(const Vector3D &v) const
+{
+    return x*v.x + y*v.y + z*v.z;
+}
+
 Vector3D Vector3D::operator *(const double mult) const {
     Vector3D result(x*mult, y*mult, z*mult);
     return result;
