@@ -14,6 +14,7 @@ public:
     PictureObject(const Point3D& point, const Vector3D& v1, const Vector3D& v2, const QImage &image);
 
     void processIntersection(const Ray3D &ray, const Point3D &point);
+//    QVariant getCoords() {return QVariant(m_rectangle.point(), m_rectangle.horizontalVect(), m_rectangle.verticalVect());
 private:
     QImage m_image;
 };

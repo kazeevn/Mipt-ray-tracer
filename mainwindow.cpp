@@ -7,6 +7,7 @@
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "model.h"
+#include "glwidget.h"
 
 #include <QMessageBox>
 #include <QTreeView>
@@ -20,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
+    GLWidget* glWidget = new GLWidget;
+    ui->formLayout->addWidget(glWidget);
 
     QImage image;
     image.load("google.png");

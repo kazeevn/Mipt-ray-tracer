@@ -2,12 +2,12 @@
 # Project created by QtCreator 2012-02-21T18:05:04
 # -------------------------------------------------
 QT += core \
-    gui
+    gui \
+    opengl
 TARGET = optproject
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    model.cpp \
     core/geometry/vector3d.cpp \
     core/geometry/point3d.cpp \
     core/geometry/ray3d.cpp \
@@ -25,8 +25,10 @@ SOURCES += main.cpp \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
-    core/objects/physicaltrianglepolygon.cpp
-
+    core/objects/physicaltrianglepolygon.cpp \
+    model.cpp \
+    glwidget.cpp \
+    qtlogo.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -45,6 +47,7 @@ HEADERS  += mainwindow.h \
     core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
     core/objects/physicaltrianglepolygon.h \
-    model.h
-
+    model.h \
+    glwidget.h \
+    qtlogo.h
 FORMS    += mainwindow.ui
