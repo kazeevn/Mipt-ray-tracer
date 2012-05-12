@@ -40,5 +40,50 @@ int PictureModel::columnCount(const QModelIndex &parent) const {
 };
 
 QVariant PictureModel::data(const QModelIndex &index, int role) const {
-    return QVariant(false);
+    switch (index.row()){
+    case 0:
+        switch (index.column()){
+        case 0:
+            return p_object->getPoint().x;
+            break;
+        case 1:
+            return p_object->getPoint().y;
+            break;
+        case 2:
+            return p_object->getPoint().z;
+            break;
+        default:
+            return QVariant();
+        }
+    case 1:
+        switch (index.column()){
+        case 0:
+            return p_object->getHVector().x;
+            break;
+        case 1:
+            return p_object->getHVector().y;
+            break;
+        case 2:
+            return p_object->getHVector().z;
+            break;
+        default:
+            return QVariant();
+        }
+    case 2:
+        switch (index.column()){
+        case 0:
+            return p_object->getVVector().x;
+            break;
+        case 1:
+            return p_object->getVVector().y;
+            break;
+        case 2:
+            return p_object->getVVector().z;
+            break;
+        default:
+            return QVariant();
+        }
+    default:
+        return QVariant();
+    }
 }

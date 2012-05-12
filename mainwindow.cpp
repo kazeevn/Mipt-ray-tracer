@@ -29,9 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addObject("tralala", new PictureObject(Point3D(1, 0, 1), Vector3D(1, 10, -1), Vector3D(0, 0, -1), image));
     Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
-    SceneModel *model=new SceneModel;
+    SceneModel *scene_model=new SceneModel;
     //QMessageBox::information(this,"dd",QString("%1").arg(model.rowCount()));
-    ui->listView->setModel(model);
+    ui->listView->setModel(scene_model);
+    PictureModel *pic_model=new PictureModel((PictureObject*)Scene::Instance().objects()[0]);
+    ui->tableView->setModel(pic_model);
     /*Scene::Instance().startRendering(Point3D(0, 0, 0),
                                      Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
                                      QSize(500, 300));*/
