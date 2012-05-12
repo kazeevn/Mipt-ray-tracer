@@ -41,9 +41,9 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     if (fractureAngle > DBL_EPSILON)
         fractureDirection += planeProjection.unit()*sin(fractureAngle);
     // Коэффициенты отражения и преломления для разных поляризаций
-    double sfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(fractureAngle+incidenceAngle);
+    //double sfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(fractureAngle+incidenceAngle);
     double srefl = -sin(incidenceAngle - fractureAngle) / sin(incidenceAngle + fractureAngle);
-    double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
+    //double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
     double prefl = tan(incidenceAngle-fractureAngle) / tan(incidenceAngle+fractureAngle);
     // Отраженный луч
     RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,

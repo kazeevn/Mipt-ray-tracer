@@ -31,19 +31,44 @@ double Vector3D::dotProduct(const Vector3D &v) const
     return x*v.x + y*v.y + z*v.z;
 }
 
-Vector3D Vector3D::operator *(const double mult) const {
+Vector3D Vector3D::operator -(const Vector3D& v) const
+{
+    Vector3D result(x-v.x, y-v.y, z-v.z);
+    return result;
+}
+
+Vector3D Vector3D::operator *(const double mult) const
+{
     Vector3D result(x*mult, y*mult, z*mult);
     return result;
 }
 
-Vector3D Vector3D::operator/(const double mult) const {
+Vector3D Vector3D::operator/(const double mult) const
+{
     Vector3D result(x/mult, y/mult, z/mult);
     return result;
 }
 
-Vector3D& Vector3D::operator /=(const double mult) {
+Vector3D& Vector3D::operator *=(const double mult)
+{
+    x *= mult;
+    y *= mult;
+    z *= mult;
+    return *this;
+}
+
+Vector3D& Vector3D::operator /=(const double mult)
+{
     x /= mult;
     y /= mult;
     z /= mult;
+    return *this;
+}
+
+Vector3D& Vector3D::operator +=(const Vector3D& v)
+{
+    x += v.x;
+    y += v.y;
+    z += v.z;
     return *this;
 }
