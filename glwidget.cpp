@@ -147,6 +147,14 @@ void GLWidget::resizeGL(int width, int height)
     glMatrixMode(GL_MODELVIEW);
 }
 
+void GLWidget::wheelEvent(QWheelEvent *event)
+{
+    if (r - speed * 0.01 * event->delta() > 0) {
+        r -= speed * 0.01 * event->delta();
+    };
+    updateGL();
+}
+
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     lastPos = event->pos();
@@ -169,7 +177,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
             teta += speed * dy;
         }
     } else if (event->buttons() & Qt::RightButton) {
-        if (speed * 0.1 * dy > -100) {
+        if (r + speed * 0.1 * dy > 0) {
             r += speed * 0.1 * dy;
         };
     }
