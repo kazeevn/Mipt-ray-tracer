@@ -68,3 +68,8 @@ void MainWindow::on_pushButton_2_clicked()
                                          Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
                                          QSize(500, 300));
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this, "MIPT 2012 DGAP project by I. Pobojko, N. Kazeev, A. Gapchenko, A. Logins");
+}
