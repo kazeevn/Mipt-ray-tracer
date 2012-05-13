@@ -27,3 +27,17 @@ Point3D Point3D::operator -(const Vector3D& v) const
     Point3D p(x-v.x, y-v.y, z-v.z);
     return p;
 }
+
+double& Point3D::operator [](int i) {
+    switch (i) {
+    case 0:
+        return x;
+        break;
+    case 1:
+        return y;
+        break;
+    case 2:
+        return z;
+        break;
+    }
+}

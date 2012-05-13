@@ -47,3 +47,17 @@ Vector3D& Vector3D::operator /=(const double mult) {
     z /= mult;
     return *this;
 }
+
+double& Vector3D::operator [](int i) {
+    switch (i) {
+    case 0:
+        return x;
+        break;
+    case 1:
+        return y;
+        break;
+    case 2:
+        return z;
+        break;
+    }
+}

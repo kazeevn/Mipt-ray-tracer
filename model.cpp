@@ -23,14 +23,13 @@ Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
 
 bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (index.isValid() && role == Qt::EditRole) {
-
         return true;
     }
     return false;
 };
 
 int PictureModel::columnCount(const QModelIndex &parent) const {
-    if (0 <= parent.row() <= 2)
+    if (0 <= parent.row() && parent.row() <= 2)
         return 3;
     else if (parent.row()==4)
         return 1;
@@ -42,47 +41,14 @@ int PictureModel::columnCount(const QModelIndex &parent) const {
 QVariant PictureModel::data(const QModelIndex &index, int role) const {
     switch (index.row()){
     case 0:
-        switch (index.column()){
-        case 0:
-            return p_object->getPoint().x;
-            break;
-        case 1:
-            return p_object->getPoint().y;
-            break;
-        case 2:
-            return p_object->getPoint().z;
-            break;
-        default:
-            return QVariant();
-        }
+        return 0;
+        break;
     case 1:
-        switch (index.column()){
-        case 0:
-            return p_object->getHVector().x;
-            break;
-        case 1:
-            return p_object->getHVector().y;
-            break;
-        case 2:
-            return p_object->getHVector().z;
-            break;
-        default:
-            return QVariant();
-        }
+       return m_object->v1()[index.column()];
+       break;
     case 2:
-        switch (index.column()){
-        case 0:
-            return p_object->getVVector().x;
-            break;
-        case 1:
-            return p_object->getVVector().y;
-            break;
-        case 2:
-            return p_object->getVVector().z;
-            break;
-        default:
-            return QVariant();
-        }
+        return m_object->v2()[index.column()];
+        break;
     default:
         return QVariant();
     }

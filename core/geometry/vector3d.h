@@ -22,6 +22,7 @@ public:
     Vector3D operator/ (const double mult) const;
     Vector3D& operator/=(const double mult);
     double x, y, z;
+    double& operator[](const int i);
 };
 
 #endif // VECTOR3D_H

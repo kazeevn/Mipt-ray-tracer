@@ -12,6 +12,7 @@ public:
     Point3D operator+(const Vector3D& v) const;
     Point3D operator-(const Vector3D& v) const;
     double x, y, z;
+    double& operator[](const int i);
 };
 
 #endif // POINT3D_H
