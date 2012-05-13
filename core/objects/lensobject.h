@@ -32,6 +32,9 @@ public:
 
     void setRefractiveIndex(double refractiveIndex);
 private:
+    double getFrontHeight(int i, int j);
+    double getBackHeight(int i, int j);
+
     void triangulateSurfaces();
 
     Rectangle3D m_rectangle;
@@ -42,7 +45,7 @@ private:
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
     RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
     RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
-
+    // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
     QSize m_frontSize, m_backSize;
     PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 };
