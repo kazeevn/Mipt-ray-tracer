@@ -4,6 +4,7 @@
 #include "core/pictureobject_stub.h"
 #include <QAbstractListModel>
 #include<QItemDelegate>
+#include<QTableView>
 
 class SceneModel : public QAbstractListModel
 {
@@ -11,17 +12,21 @@ class SceneModel : public QAbstractListModel
 public:
     SceneModel(QObject *parent = 0) : QAbstractListModel(parent) {};
     int rowCount( const QModelIndex & parent = QModelIndex() ) const;
+    Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role) {return true;}
 };
 
 class PictureDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    PictureDelegate(QObject *parent = 0);
+    PictureDelegate(QObject *parent = 0) {m_parent=(QTableView*)parent;}
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void setEditorData(QWidget *editor, const QModelIndex &index) const {};
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {};
+    void setEditorData(QWidget *editor, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+private:
+    QTableView* m_parent;
 };
 
 class PictureModel : public QAbstractTableModel

@@ -21,6 +21,14 @@ Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 };
 
+Qt::ItemFlags SceneModel::flags(const QModelIndex &index) const
+{
+    if (!index.isValid())
+        return Qt::ItemIsEnabled;
+
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+};
+
 bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (index.isValid() && role == Qt::EditRole && index.column()<3) {
         switch (index.row()) {
@@ -85,17 +93,22 @@ QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int 
             return "z";
         }
     }
-
+    return QVariant();
 }
 
 QWidget* PictureDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    QTableView* editor = new QTableView(parent);
-    return editor;
+    return new QWidget(parent);
 }
-/*
+
 void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
- //   editor->setModel(new PictureModel(Scene::Instance().stub_objects())
+
 }
-*/
+
+void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+{
+    delete m_parent->model();
+    m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()]));
+    m_parent->resizeRowsToContents();
+}
