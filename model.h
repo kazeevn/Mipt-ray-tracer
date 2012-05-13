@@ -47,4 +47,5 @@ private:
     QGLWidget* gl_widget;
 };
 
+
 #endif // MODEL_H
