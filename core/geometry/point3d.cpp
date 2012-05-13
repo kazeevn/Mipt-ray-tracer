@@ -1,7 +1,7 @@
 #include "point3d.h"
 
 #include "core/geometry/vector3d.h"
-
+ #include <QtGlobal>
 #include <cmath>
 
 Point3D::Point3D(double x, double y, double z)
@@ -29,6 +29,7 @@ Point3D Point3D::operator -(const Vector3D& v) const
 }
 
 double& Point3D::operator [](int i) {
+    Q_ASSERT(i<3);
     switch (i) {
     case 0:
         return x;
