@@ -12,7 +12,6 @@ void RayPool::pushRay(Ray3D* ray)
 {
     QMutexLocker locker(&m_mutex);
     m_rays.append(ray);
-    m_mutex.unlock();
 }
 
 Ray3D* RayPool::popRay()

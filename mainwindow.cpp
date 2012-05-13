@@ -64,6 +64,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_2_clicked()
 {
     Scene::Instance().startRendering(Point3D(0, 0, 0),
-                                         Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
-                                         QSize(500, 300));
+                                     Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
+                                     QSize(500, 300));
 }
