@@ -80,6 +80,7 @@ double& Vector3D::operator [](int i) {
         return z;
         break;
     }
+}
 
 Vector3D& Vector3D::operator +=(const Vector3D& v)
 {
