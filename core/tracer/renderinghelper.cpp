@@ -11,6 +11,10 @@ RenderingHelper::RenderingHelper(const Point3D &cameraPos, const Rectangle3D &sc
     m_workerThreadPool.setMaxThreadCount(4);
 }
 
+RenderingHelper::~RenderingHelper()
+{
+}
+
 void RenderingHelper::run()
 {
 

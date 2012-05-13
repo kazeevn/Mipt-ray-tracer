@@ -13,6 +13,7 @@ class RenderingHelper : public QObject, public QRunnable
     Q_OBJECT
 public:
     RenderingHelper(const Point3D &cameraPos, const Rectangle3D &screen, const QSize &picsize, QObject *parent = 0);
+    ~RenderingHelper();
 
     void run();
 signals:

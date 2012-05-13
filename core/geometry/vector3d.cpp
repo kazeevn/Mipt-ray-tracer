@@ -76,7 +76,7 @@ double& Vector3D::operator [](int i) {
     case 1:
         return y;
         break;
-    case 2:
+    default:
         return z;
         break;
     }
