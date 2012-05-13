@@ -3,10 +3,11 @@
 
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/rectanglepolygon.h"
-#include "core/objects/physicaltrianglepolygon.h"
+#include "core/objects/physicalpolygons.h"
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/point3d.h"
+#include "core/geometry/transformationmatrix.h"
 
 #include <QImage>
 
@@ -31,17 +32,22 @@ public:
 
     void setRefractiveIndex(double refractiveIndex);
 private:
+    double getFrontHeight(int i, int j);
+    double getBackHeight(int i, int j);
+
     void triangulateSurfaces();
 
-    PhysicalTrianglePolygon ****m_frontPolygons, ****m_backPolygons;
-
     Rectangle3D m_rectangle;
+    TransformationMatrix m_matrix;
     QImage m_heightMap1, m_heightMap2;
     double m_height, m_refractiveIndex;
     Vector3D m_perpendicular;
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
     RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
     RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
+    // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
+    QSize m_frontSize, m_backSize;
+    PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 };
 
 #endif // LENSOBJECT_H

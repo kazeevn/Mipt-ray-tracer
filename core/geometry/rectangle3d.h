@@ -12,7 +12,8 @@ public:
      * Первый соответствует "ширине", второй - "высоте"
      */
     Rectangle3D(const Point3D& p, const Vector3D& v1, const Vector3D& v2);
-    Point3D& point() { return m_point; }
+    Point3D& point_m() { return m_point; }
+    const Point3D& point() const { return m_point; }
     const Vector3D& horizontalVect() const { return m_v1; }
     const Vector3D& verticalVect() const { return m_v2; }
     Vector3D& v1() { return m_v1; }

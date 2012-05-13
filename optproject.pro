@@ -25,11 +25,11 @@ SOURCES += main.cpp \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
-    core/objects/physicaltrianglepolygon.cpp \
     model.cpp \
     glwidget.cpp \
     qtlogo.cpp \
-    core/objects/virtual3dobject_stub.cpp
+    core/objects/virtual3dobject_stub.cpp \
+    core/objects/physicalpolygons.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -47,10 +47,10 @@ HEADERS  += mainwindow.h \
     core/objects/lensobject.h \
     core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
-    core/objects/physicaltrianglepolygon.h \
     model.h \
     glwidget.h \
     qtlogo.h \
     core/objects/virtual3dobject_stub.h \
-    core/pictureobject_stub.h
+    core/pictureobject_stub.h \
+    core/objects/physicalpolygons.h
 FORMS    += mainwindow.ui

@@ -1,5 +1,5 @@
-#ifndef PHYSICALTRIANGLEPOLYGON_H
-#define PHYSICALTRIANGLEPOLYGON_H
+#ifndef PHYSICALPOLYGONS_H
+#define PHYSICALPOLYGONS_H
 
 #include "core/objects/trianglepolygon.h"
 #include "core/geometry/point3d.h"
@@ -21,4 +21,22 @@ private:
     Vector3D m_perpendicular;
 };
 
-#endif // PHYSICALTRIANGLEPOLYGON_H
+/* Класс, отвечающий за "физический" полигон с четырмя точками
+ * Ничего особенного, просто обертка для "пары треугольных полигонов".
+ * Аналогично треугольному полигону */
+class PhysicalTetragonPolygon : public Virtual3DObject
+{
+public:
+    PhysicalTetragonPolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4);
+
+    Point3D* intercrossWithRay(const Ray3D &ray);
+    void processPhysicalIntersection(const Ray3D &ray, const Point3D &point, double refractiveIndex);
+    void processIntersection(const Ray3D &ray, const Point3D &point) {
+        Q_UNUSED(ray)
+        Q_UNUSED(point)
+    }
+private:
+    PhysicalTrianglePolygon m_poly1, m_poly2;
+};
+
+#endif // PHYSICALPOLYGONS_H
