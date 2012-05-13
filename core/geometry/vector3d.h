@@ -3,6 +3,7 @@
 
 #include "core/geometry/point3d.h"
 #include <cmath>
+#include <QDebug>
 
 class Vector3D
 {
@@ -27,5 +28,7 @@ public:
     double x, y, z;
     double& operator[](const int i);
 };
+
+QDebug operator<<(QDebug dbg, const Vector3D& v);
 
 #endif // VECTOR3D_H

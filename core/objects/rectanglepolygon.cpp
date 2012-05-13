@@ -15,3 +15,9 @@ Point3D* RectanglePolygon::intercrossWithRay(const Ray3D &ray)
     p = m_poly2.intercrossWithRay(ray);
     return p;
 }
+
+QDebug operator<<(QDebug dbg, const RectanglePolygon& p)
+{
+    dbg.nospace() << p.rectangle();
+    return dbg.space();
+}

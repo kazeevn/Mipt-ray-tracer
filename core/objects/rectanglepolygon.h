@@ -8,6 +8,8 @@
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/trianglepolygon.h"
 
+#include <QDebug>
+
 class RectanglePolygon : public Virtual3DObject
 {
 public:
@@ -33,5 +35,7 @@ protected:
     /* Матрица перехода к локальному базису прямоугольника */
     TransformationMatrix m_matrix;
 };
+
+QDebug operator<<(QDebug dbg, const RectanglePolygon& p);
 
 #endif // RECTANGLEPOLYGON_H

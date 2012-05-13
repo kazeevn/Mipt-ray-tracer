@@ -24,15 +24,13 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
       m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1)
 {
-    qDebug() << "LENS CONSTRUCTOR";
-    qDebug() << "Front polygon" << m_frontPolygon.rectangle().point().x;
     triangulateSurfaces();
 }
 
 void LensObject::triangulateSurfaces()
 {
-    Vector3D frontdx(m_rectangle.horizontalVect() / (m_frontSize.width()-1));
-    Vector3D frontdy(m_rectangle.verticalVect() / (m_frontSize.height()-1));
+    Vector3D frontdx(m_rectangle.horizontalVect() / m_frontSize.width());
+    Vector3D frontdy(m_rectangle.verticalVect() / m_frontSize.height());
     Vector3D frontdz(m_perpendicular.unit());
     m_frontPolygons = new PhysicalTetragonPolygon**[m_frontSize.width()];
     for (int i = 0; i < m_frontSize.width(); i++) {
@@ -46,8 +44,8 @@ void LensObject::triangulateSurfaces()
         }
     }
 
-    Vector3D backdx(m_rectangle.horizontalVect() / (m_backSize.width()-1));
-    Vector3D backdy(m_rectangle.verticalVect() / (m_backSize.height()-1));
+    Vector3D backdx(m_rectangle.horizontalVect() / m_backSize.width());
+    Vector3D backdy(m_rectangle.verticalVect() / m_backSize.height());
     Vector3D backdz(m_perpendicular.unit()*(-1));
     m_backPolygons = new PhysicalTetragonPolygon**[m_heightMap2.size().width()];
     for (int i = 0; i < m_backSize.width(); i++) {
@@ -55,9 +53,9 @@ void LensObject::triangulateSurfaces()
         for (int j = 0; j < m_backSize.height(); j++) {
             Point3D curpoint = m_rectangle.point() + backdx*i + backdy*j;
             m_backPolygons[i][j] = new PhysicalTetragonPolygon(curpoint+backdz*getBackHeight(i, j),
-                                                                curpoint+backdx+backdz*getBackHeight(i+1, j),
-                                                                curpoint+backdx+backdy+backdz*getBackHeight(i+1, j+1),
-                                                                curpoint+backdy+backdz*getBackHeight(i, j+1));
+                                                               curpoint+backdx+backdz*getBackHeight(i+1, j),
+                                                               curpoint+backdx+backdy+backdz*getBackHeight(i+1, j+1),
+                                                               curpoint+backdy+backdz*getBackHeight(i, j+1));
         }
     }
 }

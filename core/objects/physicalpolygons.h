@@ -4,6 +4,8 @@
 #include "core/objects/trianglepolygon.h"
 #include "core/geometry/point3d.h"
 
+#include <QDebug>
+
 /* Класс отвечает за так называемый "физический" полигон
  * На самом деле это полигон границы раздела двух сред.
  * Среда 1 - та, в которую смотрит векторное произведение векторов
@@ -38,5 +40,8 @@ public:
 private:
     PhysicalTrianglePolygon m_poly1, m_poly2;
 };
+
+// Отладочный шлак
+QDebug operator <<(QDebug dbg, const PhysicalTetragonPolygon& p);
 
 #endif // PHYSICALPOLYGONS_H
