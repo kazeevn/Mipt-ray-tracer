@@ -10,7 +10,7 @@ PictureObject::PictureObject(const Point3D &point, const Vector3D &v1, const Vec
 void PictureObject::processIntersection(const Ray3D &ray, const Point3D &point)
 {
     Q_UNUSED(ray);
-    Vector3D oldvector(m_rectangle.point(), point);
+    Vector3D oldvector(m_rectangle.point_m(), point);
     // На самом деле это двумерный вектор, с координатами от 0 до 1
     // где точка (0, 0) - нижняя левая для картинки, а (1, 0) - нижняя правая
     Vector3D newvector = m_matrix.transformVector(oldvector);

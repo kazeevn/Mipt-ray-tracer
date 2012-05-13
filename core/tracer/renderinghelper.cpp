@@ -19,7 +19,7 @@ void RenderingHelper::run()
     Vector3D dy = m_screen.verticalVect() / m_size.height();
     for (int i = 0; i < m_size.width(); i++)
         for (int j = 0; j < m_size.height(); j++)
-            RayPool::Instance().pushRay(new PhysicalRay(m_cameraPos, m_screen.point()+dx*i+dy*j, i, j, 1.0f));
+            RayPool::Instance().pushRay(new PhysicalRay(m_cameraPos, m_screen.point_m()+dx*i+dy*j, i, j, 1.0f));
 
     for (int i = 0; i < m_workerThreadPool.maxThreadCount(); i++)
         m_workerThreadPool.start(new WorkerObject());

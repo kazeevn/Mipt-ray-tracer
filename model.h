@@ -3,6 +3,7 @@
 #include "core/tracer/scene.h"
 #include "core/pictureobject_stub.h"
 #include <QAbstractListModel>
+#include<QItemDelegate>
 
 class SceneModel : public QAbstractListModel
 {
@@ -11,6 +12,16 @@ public:
     SceneModel(QObject *parent = 0) : QAbstractListModel(parent) {};
     int rowCount( const QModelIndex & parent = QModelIndex() ) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+};
+
+class PictureDelegate : public QItemDelegate
+{
+    Q_OBJECT
+public:
+    PictureDelegate(QObject *parent = 0);
+    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    void setEditorData(QWidget *editor, const QModelIndex &index) const {};
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const {};
 };
 
 class PictureModel : public QAbstractTableModel
@@ -23,6 +34,7 @@ public:
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
+    QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 private:
     PictureObjectStub* m_object;
 };
