@@ -6,7 +6,7 @@
 #include<QItemDelegate>
 #include<QTableView>
 #include<QGLWidget>
-
+#include<QtGlobal>
 class SceneModel : public QAbstractListModel
 {
         Q_OBJECT
@@ -15,7 +15,6 @@ public:
     int rowCount( const QModelIndex & parent = QModelIndex() ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) { return true;}
 };
 
 class PictureDelegate : public QItemDelegate
@@ -36,7 +35,7 @@ class PictureModel : public QAbstractTableModel
     Q_OBJECT
 public:
     PictureModel(PictureObjectStub* object=0, QGLWidget *widget = 0, QObject *parent = 0) : QAbstractTableModel(parent) {m_object = object; gl_widget=widget;}
-    int rowCount( const QModelIndex & parent = QModelIndex() ) const {return 4;}
+    int rowCount( const QModelIndex & parent = QModelIndex() ) const {Q_UNUSED(parent); return 4;}
     int columnCount( const QModelIndex & parent = QModelIndex() ) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;

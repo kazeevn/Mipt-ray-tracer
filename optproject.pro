@@ -25,7 +25,7 @@ SOURCES += main.cpp \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
-    model.cpp \
+    core/models/model.cpp \
     glwidget.cpp \
     core/stubs/virtual3dobject_stub.cpp \
     core/objects/physicalpolygons.cpp \
@@ -49,7 +49,7 @@ HEADERS  += mainwindow.h \
     core/objects/lensobject.h \
     core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
-    model.h \
+    core/models/model.h \
     glwidget.h \
     qtlogo.h \
     core/stubs/virtual3dobject_stub.h \
