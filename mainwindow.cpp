@@ -31,12 +31,13 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
-    QImage lensimg;
-    lensimg.load("lens.png");
+    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+    // QImage lensimg;
+    // lensimg.load("lens.png");
 
     // Test code...
-    LensObject *obj = new LensObject(Point3D(-1, 1, 0), Vector3D(2, 0, 0), Vector3D(0, -2, 0),
-                                     lensimg, lensimg, 0.5, 1.0);
+    // LensObject *obj = new LensObject(Point3D(-1, 1, 0), Vector3D(2, 0, 0), Vector3D(0, -2, 0),
+    //                                     lensimg, lensimg, 0.5, 1.0);
 
     SceneModel *scene_model=new SceneModel;
     PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView);
@@ -44,13 +45,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //QMessageBox::information(this,"dd",QString("%1").arg(model.rowCount()));
     ui->listView->setModel(scene_model);
     ui->listView->setItemDelegate(pic_delegate);
-    ui->tableView->setModel(pic_model);
-    /*Scene::Instance().startRendering(Point3D(0, 0, 0),
-                                     Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
-                                     QSize(500, 300));*/
+    ui->tableView->setModel(pic_model);    
 }
 
 void MainWindow::savePic() {
+    QGraphicsScene* out_image = new QGraphicsScene;
+    out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
+    ui->graphicsView->setScene(out_image);
     RenderedImage::Instance().image().save("result.png");
     QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
 }
@@ -58,4 +59,11 @@ void MainWindow::savePic() {
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    Scene::Instance().startRendering(Point3D(0, 0, 0),
+                                         Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
+                                         QSize(500, 300));
 }

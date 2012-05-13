@@ -13,7 +13,6 @@ RenderingHelper::RenderingHelper(const Point3D &cameraPos, const Rectangle3D &sc
 
 void RenderingHelper::run()
 {
-    RenderedImage::Instance().init(m_size);
 
     Vector3D dx = m_screen.horizontalVect() / m_size.width();
     Vector3D dy = m_screen.verticalVect() / m_size.height();
