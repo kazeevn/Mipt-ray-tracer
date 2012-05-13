@@ -17,15 +17,13 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     if (!physray)
         return;
     double dotProduct = physray->direction().dotProduct(m_perpendicular);
-
     Vector3D localPerpendicular(dotProduct > 0 ? m_perpendicular*(-1) : m_perpendicular);
     double localRefractiveIndex = (dotProduct < 0 ? refractiveIndex : 1 / refractiveIndex);
     // Проекция падающего луча на нормаль
     Vector3D projection(localPerpendicular*(dotProduct/localPerpendicular.dotProduct(localPerpendicular)));
-    projection *= dotProduct / m_perpendicular.dotProduct(m_perpendicular);
     // Направление отраженного луча
     Vector3D reflectedDirection(physray->direction() - projection*2);
-    double incidenceAngle = acos(dotProduct / m_perpendicular.length() / physray->direction().length());
+    double incidenceAngle = acos(abs(dotProduct) / m_perpendicular.length() / physray->direction().length());
     // Полное внутреннее отражение
     if (sin(incidenceAngle)/localRefractiveIndex >= 1) {
         RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
@@ -38,8 +36,9 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     Vector3D planeProjection(physray->direction() - projection);
     // Направление преломленного луча:
     Vector3D fractureDirection(projection.unit()*cos(fractureAngle));
-    if (fractureAngle > DBL_EPSILON)
+    if (fractureAngle > DBL_EPSILON) {
         fractureDirection += planeProjection.unit()*sin(fractureAngle);
+    }
     // Коэффициенты отражения и преломления для разных поляризаций
     //double sfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(fractureAngle+incidenceAngle);
     double srefl = -sin(incidenceAngle - fractureAngle) / sin(incidenceAngle + fractureAngle);
@@ -49,6 +48,7 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                 physray->startingX(), physray->startingY(),
                                                 (srefl*srefl + prefl*prefl)/2 * physray->intensity()));
+
     // Преломлённый луч
     RayPool::Instance().pushRay(new PhysicalRay(point, fractureDirection,
                                                 physray->startingX(), physray->startingY(),

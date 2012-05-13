@@ -8,6 +8,7 @@
 #include "core/stubs/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
+#include "core/tracer/physicalray.h"
 #include "model.h"
 #include "glwidget.h"
 #include "core/stubs/camerastub.h"
@@ -36,7 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Scene::Instance().createObjectsFromStubs();
 
-   //Scene::Instance().addObject("Lens", PhysicalTrianglePolygon(Point3D(55, 60, 0), Point3D(45, 40, 10), Point3D(45, 40, -10)));
+    PhysicalTrianglePolygon* poly = new PhysicalTrianglePolygon(Point3D(55, 60, 0), Point3D(45, 40, 10), Point3D(45, 40, -10));
+    PhysicalRay r(Point3D(100, 50, 0), Point3D(53, 56, 0), 0, 0, 1.0f);
+    Point3D* result = poly->intercrossWithRay(r);
+    poly->processPhysicalIntersection(r, *result, 0.7386);
+
 
     // Test code...
     // QImage lensimg;
@@ -65,7 +70,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    Scene::Instance().startRendering(Point3D(0, 0, 0),
-                                     Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
-                                     QSize(500, 300));
+    Scene::Instance().startRendering();
 }
