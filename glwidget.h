@@ -11,6 +11,7 @@
 #include "core/stubs/pictureobject_stub.h"
 #include "core/stubs/lensstab.h"
 #include "core/tracer/scene.h"
+#include "core/objects/lensobject.h"
 
 class GLWidget : public QGLWidget
 {
@@ -47,6 +48,7 @@ private:
     float speed; //Camera sensetivity
     float teta;
     float phi; //coords of camera
+     LensObject *objl; //delete
 
     //Private methods
     void drawGround( float fExtent, float fStep, float y);

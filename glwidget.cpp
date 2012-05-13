@@ -50,6 +50,11 @@ void GLWidget::initializeGL()
     glEnable (GL_BLEND); //enabling alpha
 
     glFrontFace(GL_CCW);
+
+    QImage lensimg;
+    lensimg.load("lens.png");
+     objl = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
+                                          lensimg, lensimg, 0.2, 1.1);
 }
 
 void GLWidget::paintGL()
@@ -146,6 +151,21 @@ void GLWidget::paintGL()
                     glTexCoord2f(0, 1);
                     glVertex3f( points[3].x, points[3].y, points[3].z);
               glEnd();
+
+
+            //drawing lens
+              glDisable(GL_TEXTURE_2D);
+              glColor4f(0.8,0.8,0.8,1.0);
+
+                int x, y;
+                for ( y = 0; y < objl->frontSize().height(); y ++) {
+                    glBegin(GL_TRIANGLE_STRIP);
+                    for (x = 0; x < objl->frontSize().width(); x++) {
+                        glVertex3f(objl->frontPoint(x,y).x, objl->frontPoint(x,y).y, objl->frontPoint(x,y).z);
+                        glVertex3f(objl->frontPoint(x,y+1).x, objl->frontPoint(x,y+1).y,objl->frontPoint(x,y+1).z);
+                    }
+                    glEnd();
+                }
 
         }
         //glDepthMask( GL_FALSE/TRUE) - turn off depth check for a moment
