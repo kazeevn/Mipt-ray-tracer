@@ -73,7 +73,7 @@ Point3D* PhysicalTetragonPolygon::intercrossWithRay(const Ray3D &ray)
 void PhysicalTetragonPolygon::processPhysicalIntersection(const Ray3D &ray, const Point3D &point, double refractiveIndex)
 {
     Point3D* p = m_poly1.intercrossWithRay(ray);
-    if (p) {
+    if (p && (p->dist(point) < DBL_EPSILON)) {
         delete p;
         m_poly1.processPhysicalIntersection(ray, point, refractiveIndex);
     } else
