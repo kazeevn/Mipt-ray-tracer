@@ -8,7 +8,7 @@
 #include <math.h>
 
 #include "gllight.h"
-#include "core/pictureobject_stub.h"
+#include "core/stubs/pictureobject_stub.h"
 #include "core/tracer/scene.h"
 
 class GLWidget : public QGLWidget

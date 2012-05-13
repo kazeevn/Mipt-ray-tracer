@@ -27,9 +27,9 @@ SOURCES += main.cpp \
     core/geometry/rectangle3d.cpp \
     model.cpp \
     glwidget.cpp \
-    qtlogo.cpp \
-    core/objects/virtual3dobject_stub.cpp \
-    core/objects/physicalpolygons.cpp
+    core/stubs/virtual3dobject_stub.cpp \
+    core/objects/physicalpolygons.cpp \
+    core/stubs/pictureobject_stub.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -50,7 +50,7 @@ HEADERS  += mainwindow.h \
     model.h \
     glwidget.h \
     qtlogo.h \
-    core/objects/virtual3dobject_stub.h \
-    core/pictureobject_stub.h \
+    core/stubs/virtual3dobject_stub.h \
+    core/stubs/pictureobject_stub.h \
     core/objects/physicalpolygons.h
 FORMS    += mainwindow.ui

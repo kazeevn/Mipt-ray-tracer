@@ -7,7 +7,8 @@
 class Virtual3DObjectStub : public Rectangle3D
 {
 public:
-    Virtual3DObjectStub(const Point3D& point, const Vector3D& v1, const Vector3D& v2) : Rectangle3D(point, v1, v2) {};
+    Virtual3DObjectStub(const Point3D& point, const Vector3D& v1, const Vector3D& v2) : Rectangle3D(point, v1, v2) {}
+    virtual ~Virtual3DObjectStub() {}
     const QString& name() const { return m_name; }
     void setName(const QString& name) { m_name = name; }
     QList<Point3D> getPoints();

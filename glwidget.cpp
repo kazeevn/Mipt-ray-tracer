@@ -92,7 +92,7 @@ void GLWidget::paintGL()
 
 
             //textures
-            image = convertToGLFormat(obj->getImage());
+            image = convertToGLFormat(obj->image());
             glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
                              GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
 

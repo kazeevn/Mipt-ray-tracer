@@ -5,7 +5,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
-#include "core/pictureobject_stub.h"
+#include "core/stubs/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "model.h"
@@ -49,8 +49,8 @@ void MainWindow::savePic() {
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
     ui->graphicsView->setScene(out_image);
-    RenderedImage::Instance().image().save("result.png");
-    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
+//    RenderedImage::Instance().image().save("result.png");
+//    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
 }
 
 MainWindow::~MainWindow()
