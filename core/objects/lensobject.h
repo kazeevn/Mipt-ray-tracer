@@ -7,6 +7,7 @@
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/point3d.h"
+#include "core/geometry/transformationmatrix.h"
 
 #include <QImage>
 
@@ -33,15 +34,17 @@ public:
 private:
     void triangulateSurfaces();
 
-    PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
-
     Rectangle3D m_rectangle;
+    TransformationMatrix m_matrix;
     QImage m_heightMap1, m_heightMap2;
     double m_height, m_refractiveIndex;
     Vector3D m_perpendicular;
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
     RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
     RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
+
+    QSize m_frontSize, m_backSize;
+    PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 };
 
 #endif // LENSOBJECT_H
