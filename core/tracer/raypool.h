@@ -5,6 +5,7 @@
 #include <QList>
 #include <QMutex>
 #include "core/geometry/ray3d.h"
+#include "core/tracer/physicalray.h"
 
 /* Пул лучей, откуда WorkerObject'ы достают лучи чтобы их оттрассировать
  * и куда объекты добавляют новые (в случае, если в результате взаимодействия

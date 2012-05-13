@@ -5,6 +5,8 @@
 #include "core/geometry/point3d.h"
 #include "core/geometry/plane3d.h"
 
+#include <QDebug>
+
 class TrianglePolygon : public Virtual3DObject
 {
 public:
@@ -12,6 +14,9 @@ public:
     TrianglePolygon(double x1, double y1, double z1,
                     double x2, double y2, double z2,
                     double x3, double y3, double z3);
+    const Point3D& point1() const { return p1; }
+    const Point3D& point2() const { return p2; }
+    const Point3D& point3() const { return p3; }
     Point3D *intercrossWithRay(const Ray3D &ray);
     // Just do nothing
     virtual void processIntersection(const Ray3D &ray, const Point3D &point)
@@ -34,5 +39,7 @@ private:
                                         double cx1, double cy1,
                                         double cx2, double cy2);
 };
+
+QDebug operator<<(QDebug dbg, const TrianglePolygon& p);
 
 #endif // TRIANGLEPOLYGON_H

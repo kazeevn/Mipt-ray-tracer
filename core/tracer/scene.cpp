@@ -6,6 +6,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/tracer/physicalray.h"
 #include "core/objects/pictureobject.h"
+#include "core/objects/lensobject.h"
 #include "core/stubs/pictureobject_stub.h"
 
 Scene::Scene(QObject *parent) :
@@ -41,11 +42,13 @@ void Scene::traceRay(Ray3D *ray)
     // Searching for nearest collision with any object
     Q_FOREACH(Virtual3DObject* obj, m_objects)
     {
+        point = NULL;
         PictureObject* picobj = dynamic_cast<PictureObject*>(obj);
         if (picobj)
             point = picobj->intercrossWithRay(*ray);
-        else
-            point = NULL;
+        LensObject* lensobj = dynamic_cast<LensObject*>(obj);
+        if (lensobj)
+            point = lensobj->intercrossWithRay(*ray);
         if (point != NULL) {
             double dist = point->dist(ray->point());
             if ((minpoint == NULL) || (dist < mindist)) {

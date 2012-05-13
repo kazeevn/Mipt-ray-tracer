@@ -33,21 +33,16 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
     Scene::Instance().addCamera(new CameraStub(Point3D(0, 1, 2), Vector3D(0, -5, 0), Vector3D(0, 0, -3),
                                                Point3D(4, 0, 0), QSize(500, 300)));
+    QImage lensimg;
+    lensimg.load("lens.png");
+//    LensObject *obj = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
+//                                     lensimg, lensimg, 0.2, 1.1);
 
 
     Scene::Instance().createObjectsFromStubs();
-
-    PhysicalTrianglePolygon* poly = new PhysicalTrianglePolygon(Point3D(55, 60, 0), Point3D(45, 40, 10), Point3D(45, 40, -10));
-    PhysicalRay r(Point3D(100, 50, 0), Point3D(53, 56, 0), 0, 0, 1.0f);
-    Point3D* result = poly->intercrossWithRay(r);
-    poly->processPhysicalIntersection(r, *result, 0.7386);
-
+//    Scene::Instance().addObject("Lens", obj);
 
     // Test code...
-    // QImage lensimg;
-    // lensimg.load("lens.png");
-    // LensObject *obj = new LensObject(Point3D(-1, 1, 0), Vector3D(2, 0, 0), Vector3D(0, -2, 0),
-    //                                     lensimg, lensimg, 0.5, 1.0);
 
     SceneModel *scene_model=new SceneModel;
     PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView, glWidget);

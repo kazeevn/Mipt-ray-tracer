@@ -41,7 +41,4 @@ private:
     PhysicalTrianglePolygon m_poly1, m_poly2;
 };
 
-// Отладочный шлак
-QDebug operator <<(QDebug dbg, const PhysicalTetragonPolygon& p);
-
 #endif // PHYSICALPOLYGONS_H
