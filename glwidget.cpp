@@ -149,8 +149,8 @@ void GLWidget::resizeGL(int width, int height)
 
 void GLWidget::wheelEvent(QWheelEvent *event)
 {
-    if (r - speed * 0.01 * event->delta() > 0) {
-        r -= speed * 0.01 * event->delta();
+    if (r - speed * 0.1 * event->delta() > 0) {
+        r -= speed * 0.1 * event->delta();
     };
     updateGL();
 }
