@@ -4,6 +4,7 @@
 #include <QtGui>
 #include <QtOpenGL>
 #include <QList>
+#include <QWheelEvent>
 
 #include <math.h>
 
@@ -37,6 +38,7 @@ protected:
     void resizeGL(int width, int height);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
 
 private:
     QPoint lastPos;

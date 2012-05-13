@@ -147,6 +147,14 @@ void GLWidget::resizeGL(int width, int height)
     glMatrixMode(GL_MODELVIEW);
 }
 
+void GLWidget::wheelEvent(QWheelEvent *event)
+{
+    if (speed * 0.01 * event->delta() > -100) {
+        r += speed * 0.01 * event->delta();
+    };
+    updateGL();
+}
+
 void GLWidget::mousePressEvent(QMouseEvent *event)
 {
     lastPos = event->pos();
