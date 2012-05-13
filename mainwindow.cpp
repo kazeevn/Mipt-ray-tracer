@@ -10,9 +10,9 @@
 #include "core/geometry/vector3d.h"
 #include "model.h"
 #include "glwidget.h"
+#include "core/stubs/camerastub.h"
 
 #include <QMessageBox>
-
 #include <QStandardItemModel>
 #include <QStandardItem>
 
@@ -30,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
+    Scene::Instance().addCamera(new CameraStub(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
+                                                             Point3D(0, 0, 0), QSize(500, 300)));
 
 
     Scene::Instance().createObjectsFromStubs();

@@ -10,6 +10,7 @@
 #include "core/stubs/virtual3dobject_stub.h"
 #include "core/geometry/ray3d.h"
 #include "core/tracer/renderinghelper.h"
+#include "core/stubs/camerastub.h"
 
 // Singletone object
 class Scene : public QObject
@@ -27,6 +28,7 @@ public:
     // Stub
     const QList<Virtual3DObjectStub*>& stub_objects() const {return m_stubs;}
     void addStubObject(const QString& name, Virtual3DObjectStub* object);
+    void addCamera(CameraStub* camera) {m_camera=camera;}
 
     void createObjectsFromStubs();
 signals:
@@ -39,6 +41,7 @@ private:
     QList<Virtual3DObject*> m_objects;
     // Stub
     QList<Virtual3DObjectStub*> m_stubs;
+    CameraStub* m_camera;
 };
 
 #endif // SCENE_H
