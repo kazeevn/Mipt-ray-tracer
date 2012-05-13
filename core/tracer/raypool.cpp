@@ -12,13 +12,14 @@ void RayPool::pushRay(Ray3D* ray)
 {
     QMutexLocker locker(&m_mutex);
     m_rays.append(ray);
-    m_mutex.unlock();
 }
 
 Ray3D* RayPool::popRay()
 {
     QMutexLocker locker(&m_mutex);
-    if (m_rays.isEmpty())
+    if (m_rays.isEmpty()) {
+        emit exhausted();
         return NULL;
+    }
     return m_rays.takeFirst();
 }

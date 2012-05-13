@@ -29,7 +29,9 @@ SOURCES += main.cpp \
     glwidget.cpp \
     core/stubs/virtual3dobject_stub.cpp \
     core/objects/physicalpolygons.cpp \
-    core/stubs/pictureobject_stub.cpp
+    core/stubs/pictureobject_stub.cpp \
+    core/stubs/camerastub.cpp \
+    core/models/cameramodel.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -52,5 +54,7 @@ HEADERS  += mainwindow.h \
     qtlogo.h \
     core/stubs/virtual3dobject_stub.h \
     core/stubs/pictureobject_stub.h \
-    core/objects/physicalpolygons.h
+    core/objects/physicalpolygons.h \
+    core/stubs/camerastub.h \
+    core/models/cameramodel.h
 FORMS    += mainwindow.ui

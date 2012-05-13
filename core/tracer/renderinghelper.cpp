@@ -17,7 +17,6 @@ RenderingHelper::~RenderingHelper()
 
 void RenderingHelper::run()
 {
-
     Vector3D dx = m_screen.horizontalVect() / m_size.width();
     Vector3D dy = m_screen.verticalVect() / m_size.height();
     for (int i = 0; i < m_size.width(); i++)

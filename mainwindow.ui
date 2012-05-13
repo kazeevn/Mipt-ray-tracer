@@ -31,7 +31,7 @@
        <attribute name="title">
         <string>Edit</string>
        </attribute>
-       <widget class="QWidget" name="formLayoutWidget">
+       <widget class="QWidget" name="horizontalLayoutWidget">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -44,12 +44,18 @@
          <property name="fieldGrowthPolicy">
           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
          </property>
+<<<<<<< HEAD
          <property name="horizontalSpacing">
           <number>3</number>
          </property>
          <property name="verticalSpacing">
           <number>3</number>
          </property>
+=======
+         <item row="8" column="0">
+          <widget class="QTableView" name="tableView"/>
+         </item>
+>>>>>>> 337e691a014fe4b4535f7ba9139c28da3f198d55
          <item row="7" column="0">
           <widget class="QListView" name="listView">
            <property name="sizePolicy">
