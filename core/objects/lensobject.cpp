@@ -113,7 +113,7 @@ double LensObject::getFrontHeight(int i, int j)
     if (i == 0 || i == m_frontSize.width() || j == 0 || j == m_frontSize.height())
         return 0;
     else
-        return QColor(m_heightMap1.pixel(i-1, j-1)).blackF() / 255 * m_height;
+        return (QColor(m_heightMap1.pixel(i-1, j-1)).blackF()+1) / 255 * m_height;
 }
 
 double LensObject::getBackHeight(int i, int j)
@@ -121,7 +121,7 @@ double LensObject::getBackHeight(int i, int j)
     if (i == 0 || i == m_backSize.width() || j == 0 || j == m_backSize.height())
         return 0;
     else
-        return QColor(m_heightMap2.pixel(i-1, j-1)).blackF() / 255 * m_height;
+        return (QColor(m_heightMap2.pixel(i-1, j-1)).blackF()+1) / 255 * m_height;
 }
 
 void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
@@ -138,7 +138,7 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 if ((coordx+i >= 0) && (coordx+i < m_frontSize.width()) && \
-                        (coordy+j >= 0) && (coordy < m_frontSize.height())) {
+                        (coordy+j >= 0) && (coordy+j < m_frontSize.height())) {
                     helper = m_frontPolygons[coordx+i][coordy+j]->intercrossWithRay(ray);
                     if (helper) {
                         delete helper;

@@ -43,3 +43,9 @@ Point3D* TrianglePolygon::intercrossWithRay(const Ray3D &ray)
         return NULL;
     }
 }
+
+QDebug operator <<(QDebug dbg, const TrianglePolygon& p)
+{
+    dbg.nospace() << p.point1() << p.point2() << p.point3();
+    return dbg.space();
+}
