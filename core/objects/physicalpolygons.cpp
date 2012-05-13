@@ -65,7 +65,6 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
 PhysicalTetragonPolygon::PhysicalTetragonPolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4)
     : m_poly1(p1, p2, p4), m_poly2(p2, p3, p4)
 {
-    qDebug() << "CREATING POLYGON" << p1 << p2 << p3 << p4;
 }
 
 Point3D* PhysicalTetragonPolygon::intercrossWithRay(const Ray3D &ray)
