@@ -5,7 +5,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
-#include "core/pictureobject_stub.h"
+#include "core/stubs/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "model.h"
@@ -31,7 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
-    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+    Scene::Instance().createObjectsFromStubs();
+    //Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     // QImage lensimg;
     // lensimg.load("lens.png");
 
@@ -52,8 +53,8 @@ void MainWindow::savePic() {
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
     ui->graphicsView->setScene(out_image);
-    RenderedImage::Instance().image().save("result.png");
-    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
+//    RenderedImage::Instance().image().save("result.png");
+//    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
 }
 
 MainWindow::~MainWindow()

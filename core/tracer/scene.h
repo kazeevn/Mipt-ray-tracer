@@ -7,7 +7,7 @@
 #include <QSize>
 #include <QThreadPool>
 #include "core/objects/virtual3dobject.h"
-#include "core/objects/virtual3dobject_stub.h"
+#include "core/stubs/virtual3dobject_stub.h"
 #include "core/geometry/ray3d.h"
 #include "core/tracer/renderinghelper.h"
 
@@ -25,8 +25,10 @@ public:
     void startRendering(const Point3D& cameraPos, const Rectangle3D& screen, const QSize& picsize);
     const QList<Virtual3DObject*>& objects() const {return m_objects;}
     // Stub
-    const QList<Virtual3DObjectStub*>& stub_objects() const {return user_objects;}
-    void addStubObject(const QString& name, Virtual3DObjectStub* object) {object->setName(name); user_objects.append(object);}
+    const QList<Virtual3DObjectStub*>& stub_objects() const {return m_stubs;}
+    void addStubObject(const QString& name, Virtual3DObjectStub* object);
+
+    void createObjectsFromStubs();
 signals:
     void renderingFinished();
 private:
@@ -36,7 +38,7 @@ private:
     RenderingHelper* m_renderingHelper;
     QList<Virtual3DObject*> m_objects;
     // Stub
-    QList<Virtual3DObjectStub*> user_objects;
+    QList<Virtual3DObjectStub*> m_stubs;
 };
 
 #endif // SCENE_H
