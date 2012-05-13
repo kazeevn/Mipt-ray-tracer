@@ -6,6 +6,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/tracer/physicalray.h"
 #include "core/objects/pictureobject.h"
+#include "core/stubs/pictureobject_stub.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -24,6 +25,12 @@ void Scene::addObject(const QString& name, Virtual3DObject *object)
 {
     object->setName(name);
     m_objects.append(object);
+}
+
+void Scene::addStubObject(const QString &name, Virtual3DObjectStub *object)
+{
+    object->setName(name);
+    m_stubs.append(object);
 }
 
 void Scene::traceRay(Ray3D *ray)
@@ -65,4 +72,15 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
     m_renderingHelper = new RenderingHelper(cameraPos, screen, picsize);
     connect(m_renderingHelper, SIGNAL(renderingFinished()), this, SIGNAL(renderingFinished()));
     QThreadPool::globalInstance()->start(m_renderingHelper);
+}
+
+
+void Scene::createObjectsFromStubs()
+{
+    Q_FOREACH(Virtual3DObjectStub* obj, m_stubs)
+    {
+        PictureObjectStub *pstub = dynamic_cast<PictureObjectStub*>(obj);
+        if (!pstub)
+            addObject(pstub->name(), new PictureObject(pstub->point(), pstub->horizontalVect(), pstub->verticalVect(), pstub->image()));
+    }
 }

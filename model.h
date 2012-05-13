@@ -1,7 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 #include "core/tracer/scene.h"
-#include "core/pictureobject_stub.h"
+#include "core/stubs/pictureobject_stub.h"
 #include <QAbstractListModel>
 #include<QItemDelegate>
 #include<QTableView>

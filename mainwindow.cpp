@@ -5,7 +5,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
-#include "core/pictureobject_stub.h"
+#include "core/stubs/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "model.h"
