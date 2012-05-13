@@ -18,9 +18,12 @@ public:
 
     Vector3D unit() const;
 
+    Vector3D operator- (const Vector3D& v) const;
     Vector3D operator* (const double mult) const;
     Vector3D operator/ (const double mult) const;
+    Vector3D& operator*=(const double mult);
     Vector3D& operator/=(const double mult);
+    Vector3D& operator+=(const Vector3D& v);
     double x, y, z;
     double& operator[](const int i);
 };

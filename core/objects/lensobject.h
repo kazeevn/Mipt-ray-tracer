@@ -3,6 +3,7 @@
 
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/rectanglepolygon.h"
+#include "core/objects/physicaltrianglepolygon.h"
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/point3d.h"
@@ -27,7 +28,13 @@ public:
 
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const Ray3D &ray, const Point3D &point);
+
+    void setRefractiveIndex(double refractiveIndex);
 private:
+    void triangulateSurfaces();
+
+    PhysicalTrianglePolygon ****m_frontPolygons, ****m_backPolygons;
+
     Rectangle3D m_rectangle;
     QImage m_heightMap1, m_heightMap2;
     double m_height, m_refractiveIndex;

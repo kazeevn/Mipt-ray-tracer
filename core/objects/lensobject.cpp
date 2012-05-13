@@ -20,6 +20,31 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
     /* TODO: вот тут-то нам нужно побить поверхность на полигоны. */
 }
 
+void LensObject::triangulateSurfaces()
+{
+    m_frontPolygons = new PhysicalTrianglePolygon***[m_heightMap1.size().width()];
+    for (int i = 0; i < m_heightMap1.size().width(); i++) {
+        m_frontPolygons[i] = new PhysicalTrianglePolygon**[m_heightMap1.size().height()];
+        for (int j = 0; j < m_heightMap1.size().height(); j++) {
+            m_frontPolygons[i][j] = new PhysicalTrianglePolygon*[2];
+            //TODO: координатки полигонов...
+            //m_frontPolygons[i][j][0] = new PhysicalTrianglePolygon(
+            //m_frontPolygons[i][j][1] = new PhysicalTrianglePolygon(
+        }
+    }
+
+    m_backPolygons = new PhysicalTrianglePolygon***[m_heightMap2.size().width()];
+    for (int i = 0; i < m_heightMap2.size().width(); i++) {
+        m_backPolygons[i] = new PhysicalTrianglePolygon**[m_heightMap2.size().height()];
+        for (int j = 0; j < m_heightMap2.size().height(); j++) {
+            m_backPolygons[i][j] = new PhysicalTrianglePolygon*[2];
+            //TODO: координатки полигонов...
+            //m_frontPolygons[i][j][0] = new PhysicalTrianglePolygon(
+            //m_frontPolygons[i][j][1] = new PhysicalTrianglePolygon(
+        }
+    }
+}
+
 Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
 {
     Point3D* p1 = 0;
@@ -52,6 +77,7 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
         delete p2;
         back = true;
     }
+
     // TODO: do something
     return NULL;
 }
@@ -60,4 +86,9 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
 {
     Q_UNUSED(ray)
     Q_UNUSED(point)
+}
+
+void LensObject::setRefractiveIndex(double refractiveIndex)
+{
+    m_refractiveIndex = refractiveIndex;
 }
