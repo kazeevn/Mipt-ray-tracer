@@ -1,6 +1,7 @@
 #include "lensobject.h"
 
 #include <QColor>
+#include <QDebug>
 
 LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, double height, double refractiveIndex)
     : m_rectangle(point, v1, v2), m_matrix(v1, v2, v1.crossProduct(v2).unit()),
@@ -23,6 +24,8 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
       m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1)
 {
+    qDebug() << "LENS CONSTRUCTOR";
+    qDebug() << "Front polygon" << m_frontPolygon.rectangle().point().x;
     triangulateSurfaces();
 }
 
@@ -112,7 +115,7 @@ double LensObject::getFrontHeight(int i, int j)
     if (i == 0 || i == m_frontSize.width() || j == 0 || j == m_frontSize.height())
         return 0;
     else
-        return QColor(m_heightMap1.pixel(i-1, j-1)).black() / 255 * m_height;
+        return QColor(m_heightMap1.pixel(i-1, j-1)).blackF() / 255 * m_height;
 }
 
 double LensObject::getBackHeight(int i, int j)
@@ -120,7 +123,7 @@ double LensObject::getBackHeight(int i, int j)
     if (i == 0 || i == m_backSize.width() || j == 0 || j == m_backSize.height())
         return 0;
     else
-        return QColor(m_heightMap2.pixel(i-1, j-1)).black() / 255 * m_height;
+        return QColor(m_heightMap2.pixel(i-1, j-1)).blackF() / 255 * m_height;
 }
 
 void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)

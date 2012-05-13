@@ -23,7 +23,7 @@ public:
         Q_UNUSED(ray)
         Q_UNUSED(point)
     }
-    const Rectangle3D& getRectangle() const {return m_rectangle;}
+    const Rectangle3D& rectangle() const {return m_rectangle;}
 protected:
     Rectangle3D m_rectangle;
     /* Прямоугольный полигон для удобства бьётся на два треугольных
