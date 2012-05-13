@@ -8,7 +8,7 @@
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    r = 3.0;
+    r = 10.0;
     speed = 0.2;
     teta = 30.0;
     phi = 45.0;
@@ -35,7 +35,7 @@ void GLWidget::initializeGL()
 {
     glClearColor( 0.0, 0.0, 0.0, 1.0); // Select backgroung color
 
-    glEnable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
     glEnable(GL_COLOR_MATERIAL);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LINE_STIPPLE);
@@ -64,7 +64,7 @@ void GLWidget::paintGL()
 
     rotateCamera();
 
-    drawGround( 1.0f, 0.1f, 0);
+    drawGround( 10.0f, 1.0f, 0);
 
     //Using stack of matrix
     glPushMatrix();
@@ -96,7 +96,7 @@ void GLWidget::paintGL()
             glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
                              GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
 
-
+    //qDebug() << points;
           glBegin( GL_QUADS);
                 //Draw normals for lighting TODO
                 //glNormal3f( x, y ,z);
@@ -149,7 +149,7 @@ void GLWidget::resizeGL(int width, int height)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(30.0f, width/height, 0.1, 10.0);
+    gluPerspective(30.0f, width/height, 0.1, 100.0);
 
     glMatrixMode(GL_MODELVIEW);
 }
@@ -222,62 +222,62 @@ void GLWidget::drawGround( float fExtent, float fStep, float y)
         glBegin(GL_LINES);
             //Red - x;
             glColor3f( 1.0, 0.0, 0.0);
-            glVertex3f( -1.0, 0.0, 0.0);
-            glVertex3f( 1.0, 0.0, 0.0);
+            glVertex3f( -10.0, 0.0, 0.0);
+            glVertex3f( 10.0, 0.0, 0.0);
             //Green - y
             glColor3f( 0.0, 1.0, 0.0);
-            glVertex3f( 0.0, -0.5, 0.0);
-            glVertex3f( 0.0, 0.5, 0.0);
+            glVertex3f( 0.0, -5, 0.0);
+            glVertex3f( 0.0, 5, 0.0);
             //Blue - z
             glColor3f( 0.0, 0.0, 1.0);
-            glVertex3f( 0.0, 0.0, -1.0);
-            glVertex3f( 0.0, 0.0, 1.0);
+            glVertex3f( 0.0, 0.0, -10.0);
+            glVertex3f( 0.0, 0.0, 10.0);
         glEnd();
 
         //Draw arrows
         glPushMatrix();
             glColor3f( 1.0, 0.0, 0.0);
-            glTranslatef(1.0,0.0,0.0);
+            glTranslatef(10.0,0.0,0.0);
             glRotatef( 90.0 , 0.0, 1.0, 0.0);
             glBegin(GL_TRIANGLE_FAN);
-                glVertex3f(0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(-0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(0.01, -0.01, 0.0);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
+                glVertex3f(0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(-0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(0.1, -0.1, 0.0);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
             glEnd();
         glPopMatrix();
         glPushMatrix();
             glColor3f( 0.0, 1.0, 0.0);
-            glTranslatef(0.0,0.5,0.0);
+            glTranslatef(0.0,5,0.0);
             glRotatef( -90.0 , 1.0, 0.0, 0.0);
             glBegin(GL_TRIANGLE_FAN);
-                glVertex3f(0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(-0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(0.01, -0.01, 0.0);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
+                glVertex3f(0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(-0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(0.1, -0.1, 0.0);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
             glEnd();
         glPopMatrix();
         glPushMatrix();
             glColor3f( 0.0, 0.0, 1.0);
-            glTranslatef(0.0,0.0,1.0);
+            glTranslatef(0.0,0.0,10.0);
             glRotatef( 90.0 , 0.0, 0.0, 1.0);
             glBegin(GL_TRIANGLE_FAN);
-            glVertex3f(0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(-0.01, 0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
-                glVertex3f(0.01, -0.01, 0.0);
-                glVertex3f(-0.01, -0.01, 0.0);
-                glVertex3f(0.0, 0.0, 0.03);
+                glVertex3f(0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(-0.1, 0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
+                glVertex3f(0.1, -0.1, 0.0);
+                glVertex3f(-0.1, -0.1, 0.0);
+                glVertex3f(0.0, 0.0, 0.3);
             glEnd();
         glPopMatrix();
 
