@@ -42,6 +42,7 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
             m_object->v2()[index.column()]=value.toDouble();
             break;
     }
+        gl_widget->updateGL();
         return true;
     }
     return false;
@@ -109,6 +110,7 @@ void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
 void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     delete m_parent->model();
-    m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()]));
+    m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()], gl_widget));
     m_parent->resizeRowsToContents();
+    m_parent->resizeColumnsToContents();
 }
