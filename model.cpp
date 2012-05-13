@@ -74,7 +74,7 @@ QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int 
 {
     if (role != Qt::DisplayRole)
         return QVariant();
-    if (orientation==Qt::Horizontal) {
+    if (orientation==Qt::Vertical) {
         switch (section) {
         case 0:
             return "Point";
@@ -83,7 +83,7 @@ QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int 
         case 2:
             return "VVector";
         }
-    } else if (orientation==Qt::Vertical){
+    } else if (orientation==Qt::Horizontal){
         switch (section) {
         case 0:
             return "x";
