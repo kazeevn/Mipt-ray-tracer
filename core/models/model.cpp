@@ -2,6 +2,7 @@
 #include "core/models/lensmodel.h"
 #include <QTableView>
 #include <QtGlobal>
+
 #include <typeinfo>
 
 int SceneModel::rowCount(const QModelIndex &parent) const {
@@ -114,7 +115,6 @@ void Virtual3DObjectDelegate::setModelData(QWidget *editor, QAbstractItemModel *
     Q_UNUSED(editor);
     Q_UNUSED(model);
     Q_UNUSED(index);
-    Scene::Instance().stub_objects()[index.row()]->deselect();
 }
 
 void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -133,5 +133,5 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
 
     m_parent->resizeRowsToContents();
     m_parent->resizeColumnsToContents();
-    Scene::Instance().stub_objects()[index.row()]->select();
+
 }
