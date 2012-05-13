@@ -22,41 +22,41 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_backBottomPolygon(point+v2, m_perpendicular*(-1), v1),
 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
-      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1)
+      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1),
+
+      m_frontdx(v1 / m_frontSize.width()), m_frontdy(v2 / m_frontSize.height()), m_frontdz(m_perpendicular.unit()),
+      m_backdx(v1 / m_backSize.width()), m_backdy(v2 / m_backSize.height()), m_backdz(m_perpendicular.unit()*(-1))
+
 {
     triangulateSurfaces();
 }
 
+Point3D LensObject::frontPoint(int i, int j)
+{
+    return m_rectangle.point()+m_frontdx*i+m_frontdy*j+m_frontdz*getFrontHeight(i, j);
+}
+
+Point3D LensObject::backPoint(int i, int j)
+{
+    return m_rectangle.point()+m_backdx*i+m_backdy*j+m_backdz*getBackHeight(i, j);
+}
+
 void LensObject::triangulateSurfaces()
 {
-    Vector3D frontdx(m_rectangle.horizontalVect() / m_frontSize.width());
-    Vector3D frontdy(m_rectangle.verticalVect() / m_frontSize.height());
-    Vector3D frontdz(m_perpendicular.unit());
     m_frontPolygons = new PhysicalTetragonPolygon**[m_frontSize.width()];
     for (int i = 0; i < m_frontSize.width(); i++) {
         m_frontPolygons[i] = new PhysicalTetragonPolygon*[m_frontSize.height()];
-        for (int j = 0; j < m_frontSize.height(); j++) {
-            Point3D curpoint = m_rectangle.point() + frontdx*i + frontdy*j;
-            m_frontPolygons[i][j] = new PhysicalTetragonPolygon(curpoint+frontdz*getFrontHeight(i, j),
-                                                                curpoint+frontdx+frontdz*getFrontHeight(i+1, j),
-                                                                curpoint+frontdx+frontdy+frontdz*getFrontHeight(i+1, j+1),
-                                                                curpoint+frontdy+frontdz*getFrontHeight(i, j+1));
-        }
+        for (int j = 0; j < m_frontSize.height(); j++)
+            m_frontPolygons[i][j] = new PhysicalTetragonPolygon(frontPoint(i, j), frontPoint(i+1, j),
+                                                                frontPoint(i+1, j+1), frontPoint(i, j+1));
     }
 
-    Vector3D backdx(m_rectangle.horizontalVect() / m_backSize.width());
-    Vector3D backdy(m_rectangle.verticalVect() / m_backSize.height());
-    Vector3D backdz(m_perpendicular.unit()*(-1));
     m_backPolygons = new PhysicalTetragonPolygon**[m_heightMap2.size().width()];
     for (int i = 0; i < m_backSize.width(); i++) {
         m_backPolygons[i] = new PhysicalTetragonPolygon*[m_heightMap2.size().height()];
-        for (int j = 0; j < m_backSize.height(); j++) {
-            Point3D curpoint = m_rectangle.point() + backdx*i + backdy*j;
-            m_backPolygons[i][j] = new PhysicalTetragonPolygon(curpoint+backdz*getBackHeight(i, j),
-                                                               curpoint+backdx+backdz*getBackHeight(i+1, j),
-                                                               curpoint+backdx+backdy+backdz*getBackHeight(i+1, j+1),
-                                                               curpoint+backdy+backdz*getBackHeight(i, j+1));
-        }
+        for (int j = 0; j < m_backSize.height(); j++)
+            m_backPolygons[i][j] = new PhysicalTetragonPolygon(backPoint(i, j), backPoint(i+1, j),
+                                                               backPoint(i+1, j+1), backPoint(i+1, j));
     }
 }
 

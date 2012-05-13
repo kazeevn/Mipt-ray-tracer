@@ -31,6 +31,11 @@ public:
     void processIntersection(const Ray3D &ray, const Point3D &point);
 
     void setRefractiveIndex(double refractiveIndex);
+
+    Point3D frontPoint(int i, int j);
+    Point3D backPoint(int i, int j);
+    const QSize& frontSize() { return m_frontSize; }
+    const QSize& backSize() { return m_backSize; }
 private:
     double getFrontHeight(int i, int j);
     double getBackHeight(int i, int j);
@@ -45,8 +50,10 @@ private:
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
     RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
     RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
+
     // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
     QSize m_frontSize, m_backSize;
+    Vector3D m_frontdx, m_frontdy, m_frontdz, m_backdx, m_backdy, m_backdz;
     PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 };
 
