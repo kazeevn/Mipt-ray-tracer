@@ -1,6 +1,8 @@
 #include "core/models/model.h"
+#include "core/models/lensmodel.h"
 #include <QTableView>
 #include <QtGlobal>
+#include <typeinfo>
 
 int SceneModel::rowCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
@@ -100,14 +102,14 @@ QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int 
     return QVariant();
 }
 
-QWidget* PictureDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget* Virtual3DObjectDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     Q_UNUSED(option);
     Q_UNUSED(index);
     return new QWidget(parent);
 }
 
-void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+void Virtual3DObjectDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
     Q_UNUSED(editor);
     Q_UNUSED(model);
@@ -115,11 +117,20 @@ void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
     Scene::Instance().stub_objects()[index.row()]->deselect();
 }
 
-void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
+void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
     Q_UNUSED(editor);
     delete m_parent->model();
-    m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()], gl_widget));
+    PictureObjectStub* picture = dynamic_cast<PictureObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (picture != NULL)
+        m_parent->setModel(new PictureModel(picture, gl_widget));
+    else {
+        LenseObjectStub* lense = dynamic_cast<LenseObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+        if (lense!=NULL)
+            m_parent->setModel(new LenseModel(lense, gl_widget));
+        // TODO(kazeevn) What about an exception?
+    }
+
     m_parent->resizeRowsToContents();
     m_parent->resizeColumnsToContents();
     Scene::Instance().stub_objects()[index.row()]->select();

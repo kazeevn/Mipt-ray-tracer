@@ -12,7 +12,7 @@
 #include "core/models/cameramodel.h"
 
 #include "core/stubs/camerastub.h"
-#include "core/stubs/lensstab.h"
+#include "core/stubs/lensobjectstub.h"
 
 #include "glwidget.h"
 
@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
 
-    Scene::Instance().addStubObject("GoogleLens", new LensStab(Point3D(2, 2, 2), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image, 1.23));
+    Scene::Instance().addStubObject("GoogleLens", new LenseObjectStub(Point3D(2, 2, 2), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image, image, 0.4, 1.23));
 
 //    QImage lensimg;
 //    lensimg.load("lens.png");
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SceneModel *scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
-    PictureDelegate *pic_delegate = new PictureDelegate(tableView, glWidget);
+    Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(tableView, glWidget);
     listView->setModel(scene_model);
     listView->setItemDelegate(pic_delegate);
     tableViewCamera->setModel(camera_model);
