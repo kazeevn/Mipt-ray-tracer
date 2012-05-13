@@ -31,7 +31,8 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
-    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+    Scene::Instance().createObjectsFromStubs();
+    //Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     // QImage lensimg;
     // lensimg.load("lens.png");
 

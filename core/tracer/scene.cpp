@@ -77,10 +77,13 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
 
 void Scene::createObjectsFromStubs()
 {
+    qDeleteAll(m_objects);
+    m_objects.clear();
+
     Q_FOREACH(Virtual3DObjectStub* obj, m_stubs)
     {
         PictureObjectStub *pstub = dynamic_cast<PictureObjectStub*>(obj);
-        if (!pstub)
+        if (pstub)
             addObject(pstub->name(), new PictureObject(pstub->point(), pstub->horizontalVect(), pstub->verticalVect(), pstub->image()));
     }
 }
