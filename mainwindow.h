@@ -21,7 +21,6 @@ public slots:
     void savePic();
 private slots:
     void on_pushButton_2_clicked();
-    void on_actionAbout_triggered();
 };
 
 #endif // MAINWINDOW_H
