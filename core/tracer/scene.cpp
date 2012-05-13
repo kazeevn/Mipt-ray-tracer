@@ -75,6 +75,11 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
     QThreadPool::globalInstance()->start(m_renderingHelper);
 }
 
+void Scene::startRendering()
+{
+    startRendering(m_camera->point(), *m_camera, m_camera->size());
+}
+
 
 void Scene::createObjectsFromStubs()
 {

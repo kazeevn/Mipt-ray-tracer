@@ -24,6 +24,7 @@ public:
     void addObject(const QString& name, Virtual3DObject* object);
     void traceRay(Ray3D *ray);
     void startRendering(const Point3D& cameraPos, const Rectangle3D& screen, const QSize& picsize);
+    void startRendering();
     const QList<Virtual3DObject*>& objects() const {return m_objects;}
     // Stub
     const QList<Virtual3DObjectStub*>& stub_objects() const {return m_stubs;}
