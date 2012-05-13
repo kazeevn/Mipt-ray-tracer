@@ -36,8 +36,8 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>1061</width>
-          <height>521</height>
+          <width>471</width>
+          <height>392</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout">
@@ -70,10 +70,10 @@
        <widget class="QPushButton" name="pushButton_2">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>30</y>
-          <width>97</width>
-          <height>27</height>
+          <x>10</x>
+          <y>10</y>
+          <width>101</width>
+          <height>91</height>
          </rect>
         </property>
         <property name="text">
@@ -83,10 +83,10 @@
        <widget class="QGraphicsView" name="graphicsView">
         <property name="geometry">
          <rect>
-          <x>360</x>
-          <y>20</y>
-          <width>901</width>
-          <height>731</height>
+          <x>120</x>
+          <y>10</y>
+          <width>951</width>
+          <height>521</height>
          </rect>
         </property>
        </widget>
@@ -113,7 +113,19 @@
      <height>25</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>About</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
+   <addaction name="menuAbout"/>
   </widget>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
