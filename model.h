@@ -10,11 +10,11 @@ class SceneModel : public QAbstractListModel
 {
         Q_OBJECT
 public:
-    SceneModel(QObject *parent = 0) : QAbstractListModel(parent) {};
+    SceneModel(QObject *parent = 0) : QAbstractListModel(parent) {}
     int rowCount( const QModelIndex & parent = QModelIndex() ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) {return true;}
+    bool setData(const QModelIndex &index, const QVariant &value, int role) { return true;}
 };
 
 class PictureDelegate : public QItemDelegate

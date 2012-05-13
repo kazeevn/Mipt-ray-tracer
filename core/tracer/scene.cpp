@@ -70,6 +70,7 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
     RenderedImage::Instance().init(picsize);
     if (m_renderingHelper) delete m_renderingHelper;
     m_renderingHelper = new RenderingHelper(cameraPos, screen, picsize);
+    m_renderingHelper->setAutoDelete(false);
     connect(m_renderingHelper, SIGNAL(renderingFinished()), this, SIGNAL(renderingFinished()));
     QThreadPool::globalInstance()->start(m_renderingHelper);
 }
