@@ -35,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QGridLayout* editor_layout = new QGridLayout;
 
     ui->tabWidget->widget(0)->setLayout(editor_layout);
+    //ui->tabWidget->activateWindow(0);
     editor_layout->addWidget(tableView,0,0);
     editor_layout->addWidget(listView,1,0);
     editor_layout->addWidget(tableViewCamera,2,0);
