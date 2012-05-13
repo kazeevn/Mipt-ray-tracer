@@ -57,9 +57,5 @@ HEADERS  += mainwindow.h \
     core/objects/physicalpolygons.h \
     core/stubs/camerastub.h \
     core/models/cameramodel.h \
-<<<<<<< HEAD
-    core/stubs/lensobjectstub.h
-=======
     core/stubs/lensstab.h
->>>>>>> 4b18255d264a9a9614667ef9813a8d3bf0da379b
 FORMS    += mainwindow.ui
