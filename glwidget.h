@@ -7,7 +7,6 @@
 
 #include <math.h>
 
-#include "gllight.h"
 #include "core/stubs/pictureobject_stub.h"
 #include "core/tracer/scene.h"
 
@@ -41,9 +40,6 @@ protected:
 
 private:
     QPoint lastPos;
-    QColor qtGreen;
-    QColor qtPurple;
-    vector<glLight> lights;
     float r; //Radius of camera
     float speed; //Camera sensetivity
     float teta;
