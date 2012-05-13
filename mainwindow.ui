@@ -25,7 +25,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="edit">
        <attribute name="title">
@@ -36,7 +36,7 @@
        <attribute name="title">
         <string>Render</string>
        </attribute>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="renderButton">
         <property name="geometry">
          <rect>
           <x>10</x>

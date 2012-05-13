@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QTableView* tableViewCamera = new QTableView;
     QGridLayout* editor_layout = new QGridLayout;
 
-    ui->tabWidget->setLayout(editor_layout);
+    ui->tabWidget->widget(0)->setLayout(editor_layout);
     editor_layout->addWidget(tableView,0,0);
     editor_layout->addWidget(listView,1,0);
     editor_layout->addWidget(tableViewCamera,2,0);
@@ -81,7 +81,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_renderButton_clicked()
 {
     Scene::Instance().startRendering();
 }
