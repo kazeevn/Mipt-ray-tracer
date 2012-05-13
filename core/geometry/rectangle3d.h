@@ -1,8 +1,12 @@
 #ifndef RECTANGLE3D_H
 #define RECTANGLE3D_H
 
+#include <QDebug>
+
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
+
+class QDebug;
 
 class Rectangle3D
 {
@@ -23,5 +27,7 @@ private:
     Vector3D m_v1;
     Vector3D m_v2;
 };
+
+QDebug operator<<(QDebug dbg, const Rectangle3D& r);
 
 #endif // RECTANGLE3D_H

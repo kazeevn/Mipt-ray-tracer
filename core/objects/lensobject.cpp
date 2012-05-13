@@ -1,6 +1,7 @@
 #include "lensobject.h"
 
 #include <QColor>
+#include <QDebug>
 
 LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, double height, double refractiveIndex)
     : m_rectangle(point, v1, v2), m_matrix(v1, v2, v1.crossProduct(v2).unit()),
@@ -28,8 +29,8 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
 
 void LensObject::triangulateSurfaces()
 {
-    Vector3D frontdx(m_rectangle.horizontalVect() / (m_frontSize.width()-1));
-    Vector3D frontdy(m_rectangle.verticalVect() / (m_frontSize.height()-1));
+    Vector3D frontdx(m_rectangle.horizontalVect() / m_frontSize.width());
+    Vector3D frontdy(m_rectangle.verticalVect() / m_frontSize.height());
     Vector3D frontdz(m_perpendicular.unit());
     m_frontPolygons = new PhysicalTetragonPolygon**[m_frontSize.width()];
     for (int i = 0; i < m_frontSize.width(); i++) {
@@ -43,8 +44,8 @@ void LensObject::triangulateSurfaces()
         }
     }
 
-    Vector3D backdx(m_rectangle.horizontalVect() / (m_backSize.width()-1));
-    Vector3D backdy(m_rectangle.verticalVect() / (m_backSize.height()-1));
+    Vector3D backdx(m_rectangle.horizontalVect() / m_backSize.width());
+    Vector3D backdy(m_rectangle.verticalVect() / m_backSize.height());
     Vector3D backdz(m_perpendicular.unit()*(-1));
     m_backPolygons = new PhysicalTetragonPolygon**[m_heightMap2.size().width()];
     for (int i = 0; i < m_backSize.width(); i++) {
@@ -52,9 +53,9 @@ void LensObject::triangulateSurfaces()
         for (int j = 0; j < m_backSize.height(); j++) {
             Point3D curpoint = m_rectangle.point() + backdx*i + backdy*j;
             m_backPolygons[i][j] = new PhysicalTetragonPolygon(curpoint+backdz*getBackHeight(i, j),
-                                                                curpoint+backdx+backdz*getBackHeight(i+1, j),
-                                                                curpoint+backdx+backdy+backdz*getBackHeight(i+1, j+1),
-                                                                curpoint+backdy+backdz*getBackHeight(i, j+1));
+                                                               curpoint+backdx+backdz*getBackHeight(i+1, j),
+                                                               curpoint+backdx+backdy+backdz*getBackHeight(i+1, j+1),
+                                                               curpoint+backdy+backdz*getBackHeight(i, j+1));
         }
     }
 }
@@ -112,7 +113,7 @@ double LensObject::getFrontHeight(int i, int j)
     if (i == 0 || i == m_frontSize.width() || j == 0 || j == m_frontSize.height())
         return 0;
     else
-        return QColor(m_heightMap1.pixel(i-1, j-1)).black() / 255 * m_height;
+        return QColor(m_heightMap1.pixel(i-1, j-1)).blackF() / 255 * m_height;
 }
 
 double LensObject::getBackHeight(int i, int j)
@@ -120,7 +121,7 @@ double LensObject::getBackHeight(int i, int j)
     if (i == 0 || i == m_backSize.width() || j == 0 || j == m_backSize.height())
         return 0;
     else
-        return QColor(m_heightMap2.pixel(i-1, j-1)).black() / 255 * m_height;
+        return QColor(m_heightMap2.pixel(i-1, j-1)).blackF() / 255 * m_height;
 }
 
 void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)

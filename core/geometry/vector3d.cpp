@@ -89,3 +89,9 @@ Vector3D& Vector3D::operator +=(const Vector3D& v)
     z += v.z;
     return *this;
 }
+
+QDebug operator <<(QDebug dbg, const Vector3D& v)
+{
+    dbg.nospace() << "Vector(" << v.x << ", " << v.y << ", " << v.z << ")";
+    return dbg.space();
+}

@@ -8,6 +8,8 @@
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/trianglepolygon.h"
 
+#include <QDebug>
+
 class RectanglePolygon : public Virtual3DObject
 {
 public:
@@ -23,7 +25,7 @@ public:
         Q_UNUSED(ray)
         Q_UNUSED(point)
     }
-    const Rectangle3D& getRectangle() const {return m_rectangle;}
+    const Rectangle3D& rectangle() const {return m_rectangle;}
 protected:
     Rectangle3D m_rectangle;
     /* Прямоугольный полигон для удобства бьётся на два треугольных
@@ -33,5 +35,7 @@ protected:
     /* Матрица перехода к локальному базису прямоугольника */
     TransformationMatrix m_matrix;
 };
+
+QDebug operator<<(QDebug dbg, const RectanglePolygon& p);
 
 #endif // RECTANGLEPOLYGON_H

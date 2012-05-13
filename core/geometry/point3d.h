@@ -1,6 +1,8 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
+#include <QDebug>
+
 class Vector3D;
 
 class Point3D
@@ -14,5 +16,7 @@ public:
     double x, y, z;
     double& operator[](const int i);
 };
+
+QDebug operator<<(QDebug dbg, const Point3D& p);
 
 #endif // POINT3D_H

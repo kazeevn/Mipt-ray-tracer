@@ -4,6 +4,7 @@
 #include "core/tracer/scene.h"
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
+#include "core/objects/lensobject.h"
 #include "core/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
@@ -29,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent) :
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+
+    QImage lensimg;
+    lensimg.load("lens.png");
+
+    // Test code...
+    LensObject *obj = new LensObject(Point3D(-1, 1, 0), Vector3D(2, 0, 0), Vector3D(0, -2, 0),
+                                     lensimg, lensimg, 0.5, 1.0);
 
     SceneModel *scene_model=new SceneModel;
     PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView);

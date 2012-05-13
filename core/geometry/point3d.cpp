@@ -1,7 +1,7 @@
 #include "point3d.h"
 
 #include "core/geometry/vector3d.h"
- #include <QtGlobal>
+#include <QtGlobal>
 #include <cmath>
 
 Point3D::Point3D(double x, double y, double z)
@@ -41,4 +41,10 @@ double& Point3D::operator [](int i) {
         return z;
         break;
     }
+}
+
+QDebug operator <<(QDebug dbg, const Point3D& p)
+{
+    dbg.nospace() << "Point(" << p.x << ", " << p.y << ", " << p.z << ")";
+    return dbg.space();
 }
