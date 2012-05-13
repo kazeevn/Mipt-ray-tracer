@@ -3,7 +3,7 @@
 
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/rectanglepolygon.h"
-#include "core/objects/physicaltrianglepolygon.h"
+#include "core/objects/physicalpolygons.h"
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/point3d.h"
@@ -33,7 +33,7 @@ public:
 private:
     void triangulateSurfaces();
 
-    PhysicalTrianglePolygon ****m_frontPolygons, ****m_backPolygons;
+    PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 
     Rectangle3D m_rectangle;
     QImage m_heightMap1, m_heightMap2;
