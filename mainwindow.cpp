@@ -12,14 +12,14 @@
 #include "core/models/cameramodel.h"
 
 #include "core/stubs/camerastub.h"
-
-#include "glwidget.h"
+#include "core/stubs/lensobjectstub.h"
 
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QStandardItem>
 #include <QTableView>
 #include <QGridLayout>
+ #include <QItemSelectionModel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,7 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
-    GLWidget* glWidget = new GLWidget;
+    glWidget = new GLWidget;
     QTableView* tableView = new QTableView;
     QListView* listView = new QListView;
     QTableView* tableViewCamera = new QTableView;
@@ -46,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent) :
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
+
+    Scene::Instance().addStubObject("GoogleLens", new LenseObjectStub(Point3D(2, 2, 2), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image, image, 0.4, 1.23));
+
 //    QImage lensimg;
 //    lensimg.load("lens.png");
 //    LensObject *obj = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
@@ -53,6 +56,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 //    Scene::Instance().addObject("Lens", obj);
+
     Scene::Instance().addCamera(new CameraStub(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
                                                              Point3D(5, 0, 0), QSize(500, 300)));
     Scene::Instance().createObjectsFromStubs();
@@ -63,12 +67,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SceneModel *scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
-    PictureDelegate *pic_delegate = new PictureDelegate(tableView, glWidget);
+    Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(tableView, glWidget);
     listView->setModel(scene_model);
     listView->setItemDelegate(pic_delegate);
+    QItemSelectionModel *selectionModel = listView->selectionModel();
+    connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
+            this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
+
     tableViewCamera->setModel(camera_model);
     tableViewCamera->resizeRowsToContents();
     tableViewCamera->resizeColumnsToContents();
+}
+
+void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
+{
+    foreach(const QModelIndex& index, newSelection.indexes())
+        Scene::Instance().stub_objects()[index.row()]->select();
+    foreach(const QModelIndex& index, oldSelection.indexes())
+        Scene::Instance().stub_objects()[index.row()]->deselect();
+    glWidget->updateGL();
 }
 
 void MainWindow::savePic() {

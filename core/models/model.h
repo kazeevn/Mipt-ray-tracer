@@ -17,11 +17,11 @@ public:
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
 };
 
-class PictureDelegate : public QItemDelegate
+class Virtual3DObjectDelegate : public QItemDelegate
 {
     Q_OBJECT
 public:
-    PictureDelegate(QObject *parent = 0, QGLWidget *draw_me=0) {m_parent=(QTableView*)parent; gl_widget=draw_me;}
+    Virtual3DObjectDelegate(QObject *parent = 0, QGLWidget *draw_me=0) {m_parent=(QTableView*)parent; gl_widget=draw_me;}
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
     void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
@@ -35,7 +35,7 @@ class PictureModel : public QAbstractTableModel
     Q_OBJECT
 public:
     PictureModel(PictureObjectStub* object=0, QGLWidget *widget = 0, QObject *parent = 0) : QAbstractTableModel(parent) {m_object = object; gl_widget=widget;}
-    int rowCount( const QModelIndex & parent = QModelIndex() ) const {Q_UNUSED(parent); return 4;}
+    int rowCount( const QModelIndex & parent = QModelIndex() ) const {Q_UNUSED(parent); return 3;}
     int columnCount( const QModelIndex & parent = QModelIndex() ) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;

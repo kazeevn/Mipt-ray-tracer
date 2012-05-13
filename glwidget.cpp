@@ -54,8 +54,7 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    int i;
-    PictureObjectStub* obj;
+    int i, type;
     QList<Point3D> points;
     QImage image;
 
@@ -63,17 +62,12 @@ void GLWidget::paintGL()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     rotateCamera();
-
     drawGround( 10.0f, 1.0f, 0);
 
     //Using stack of matrix
     glPushMatrix();
 
         //Draw all objects
-
-        float specref[] = { 0.8, 0.8, 0.8};
-        glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, specref);
-        glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, 20); //0..128 - reflection
 
         glEnable(GL_TEXTURE_2D);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -84,37 +78,81 @@ void GLWidget::paintGL()
         //colors of glObject are replaced by texture. other - GL_REPLACE - combination
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
-        glColor4f( 1.0, 1.0, 1.0, 1.0);
+
         for( i = 0; i < Scene::Instance().stub_objects().size(); i++)
         {
-            obj = (PictureObjectStub*)Scene::Instance().stub_objects()[i];
-            points = obj->getPoints();
 
+            //checking type of object - lense or picture
+            LensStab* n = dynamic_cast<LensStab*>(Scene::Instance().stub_objects()[i]);
+            if (n)
+            {
+                type = 1; // Lense
+            } else {
+                type = 0; // Picture
+            }
 
-            //textures
-            image = convertToGLFormat(obj->image());
-            glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
-                             GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+            float refl;
+            int shine;
 
-    //qDebug() << points;
-          glBegin( GL_QUADS);
-                //Draw normals for lighting TODO
-                //glNormal3f( x, y ,z);
-                glTexCoord2f(0, 0);
-                glVertex3f( points[0].x, points[0].y, points[0].z);
-                glTexCoord2f(1, 0);
-                glVertex3f( points[1].x, points[1].y, points[1].z);
-                glTexCoord2f(1, 1);
-                glVertex3f( points[2].x, points[2].y, points[2].z);
-                glTexCoord2f(0, 1);
-                glVertex3f( points[3].x, points[3].y, points[3].z);
-            glEnd();
+            if (type == 0)
+            {
+                glEnable(GL_TEXTURE_2D);
+                shine = 10;
+                refl = 0.5;
+                //textures
+                PictureObjectStub* picobj = (PictureObjectStub*)Scene::Instance().stub_objects()[i];
+                image = convertToGLFormat(picobj->image());
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
+                                 GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+
+                if (Scene::Instance().stub_objects()[i]->selected())
+                {
+                    glColor4f( 0.1, 0.1, 1.0, 1.0);
+                } else {
+                    glColor4f( 1.0, 1.0, 1.0, 1.0);
+                }
+            }
+
+            if (type == 1)
+            {
+                glDisable(GL_TEXTURE_2D);
+                shine = 128;
+                refl = 1.0;
+
+                if (Scene::Instance().stub_objects()[i]->selected())
+                {
+                    glColor4f( 0.1, 0.1, 1.0, 0.5);
+                } else {
+                    glColor4f( 1.0, 1.0, 1.0, 0.5);
+                }
+            }
+
+            float specref[] = { refl, refl, refl};
+            glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, specref);
+            glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, shine); //0..128 - reflection
+
+            points = Scene::Instance().stub_objects()[i]->getPoints();
+            //qDebug() << points;
+            //Drawing pictures
+              glBegin( GL_QUADS);
+                    //Draw normals for lighting TODO
+                    //glNormal3f( x, y ,z);
+                    glTexCoord2f(0, 0);
+                    glVertex3f( points[0].x, points[0].y, points[0].z);
+                    glTexCoord2f(1, 0);
+                    glVertex3f( points[1].x, points[1].y, points[1].z);
+                    glTexCoord2f(1, 1);
+                    glVertex3f( points[2].x, points[2].y, points[2].z);
+                    glTexCoord2f(0, 1);
+                    glVertex3f( points[3].x, points[3].y, points[3].z);
+              glEnd();
+
         }
-
-        drawCamera();
         //glDepthMask( GL_FALSE/TRUE) - turn off depth check for a moment
 
     glPopMatrix();
+
+    drawCamera();
     //clear drawing command stack
     swapBuffers();
 }
