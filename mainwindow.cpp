@@ -18,6 +18,8 @@
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QTableView>
+#include <QGridLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,7 +29,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
     GLWidget* glWidget = new GLWidget;
-    ui->formLayout->addWidget(glWidget);
+    QTableView* tableView = new QTableView;
+    QListView* listView = new QListView;
+    QTableView* tableViewCamera = new QTableView;
+    QGridLayout* editor_layout = new QGridLayout;
+
+    ui->tabWidget->widget(0)->setLayout(editor_layout);
+    editor_layout->addWidget(tableView,0,0);
+    editor_layout->addWidget(listView,1,0);
+    editor_layout->addWidget(tableViewCamera,2,0);
+    editor_layout->addWidget(glWidget,0,1,3,1);
+    editor_layout->setColumnStretch(1,1);
 
     QImage image;
     image.load("google.png");
@@ -47,10 +59,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     SceneModel *scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
-    PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView, glWidget);
-    ui->listView->setModel(scene_model);
-    ui->listView->setItemDelegate(pic_delegate);
-    ui->tableViewCamera->setModel(camera_model);
+    PictureDelegate *pic_delegate = new PictureDelegate(tableView, glWidget);
+    listView->setModel(scene_model);
+    listView->setItemDelegate(pic_delegate);
+    tableViewCamera->setModel(camera_model);
+    tableViewCamera->resizeRowsToContents();
+    tableViewCamera->resizeColumnsToContents();
 }
 
 void MainWindow::savePic() {
@@ -63,12 +77,11 @@ void MainWindow::savePic() {
 
 MainWindow::~MainWindow()
 {
+    // TODO(kazeevn) properly destroy everything
     delete ui;
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_renderButton_clicked()
 {
-    Scene::Instance().startRendering(Point3D(-1, -1, -1),
-                                     Rectangle3D(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3)),
-                                     QSize(500, 300));
+    Scene::Instance().startRendering();
 }
