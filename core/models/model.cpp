@@ -112,6 +112,7 @@ void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, c
     Q_UNUSED(editor);
     Q_UNUSED(model);
     Q_UNUSED(index);
+    Scene::Instance().stub_objects()[index.row()]->deselect();
 }
 
 void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
@@ -121,4 +122,5 @@ void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) c
     m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()], gl_widget));
     m_parent->resizeRowsToContents();
     m_parent->resizeColumnsToContents();
+    Scene::Instance().stub_objects()[index.row()]->select();
 }
