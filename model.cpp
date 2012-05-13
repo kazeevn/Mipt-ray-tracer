@@ -30,13 +30,6 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 int PictureModel::columnCount(const QModelIndex &parent) const {
     return 3;
-    if (0 <= parent.row() && parent.row() <= 2)
-        return 3;
-    else if (parent.row()==4)
-        return 1;
-    else
-        return 0;
-
 };
 
 QVariant PictureModel::data(const QModelIndex &index, int role) const {
