@@ -22,7 +22,18 @@ Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
 };
 
 bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    if (index.isValid() && role == Qt::EditRole) {
+    if (index.isValid() && role == Qt::EditRole && index.column()<3) {
+        switch (index.row()) {
+        case 0:
+            m_object->point()[index.column()]=value.toDouble();
+            break;
+        case 1:
+            m_object->v1()[index.column()]=value.toDouble();
+            break;
+        case 2:
+            m_object->v2()[index.column()]=value.toDouble();
+            break;
+    }
         return true;
     }
     return false;
