@@ -24,14 +24,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
     GLWidget* glWidget = new GLWidget;
-    ui->formLayout->addWidget(glWidget);
+    ui->horizontalLayout_2->addWidget(glWidget);
 
     QImage image;
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
-    Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+    Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
 
-    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
+    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -6, 0), Vector3D(0, 0, -1), image));
     // QImage lensimg;
     // lensimg.load("lens.png");
 
@@ -40,12 +40,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //                                     lensimg, lensimg, 0.5, 1.0);
 
     SceneModel *scene_model=new SceneModel;
-    PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView);
-    PictureModel *pic_model=new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[0]);
-    //QMessageBox::information(this,"dd",QString("%1").arg(model.rowCount()));
+    PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView, glWidget);
     ui->listView->setModel(scene_model);
-    ui->listView->setItemDelegate(pic_delegate);
-    ui->tableView->setModel(pic_model);    
+    ui->listView->setItemDelegate(pic_delegate);   
 }
 
 void MainWindow::savePic() {
