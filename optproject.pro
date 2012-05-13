@@ -27,7 +27,6 @@ SOURCES += main.cpp \
     core/geometry/rectangle3d.cpp \
     model.cpp \
     glwidget.cpp \
-    qtlogo.cpp \
     core/stubs/virtual3dobject_stub.cpp \
     core/objects/physicalpolygons.cpp \
     core/stubs/pictureobject_stub.cpp

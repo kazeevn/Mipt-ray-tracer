@@ -52,8 +52,8 @@ void MainWindow::savePic() {
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
     ui->graphicsView->setScene(out_image);
-    RenderedImage::Instance().image().save("result.png");
-    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
+//    RenderedImage::Instance().image().save("result.png");
+//    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
 }
 
 MainWindow::~MainWindow()
