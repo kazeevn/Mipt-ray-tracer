@@ -80,6 +80,7 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
 
 void Scene::startRendering()
 {
+    qDebug() << m_camera->summit();
     startRendering(m_camera->summit(), *m_camera, m_camera->size());
 }
 
