@@ -1,5 +1,5 @@
 #include "model.h"
-
+#include<QTableView>
 
 int SceneModel::rowCount(const QModelIndex &parent) const {
     return Scene::Instance().stub_objects().length();
@@ -25,7 +25,7 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
     if (index.isValid() && role == Qt::EditRole && index.column()<3) {
         switch (index.row()) {
         case 0:
-            m_object->point()[index.column()]=value.toDouble();
+            m_object->point_m()[index.column()]=value.toDouble();
             break;
         case 1:
             m_object->v1()[index.column()]=value.toDouble();
@@ -44,9 +44,10 @@ int PictureModel::columnCount(const QModelIndex &parent) const {
 };
 
 QVariant PictureModel::data(const QModelIndex &index, int role) const {
+    if (role == Qt::DisplayRole) {
     switch (index.row()){
     case 0:
-        return m_object->point()[index.column()];
+        return m_object->point_m()[index.column()];
         break;
     case 1:
        return m_object->v1()[index.column()];
@@ -57,4 +58,44 @@ QVariant PictureModel::data(const QModelIndex &index, int role) const {
     default:
         return QVariant();
     }
+    } else
+        return QVariant();
 }
+
+QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int role) const
+{
+    if (role != Qt::DisplayRole)
+        return QVariant();
+    if (orientation==Qt::Horizontal) {
+        switch (section) {
+        case 0:
+            return "Point";
+        case 1:
+            return "HVector";
+        case 2:
+            return "VVector";
+        }
+    } else if (orientation==Qt::Vertical){
+        switch (section) {
+        case 0:
+            return "x";
+        case 1:
+            return "y";
+        case 2:
+            return "z";
+        }
+    }
+
+}
+
+QWidget* PictureDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+{
+    QTableView* editor = new QTableView(parent);
+    return editor;
+}
+/*
+void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
+{
+ //   editor->setModel(new PictureModel(Scene::Instance().stub_objects())
+}
+*/

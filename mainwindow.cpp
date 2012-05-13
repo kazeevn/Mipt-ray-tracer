@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage image;
     image.load("google.png");
+    Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
     SceneModel *scene_model=new SceneModel;
