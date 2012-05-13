@@ -1,7 +1,9 @@
-#include "model.h"
-#include<QTableView>
+#include "core/models/model.h"
+#include <QTableView>
+#include <QtGlobal>
 
 int SceneModel::rowCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent);
     return Scene::Instance().stub_objects().length();
 };
 
@@ -29,7 +31,7 @@ Qt::ItemFlags SceneModel::flags(const QModelIndex &index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 };
 
-bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int role) {    
     if (index.isValid() && role == Qt::EditRole && index.column()<3) {
         switch (index.row()) {
         case 0:
@@ -49,6 +51,7 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
 };
 
 int PictureModel::columnCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent);
     return 3;
 };
 
@@ -99,16 +102,21 @@ QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int 
 
 QWidget* PictureDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
+    Q_UNUSED(option);
+    Q_UNUSED(index);
     return new QWidget(parent);
 }
 
 void PictureDelegate::setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const
 {
-
+    Q_UNUSED(editor);
+    Q_UNUSED(model);
+    Q_UNUSED(index);
 }
 
 void PictureDelegate::setEditorData(QWidget *editor, const QModelIndex &index) const
 {
+    Q_UNUSED(editor);
     delete m_parent->model();
     m_parent->setModel(new PictureModel((PictureObjectStub*)Scene::Instance().stub_objects()[index.row()], gl_widget));
     m_parent->resizeRowsToContents();

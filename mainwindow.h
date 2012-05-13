@@ -20,7 +20,7 @@ private:
 public slots:
     void savePic();
 private slots:
-    void on_pushButton_2_clicked();
+    void on_renderButton_clicked();
 };
 
 #endif // MAINWINDOW_H

@@ -25,14 +25,14 @@ SOURCES += main.cpp \
     core/objects/lensobject.cpp \
     core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
-    model.cpp \
+    core/models/model.cpp \
     glwidget.cpp \
     core/stubs/virtual3dobject_stub.cpp \
     core/objects/physicalpolygons.cpp \
     core/stubs/pictureobject_stub.cpp \
     core/stubs/camerastub.cpp \
     core/models/cameramodel.cpp \
-    core/stubs/lensobjectstub.cpp
+    core/stubs/lensstab.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -50,13 +50,16 @@ HEADERS  += mainwindow.h \
     core/objects/lensobject.h \
     core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
-    model.h \
+    core/models/model.h \
     glwidget.h \
-    qtlogo.h \
     core/stubs/virtual3dobject_stub.h \
     core/stubs/pictureobject_stub.h \
     core/objects/physicalpolygons.h \
     core/stubs/camerastub.h \
     core/models/cameramodel.h \
+<<<<<<< HEAD
     core/stubs/lensobjectstub.h
+=======
+    core/stubs/lensstab.h
+>>>>>>> 4b18255d264a9a9614667ef9813a8d3bf0da379b
 FORMS    += mainwindow.ui

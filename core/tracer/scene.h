@@ -29,6 +29,7 @@ public:
     // Stub
     const QList<Virtual3DObjectStub*>& stub_objects() const {return m_stubs;}
     void addStubObject(const QString& name, Virtual3DObjectStub* object);
+    CameraStub* camera() {return m_camera;}
     void addCamera(CameraStub* camera) {m_camera=camera;}
 
     void createObjectsFromStubs();

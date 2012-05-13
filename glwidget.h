@@ -4,6 +4,7 @@
 #include <QtGui>
 #include <QtOpenGL>
 #include <QList>
+#include <QWheelEvent>
 
 #include <math.h>
 
@@ -37,6 +38,7 @@ protected:
     void resizeGL(int width, int height);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
 
 private:
     QPoint lastPos;
@@ -47,6 +49,7 @@ private:
 
     //Private methods
     void drawGround( float fExtent, float fStep, float y);
+    void drawCamera();
     void gluPerspective(double fovy,double aspect, double zNear, double zFar);
     void rotateCamera();
 };
