@@ -51,7 +51,6 @@ HEADERS  += mainwindow.h \
     core/geometry/rectangle3d.h \
     core/models/model.h \
     glwidget.h \
-    qtlogo.h \
     core/stubs/virtual3dobject_stub.h \
     core/stubs/pictureobject_stub.h \
     core/objects/physicalpolygons.h \

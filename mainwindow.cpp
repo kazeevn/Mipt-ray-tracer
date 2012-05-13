@@ -9,8 +9,11 @@
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "core/models/model.h"
-#include "glwidget.h"
+#include "core/models/cameramodel.h"
+
 #include "core/stubs/camerastub.h"
+
+#include "glwidget.h"
 
 #include <QMessageBox>
 #include <QStandardItemModel>
@@ -43,9 +46,11 @@ MainWindow::MainWindow(QWidget *parent) :
     //                                     lensimg, lensimg, 0.5, 1.0);
 
     SceneModel *scene_model=new SceneModel;
+    CameraModel *camera_model = new CameraModel(glWidget);
     PictureDelegate *pic_delegate = new PictureDelegate(ui->tableView, glWidget);
     ui->listView->setModel(scene_model);
-    ui->listView->setItemDelegate(pic_delegate);   
+    ui->listView->setItemDelegate(pic_delegate);
+    ui->tableViewCamera->setModel(camera_model);
 }
 
 void MainWindow::savePic() {

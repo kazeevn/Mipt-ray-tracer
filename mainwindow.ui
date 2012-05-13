@@ -44,10 +44,10 @@
          <property name="fieldGrowthPolicy">
           <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
          </property>
-         <item row="8" column="0">
+         <item row="9" column="0">
           <widget class="QTableView" name="tableView"/>
          </item>
-         <item row="7" column="0">
+         <item row="8" column="0">
           <widget class="QListView" name="listView">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -56,6 +56,9 @@
             </sizepolicy>
            </property>
           </widget>
+         </item>
+         <item row="7" column="0">
+          <widget class="QTableView" name="tableViewCamera"/>
          </item>
         </layout>
        </widget>

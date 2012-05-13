@@ -3,10 +3,10 @@
 #include "core/tracer/scene.h"
 #include "core/stubs/pictureobject_stub.h"
 #include <QAbstractListModel>
-#include<QItemDelegate>
-#include<QTableView>
-#include<QGLWidget>
-#include<QtGlobal>
+#include <QItemDelegate>
+#include <QTableView>
+#include <QGLWidget>
+#include <QtGlobal>
 class SceneModel : public QAbstractListModel
 {
         Q_OBJECT
@@ -45,6 +45,5 @@ private:
     PictureObjectStub* m_object;
     QGLWidget* gl_widget;
 };
-
 
 #endif // MODEL_H
