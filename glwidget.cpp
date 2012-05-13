@@ -1,8 +1,9 @@
 #include "glwidget.h"
+//#include <QDebug>
 
-#ifndef GL_MULTISAMPLE
-#define GL_MULTISAMPLE  0x809D
-#endif
+//#ifndef GL_MULTISAMPLE
+//#define GL_MULTISAMPLE  0x809D
+//#endif
 
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
@@ -99,7 +100,6 @@ void GLWidget::paintGL()
           glBegin( GL_QUADS);
                 //Draw normals for lighting TODO
                 //glNormal3f( x, y ,z);
-
                 glTexCoord2f(0, 0);
                 glVertex3f( points[0].x, points[0].y, points[0].z);
                 glTexCoord2f(1, 0);
