@@ -20,6 +20,8 @@ public:
 
     void pushRay(Ray3D* ray);
     Ray3D* popRay();
+signals:
+    void exhausted();
 private:
     RayPool(QObject *parent = 0);
     QList<Ray3D*> m_rays;

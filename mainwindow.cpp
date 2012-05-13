@@ -32,11 +32,12 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
 
     Scene::Instance().createObjectsFromStubs();
-    //Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
-    // QImage lensimg;
-    // lensimg.load("lens.png");
+
+   //Scene::Instance().addObject("Lens", PhysicalTrianglePolygon(Point3D(55, 60, 0), Point3D(45, 40, 10), Point3D(45, 40, -10)));
 
     // Test code...
+    // QImage lensimg;
+    // lensimg.load("lens.png");
     // LensObject *obj = new LensObject(Point3D(-1, 1, 0), Vector3D(2, 0, 0), Vector3D(0, -2, 0),
     //                                     lensimg, lensimg, 0.5, 1.0);
 
@@ -54,7 +55,7 @@ void MainWindow::savePic() {
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
     ui->graphicsView->setScene(out_image);
 //    RenderedImage::Instance().image().save("result.png");
-//    QMessageBox::information(this, "Rendering finished", "Saved result to 'result.png'");
+    QMessageBox::information(this, "No one gives a fuck", "Rendering finished");
 }
 
 MainWindow::~MainWindow()
