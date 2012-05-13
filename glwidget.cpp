@@ -111,14 +111,7 @@ void GLWidget::paintGL()
             glEnd();
         }
 
-/*
-        vector<glLight>::iterator itl;
-        for(itl = lights.begin(); itl != lights.end(); ++itl)
-        {
-            (*itl).draw( i);
-            i++;
-        }
-*/
+        drawCamera();
         //glDepthMask( GL_FALSE/TRUE) - turn off depth check for a moment
 
     glPopMatrix();
@@ -283,5 +276,54 @@ void GLWidget::drawGround( float fExtent, float fStep, float y)
 
     glPopAttrib();
 
+    glPopMatrix();
+}
+
+void GLWidget::drawCamera()
+{
+    Point3D p1 = Scene::Instance().camera()->point() + Scene::Instance().camera()->horizontalVect();
+    Point3D p2 = Scene::Instance().camera()->point() + Scene::Instance().camera()->verticalVect();
+    Point3D p3 = Scene::Instance().camera()->point() + Scene::Instance().camera()->horizontalVect()
+                                                      + Scene::Instance().camera()->verticalVect();
+    glMatrixMode(GL_MODELVIEW);
+    glPushMatrix();
+        glBegin(GL_TRIANGLES);
+            glColor4f(0.9, 0.9, 0.7, 1.0);
+            glVertex3d(Scene::Instance().camera()->summit().x,
+                       Scene::Instance().camera()->summit().y,
+                       Scene::Instance().camera()->summit().z);
+            glColor4f(0.9, 0.9, 0.7, 0.3);
+            glVertex3d(Scene::Instance().camera()->point().x,
+                       Scene::Instance().camera()->point().y,
+                       Scene::Instance().camera()->point().z);
+            glVertex3d(p1.x, p1.y, p1.z);
+
+            glColor4f(0.85, 0.85, 0.7, 1.0);
+            glVertex3d(Scene::Instance().camera()->summit().x,
+                       Scene::Instance().camera()->summit().y,
+                       Scene::Instance().camera()->summit().z);
+            glColor4f(0.85, 0.85, 0.7, 0.3);
+            glVertex3d(p1.x, p1.y, p1.z);
+            glVertex3d(p3.x, p3.y, p3.z);
+
+            glColor4f(0.9, 0.9, 0.7, 1.0);
+            glVertex3d(Scene::Instance().camera()->summit().x,
+                       Scene::Instance().camera()->summit().y,
+                       Scene::Instance().camera()->summit().z);
+            glColor4f(0.9, 0.9, 0.7, 0.3);
+            glVertex3d(p2.x, p2.y, p2.z);
+            glVertex3d(p3.x, p3.y, p3.z);
+
+            glColor4f(0.85, 0.85, 0.7, 1.0);
+            glVertex3d(Scene::Instance().camera()->summit().x,
+                       Scene::Instance().camera()->summit().y,
+                       Scene::Instance().camera()->summit().z);
+            glColor4f(0.8, 0.8, 0.7, 0.3);
+            glVertex3d(Scene::Instance().camera()->point().x,
+                       Scene::Instance().camera()->point().y,
+                       Scene::Instance().camera()->point().z);
+            glVertex3d(p2.x, p2.y, p2.z);
+
+        glEnd();
     glPopMatrix();
 }

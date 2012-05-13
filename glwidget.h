@@ -47,6 +47,7 @@ private:
 
     //Private methods
     void drawGround( float fExtent, float fStep, float y);
+    void drawCamera();
     void gluPerspective(double fovy,double aspect, double zNear, double zFar);
     void rotateCamera();
 };
