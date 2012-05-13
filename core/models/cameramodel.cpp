@@ -55,8 +55,14 @@ QVariant CameraModel::data(const QModelIndex &index, int role) const {
     case 3:
         return Scene::Instance().camera()->summit()[index.column()];
     case 4:
-        return Scene::Instance().camera()->size();
-
+        switch (index.column()) {
+        case 0:
+            return QVariant(Scene::Instance().camera()->size().width());
+        case 1:
+            return Scene::Instance().camera()->size().height();
+        default:
+            return QVariant();
+        }
     default:
         return QVariant();
     }
