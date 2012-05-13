@@ -24,14 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
     GLWidget* glWidget = new GLWidget;
-    ui->horizontalLayout_2->addWidget(glWidget);
+    ui->formLayout->addWidget(glWidget);
 
     QImage image;
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
 
-    Scene::Instance().addObject("pewpewpew", new PictureObject(Point3D(1, 4, 1), Vector3D(0, -6, 0), Vector3D(0, 0, -1), image));
+
+    Scene::Instance().createObjectsFromStubs();
     // QImage lensimg;
     // lensimg.load("lens.png");
 
