@@ -1,9 +1,15 @@
 #ifndef GLWIDGET_H
 #define GLWIDGET_H
 
- #include <QGLWidget>
+#include <QtGui>
+#include <QtOpenGL>
+#include <QList>
 
-class QtLogo;
+#include <math.h>
+
+#include "gllight.h"
+#include "core/pictureobject_stub.h"
+#include "core/tracer/scene.h"
 
 class GLWidget : public QGLWidget
 {
@@ -16,7 +22,7 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
-public slots:
+/*
     void setXRotation(int angle);
     void setYRotation(int angle);
     void setZRotation(int angle);
@@ -25,7 +31,7 @@ signals:
     void xRotationChanged(int angle);
     void yRotationChanged(int angle);
     void zRotationChanged(int angle);
-
+*/
 protected:
     void initializeGL();
     void paintGL();
@@ -34,14 +40,19 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
 
 private:
-    QtLogo *logo;
-    int xRot;
-    int yRot;
-    int zRot;
     QPoint lastPos;
     QColor qtGreen;
     QColor qtPurple;
+    vector<glLight> lights;
+    float r; //Radius of camera
+    float speed; //Camera sensetivity
+    float teta;
+    float phi; //coords of camera
 
+    //Private methods
+    void drawGround( float fExtent, float fStep, float y);
+    void gluPerspective(double fovy,double aspect, double zNear, double zFar);
+    void rotateCamera();
 };
 
 #endif // GLWIDGET_H
