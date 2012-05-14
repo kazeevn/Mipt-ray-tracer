@@ -23,10 +23,9 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     Vector3D projection(localPerpendicular*(dotProduct/localPerpendicular.dotProduct(localPerpendicular)));
     // Направление отраженного луча
     Vector3D reflectedDirection(physray->direction() - projection*2);
-    double incidenceAngle = acos(abs(dotProduct) / m_perpendicular.length() / physray->direction().length());
+    double incidenceAngle = acos(-dotProduct / m_perpendicular.length() / physray->direction().length());
     // Полное внутреннее отражение
     if (sin(incidenceAngle)/localRefractiveIndex >= 1) {
-        qDebug() << "TOTAL INTERNAL REFLECTION";
         RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                     physray->startingX(), physray->startingY(), physray->intensity()));
         return;
@@ -46,10 +45,6 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     //double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
     double prefl = tan(incidenceAngle-fractureAngle) / tan(incidenceAngle+fractureAngle);
 
-    qDebug() << "POLYGON" << *this;
-    qDebug() << "RAY" << ray.direction();
-    qDebug() << "PROCESS" << point << "incidence angle:" << incidenceAngle*180/3.1415926535 << "fracture angle:" << fractureAngle*180/3.1415926535;
-
     // Отраженный луч
     RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                 physray->startingX(), physray->startingY(),
@@ -65,7 +60,7 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
 PhysicalTetragonPolygon::PhysicalTetragonPolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4)
     : m_poly1(p1, p2, p4), m_poly2(p2, p3, p4)
 {
-    qDebug() << "created polygon" << p1 << p2 << p3 << p4;
+    //qDebug() << "created polygon" << p1 << p2 << p3 << p4;
 }
 
 Point3D* PhysicalTetragonPolygon::intercrossWithRay(const Ray3D &ray)

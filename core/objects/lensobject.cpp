@@ -4,7 +4,7 @@
 #include <QDebug>
 
 LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, double height, double refractiveIndex)
-    : m_rectangle(point, v1, v2), m_matrix(v1, v2, v1.crossProduct(v2).unit()),
+    : m_rectangle(point, v1, v2), m_matrix(v1, v2, v2.crossProduct(v1).unit()),
       m_heightMap1(heightMap1), m_heightMap2(heightMap2),
       m_height(height), m_refractiveIndex(refractiveIndex),
       m_perpendicular(v2.crossProduct(v1).unit()*height),
@@ -24,6 +24,26 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
 
 {
     triangulateSurfaces();
+}
+
+double LensObject::getFrontHeight(int i, int j)
+{
+    double value = 0;
+    if ((i > 0) && (i < m_frontSize.width()) && (j > 0) && (j < m_frontSize.height())) {
+        QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
+        value = c.blackF()+0.01;
+    }
+    return value * m_height;
+}
+
+double LensObject::getBackHeight(int i, int j)
+{
+    double value = 0;
+    if ((i > 0) && (i < m_backSize.width()) && (j > 0) && (j < m_backSize.height())) {
+        QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
+        value = c.blackF()+0.01;
+    }
+    return value * m_height;
 }
 
 Point3D LensObject::frontPoint(int i, int j)
@@ -93,27 +113,6 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     return minpoint;
 }
 
-double LensObject::getFrontHeight(int i, int j)
-{
-    double value = 0;
-    if ((i > 0) && (i < m_frontSize.width()) && (j > 0) && (j < m_frontSize.height())) {
-        QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
-        value = c.blackF()+0.01;
-    }
-    return value * m_height;
-}
-
-double LensObject::getBackHeight(int i, int j)
-{
-    double value = 0;
-    if ((i > 0) && (i < m_backSize.width()) && (j > 0) && (j < m_backSize.height())) {
-        QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
-        value = c.blackF()+0.01;
-    }
-    return value * m_height;
-
-}
-
 void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
 {
     Q_UNUSED(ray);
@@ -142,7 +141,7 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 if ((coordx+i >= 0) && (coordx+i < m_backSize.width()) && \
-                        (coordy+j >= 0) && (coordy < m_backSize.height())) {
+                        (coordy+j >= 0) && (coordy+j < m_backSize.height())) {
                     helper = m_backPolygons[coordx+i][coordy+j]->intercrossWithRay(ray);
                     if (helper) {
                         delete helper;
