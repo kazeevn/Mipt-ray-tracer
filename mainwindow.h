@@ -28,6 +28,9 @@ public slots:
     void showPic();
     void doRender();
     void savePic();
+
+    void saveScene();
+    void loadScene();
 private slots:
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
     void removeRow();

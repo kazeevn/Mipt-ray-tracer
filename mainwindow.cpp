@@ -99,9 +99,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::doRender()
 {
-    Scene::Instance().saveStubsToFile("stubs.scene");
-    Scene::Instance().loadStubsFromFile("stubs.scene");
-
     Scene::Instance().createObjectsFromStubs();
     Scene::Instance().startRendering();
 }
@@ -124,4 +121,21 @@ void MainWindow::savePic()
         QMessageBox::information(this, "Give it yourself, Igor!", QString("Saved image to '%1'").arg(fileName));
     else
         QMessageBox::information(this,"Error saving file", "Probably your filename is wrong.");
+}
+
+void MainWindow::loadScene()
+{
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load scene"), "", tr("Scene Files (*.scene)"));
+    if (fileName.isEmpty())
+        return;
+    Scene::Instance().loadStubsFromFile(fileName);
+    QMessageBox::information(this, tr("Scene loaded"), tr("Scene loaded!"));
+}
+
+void MainWindow::saveScene()
+{
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save scene"), "", tr("Scene Files (*.scene)"));
+    if (fileName.isEmpty())
+        return;
+    Scene::Instance().saveStubsToFile(fileName);
 }
