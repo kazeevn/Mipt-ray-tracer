@@ -42,16 +42,16 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const PhysicalRay &ray
     //double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
     double prefl = tan(incidenceAngle-fractureAngle) / tan(incidenceAngle+fractureAngle);
 
- /*
-    qDebug() << "POLYGON" << *this;
+
+    /*qDebug() << "POLYGON" << *this;
     qDebug() << "RAY" << ray.direction();
     qDebug() << "PROCESS" << point << "incidence angle:" << incidenceAngle*180/3.1415926535 << "fracture angle:" << fractureAngle*180/3.1415926535;
     qDebug() << "P-polarization:" << prefl;
     qDebug() << "S-polarization:" << srefl;
     qDebug() << "REFLECTED INTENSITY" << (srefl*srefl + prefl*prefl)/2;
     qDebug() << "THRU INTENSITY" << (2-srefl*srefl-prefl*prefl)/2;
-    qDebug() << " --- ";
-*/
+    qDebug() << " --- ";*/
+
     // Отраженный луч
     RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                 ray.startingX(), ray.startingY(),

@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     core/objects/stubs/pictureobjectstub.cpp \
     core/objects/stubs/virtual3dobjectstub.cpp \
     core/objects/thinlensobject.cpp \
-    core/objects/stubs/thinlensobjectstub.cpp
+    core/objects/stubs/thinlensobjectstub.cpp \
+    core/objects/flatmirrorobject.cpp \
+    core/objects/stubs/flatmirrorobjectstub.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -64,5 +66,7 @@ HEADERS  += mainwindow.h \
     core/objects/stubs/pictureobjectstub.h \
     core/objects/stubs/virtual3dobjectstub.h \
     core/objects/thinlensobject.h \
-    core/objects/stubs/thinlensobjectstub.h
+    core/objects/stubs/thinlensobjectstub.h \
+    core/objects/flatmirrorobject.h \
+    core/objects/stubs/flatmirrorobjectstub.h
 FORMS    += mainwindow.ui

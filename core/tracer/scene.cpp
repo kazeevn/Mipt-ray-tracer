@@ -8,9 +8,11 @@
 #include "core/objects/thinlensobject.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
+#include "core/objects/flatmirrorobject.h"
 #include "core/objects/stubs/pictureobjectstub.h"
 #include "core/objects/stubs/lensobjectstub.h"
 #include "core/objects/stubs/thinlensobjectstub.h"
+#include "core/objects/stubs/flatmirrorobjectstub.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -55,6 +57,9 @@ void Scene::traceRay(PhysicalRay *ray)
         ThinLensObject* thinlensobj = dynamic_cast<ThinLensObject*>(obj);
         if (thinlensobj)
             point = thinlensobj->intercrossWithRay(*ray);
+        FlatMirrorObject* flatmirrorobj = dynamic_cast<FlatMirrorObject*>(obj);
+        if (flatmirrorobj)
+            point = flatmirrorobj->intercrossWithRay(*ray);
         if (point != NULL) {
             double dist = point->dist(ray->point());
             if ((minpoint == NULL) || (dist < mindist)) {
@@ -71,7 +76,7 @@ void Scene::traceRay(PhysicalRay *ray)
         nearestObj->processIntersection(*ray, *minpoint);
         delete minpoint;
     } else
-        RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
+        RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::blue).rgb());
 }
 
 void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, const QSize &picsize)
@@ -110,5 +115,10 @@ void Scene::createObjectsFromStubs()
         if (tlstub)
             addObject(tlstub->name(), new ThinLensObject(tlstub->point(), tlstub->horizontalVect(), tlstub->verticalVect(),
                                                          tlstub->bitmask(), tlstub->focus()));
+
+        FlatMirrorObjectStub *mirstub = dynamic_cast<FlatMirrorObjectStub*>(obj);
+        if (mirstub)
+            addObject(mirstub->name(), new FlatMirrorObject(mirstub->point(), mirstub->horizontalVect(), mirstub->verticalVect(),
+                                                            mirstub->bitmask(), mirstub->reflcoef()));
     }
 }
