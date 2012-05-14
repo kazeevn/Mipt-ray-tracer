@@ -67,16 +67,16 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(-1, -3, 0), Vector3D(-1, 0, 1), image));
     QImage lensimg;
     lensimg.load("lens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(30, 30), 0.2, 3.5));
+    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(50, 50), 0.5, 3.5));
     QImage thinlensimg;
     thinlensimg.load("thinlens.png");
-//    Scene::Instance().addStubObject("Thin lens", new ThinLensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, 0.5));
+    Scene::Instance().addStubObject("Thin lens", new ThinLensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, 0.5));
     Scene::Instance().addStubObject("Flat mirror", new FlatMirrorObjectStub(Point3D(-1, -1, -2), Vector3D(0, -1, 0), Vector3D(2, 0, -1), thinlensimg, 0.9));
 
 
 
     Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(1, 0, -3), Vector3D(1, -5, 0),
-                                               Point3D(5, -2, 3), QSize(300, 500)));
+                                               Point3D(5, 0, 3), QSize(300, 500)));
 
     scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
@@ -126,6 +126,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::doRender()
 {
+    Scene::Instance().saveStubsToFile("stubs.scene");
+    Scene::Instance().loadStubsFromFile("stubs.scene");
+
     Scene::Instance().createObjectsFromStubs();
     Scene::Instance().startRendering();
 }

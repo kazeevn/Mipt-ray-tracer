@@ -2,6 +2,10 @@
 
 #include <QColor>
 #include <QThreadPool>
+#include <QSettings>
+#include <QByteArray>
+#include <QBuffer>
+
 #include "core/geometry/point3d.h"
 #include "core/tracer/renderedimage.h"
 #include "core/tracer/physicalray.h"
@@ -76,7 +80,7 @@ void Scene::traceRay(PhysicalRay *ray)
         nearestObj->processIntersection(*ray, *minpoint);
         delete minpoint;
     } else
-        RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::blue).rgb());
+        RenderedImage::Instance().rayTraceResult(*ray, QColor(Qt::black).rgb());
 }
 
 void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, const QSize &picsize)
@@ -120,5 +124,135 @@ void Scene::createObjectsFromStubs()
         if (mirstub)
             addObject(mirstub->name(), new FlatMirrorObject(mirstub->point(), mirstub->horizontalVect(), mirstub->verticalVect(),
                                                             mirstub->bitmask(), mirstub->reflcoef()));
+    }
+}
+
+void Scene::saveStubsToFile(const QString &filename)
+{
+    QSettings sfile(filename, QSettings::IniFormat);
+    Q_FOREACH(Virtual3DObjectStub* obj, m_stubs) {
+        sfile.beginGroup(obj->name());
+        sfile.setValue("PointX", obj->point().x);
+        sfile.setValue("PointY", obj->point().y);
+        sfile.setValue("PointZ", obj->point().z);
+        sfile.setValue("HVectX", obj->horizontalVect().x);
+        sfile.setValue("HVectY", obj->horizontalVect().y);
+        sfile.setValue("HVectZ", obj->horizontalVect().z);
+        sfile.setValue("VVectX", obj->verticalVect().x);
+        sfile.setValue("VVectY", obj->verticalVect().y);
+        sfile.setValue("VVectZ", obj->verticalVect().z);
+        PictureObjectStub *pstub = dynamic_cast<PictureObjectStub*>(obj);
+        if (pstub) {
+            QByteArray arr;
+            QBuffer buf(&arr);
+            pstub->image().save(&buf, "PNG");
+
+            sfile.setValue("Type", "Picture");
+            sfile.setValue("Image", QString::fromLatin1(arr.toBase64().data()));
+        }
+
+        LensObjectStub *lstub = dynamic_cast<LensObjectStub*>(obj);
+        if (lstub) {
+            QByteArray arr1;
+            QBuffer buf1(&arr1);
+            lstub->heightMap1().save(&buf1, "PNG");
+            QByteArray arr2;
+            QBuffer buf2(&arr2);
+            lstub->heightMap1().save(&buf2, "PNG");
+            sfile.setValue("Type", "Lens");
+            sfile.setValue("Height", lstub->height());
+            sfile.setValue("RefractiveIndex", lstub->refractiveIndex());
+            sfile.setValue("HeightMap1", QString::fromLatin1(arr1.toBase64().data()));
+            sfile.setValue("HeightMap2", QString::fromLatin1(arr2.toBase64().data()));
+            sfile.setValue("PolyWidth", lstub->size().width());
+            sfile.setValue("PolyHeight", lstub->size().height());
+        }
+
+        ThinLensObjectStub *tlstub = dynamic_cast<ThinLensObjectStub*>(obj);
+        if (tlstub) {
+            QByteArray arr;
+            QBuffer buf(&arr);
+            tlstub->bitmask().save(&buf, "PNG");
+
+            sfile.setValue("Type", "ThinLens");
+            sfile.setValue("Focus", tlstub->focus());
+            sfile.setValue("Bitmask", QString::fromLatin1(arr.toBase64().data()));
+        }
+
+        FlatMirrorObjectStub *fmstub = dynamic_cast<FlatMirrorObjectStub*>(obj);
+        if (fmstub) {
+            QByteArray arr;
+            QBuffer buf(&arr);
+            fmstub->bitmask().save(&buf, "PNG");
+
+            sfile.setValue("Type", "FlatMirror");
+            sfile.setValue("ReflCoef", fmstub->reflcoef());
+            sfile.setValue("Bitmask", QString::fromLatin1(arr.toBase64().data()));
+        }
+
+        sfile.endGroup();
+    }
+
+    sfile.beginGroup("CameraObject");
+    sfile.setValue("Type", "Camera");
+
+    sfile.setValue("SummitX", m_camera->summit().x);
+    sfile.setValue("SummitY", m_camera->summit().y);
+    sfile.setValue("SummitZ", m_camera->summit().z);
+
+    sfile.setValue("PointX", m_camera->point().x);
+    sfile.setValue("PointY", m_camera->point().y);
+    sfile.setValue("PointZ", m_camera->point().z);
+
+    sfile.setValue("HVectX", m_camera->horizontalVect().x);
+    sfile.setValue("HVectY", m_camera->horizontalVect().y);
+    sfile.setValue("HVectZ", m_camera->horizontalVect().z);
+
+    sfile.setValue("VVectX", m_camera->verticalVect().x);
+    sfile.setValue("VVectY", m_camera->verticalVect().y);
+    sfile.setValue("VVectZ", m_camera->verticalVect().z);
+
+    sfile.setValue("Width", m_camera->size().width());
+    sfile.setValue("Height", m_camera->size().height());
+
+    sfile.endGroup();
+
+    sfile.sync();
+}
+
+void Scene::loadStubsFromFile(const QString &filename)
+{
+    qDeleteAll(m_stubs);
+    m_stubs.clear();
+
+    QSettings settings(filename, QSettings::IniFormat);
+    Q_FOREACH(QString curg, settings.childGroups()) {
+        settings.beginGroup(curg);
+        Point3D point(settings.value("PointX", 0.0).toDouble(), settings.value("PointY", 0.0).toDouble(), settings.value("PointZ", 0.0).toDouble());
+        Vector3D hvect(settings.value("HVectX", 0.0).toDouble(), settings.value("HVectY", 0.0).toDouble(), settings.value("HVectZ", 0.0).toDouble());
+        Vector3D vvect(settings.value("VVectX", 0.0).toDouble(), settings.value("VVectY", 0.0).toDouble(), settings.value("VVectZ", 0.0).toDouble());
+
+        QString type = settings.value("Type").toString();
+        if (type == "Camera") {
+            Point3D summit(settings.value("SummitX", 0.0).toDouble(), settings.value("SummitY", 0.0).toDouble(), settings.value("SummitZ", 0.0).toDouble());
+            QSize size(settings.value("Width", 0).toInt(), settings.value("Height", 0).toInt());
+            addCamera(new CameraStub(point, hvect, vvect, summit, size));
+        } else if (type == "Picture") {
+            QImage pic = QImage::fromData(QByteArray::fromBase64(settings.value("Image").toByteArray()), "PNG");
+            addStubObject(curg, new PictureObjectStub(point, hvect, vvect, pic));
+        } else if (type == "Lens") {
+            QImage heightMap1 = QImage::fromData(QByteArray::fromBase64(settings.value("HeightMap1").toByteArray()), "PNG");
+            QImage heightMap2 = QImage::fromData(QByteArray::fromBase64(settings.value("HeightMap2").toByteArray()), "PNG");
+            QSize size(settings.value("PolyWidth").toInt(), settings.value("PolyHeight").toInt());
+            addStubObject(curg, new LensObjectStub(point, hvect, vvect, heightMap1, heightMap2, size, settings.value("Height").toDouble(), settings.value("RefractiveIndex").toDouble()));
+        } else if (type == "ThinLens") {
+            QImage bitmask = QImage::fromData(QByteArray::fromBase64(settings.value("Bitmask").toByteArray()), "PNG");
+            addStubObject(curg, new ThinLensObjectStub(point, hvect, vvect, bitmask, settings.value("Focus").toDouble()));
+        } else if (type == "FlatMirror") {
+            QImage bitmask = QImage::fromData(QByteArray::fromBase64(settings.value("Bitmask").toByteArray()), "PNG");
+            addStubObject(curg, new FlatMirrorObjectStub(point, hvect, vvect, bitmask, settings.value("ReflCoef").toDouble()));
+        }
+
+        settings.endGroup();
     }
 }
