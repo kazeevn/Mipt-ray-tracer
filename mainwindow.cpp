@@ -21,6 +21,7 @@
 #include <QTableView>
 #include <QGridLayout>
 #include <QItemSelectionModel>
+ #include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -104,7 +105,11 @@ void MainWindow::showPic() {
 
 void MainWindow::savePic()
 {
-    // TODO: show a save dialog
-    RenderedImage::Instance().image().save("result.png");
-    QMessageBox::information(this, "You should give a fuck!", "Saved image to 'result.png'");
+    QString fileName = QFileDialog::getSaveFileName(this,
+        tr("Save Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
+    bool saved = RenderedImage::Instance().image().save(fileName);
+    if (saved)
+        QMessageBox::information(this, "Give it yourself, Igor!", QString("Saved image to '%1'").arg(fileName));
+    else
+        QMessageBox::information(this,"Error saving file", "Probably your filename is wrong.");
 }

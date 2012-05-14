@@ -19,13 +19,13 @@ bool LensModel::setData(const QModelIndex &index, const QVariant &value, int rol
         case 2:
             m_object->v2()[index.column()]=value.toDouble();
             break;
-        case 4:
+        case 3:
             if (index.column()==0)
                 m_object->height()=value.toDouble();
             else
                 return false;
             break;
-        case 5:
+        case 4:
             if (index.column()==0)
                 m_object->refractiveIndex()=value.toDouble();
             else
