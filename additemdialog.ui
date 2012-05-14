@@ -107,8 +107,8 @@
   <widget class="QLineEdit" name="editName">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>50</y>
+     <x>170</x>
+     <y>240</y>
      <width>113</width>
      <height>27</height>
     </rect>
@@ -117,8 +117,8 @@
   <widget class="QGraphicsView" name="graphicsView">
    <property name="geometry">
     <rect>
-     <x>280</x>
-     <y>170</y>
+     <x>290</x>
+     <y>20</y>
      <width>256</width>
      <height>192</height>
     </rect>
@@ -134,7 +134,62 @@
     </rect>
    </property>
    <property name="text">
-    <string>Image</string>
+    <string>Image1</string>
+   </property>
+  </widget>
+  <widget class="QGraphicsView" name="graphicsView_2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>220</y>
+     <width>256</width>
+     <height>192</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="loadImage2">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>310</y>
+     <width>97</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Image2</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>390</y>
+     <width>59</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
+   </property>
+   <property name="value">
+    <number>100</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="spinBox_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>390</y>
+     <width>59</width>
+     <height>27</height>
+    </rect>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
+   </property>
+   <property name="value">
+    <number>100</number>
    </property>
   </widget>
  </widget>
