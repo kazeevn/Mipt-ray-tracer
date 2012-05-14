@@ -16,6 +16,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
     bool removeRow(int row, const QModelIndex &parent= QModelIndex());
+    void refresh();
 };
 
 class Virtual3DObjectDelegate : public QItemDelegate
@@ -25,7 +26,7 @@ public:
     Virtual3DObjectDelegate(QObject *parent = 0, QGLWidget *draw_me=0) {m_parent=(QTableView*)parent; gl_widget=draw_me;}
     QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void setEditorData(QWidget *editor, const QModelIndex &index) const;
-    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;
+    void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const;    
 private:
     QTableView* m_parent;
     QGLWidget* gl_widget;

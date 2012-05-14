@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void refresh() {scene_model->refresh();}
 
 private:
     Ui::MainWindow *ui;

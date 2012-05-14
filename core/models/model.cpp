@@ -27,6 +27,9 @@ bool SceneModel::removeRow(int row, const QModelIndex &parent)
     return true;
 }
 
+void SceneModel::refresh() {
+    emit dataChanged(this->createIndex(0,0), this->createIndex(this->rowCount(),0));
+}
 
 Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
 {
@@ -57,7 +60,8 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
             m_object->v2()[index.column()]=value.toDouble();
             break;
     }
-        gl_widget->updateGL();
+        if (gl_widget != NULL)
+            gl_widget->updateGL();
         return true;
     }
     return false;
