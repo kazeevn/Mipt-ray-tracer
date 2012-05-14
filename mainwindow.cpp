@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "additemdialog.h"
 
 #include "core/tracer/scene.h"
 #include "core/tracer/renderedimage.h"
@@ -21,6 +22,7 @@
 #include <QStandardItem>
 #include <QTableView>
 #include <QGridLayout>
+#include <QHBoxLayout>
 #include <QItemSelectionModel>
  #include <QFileDialog>
 
@@ -39,16 +41,25 @@ MainWindow::MainWindow(QWidget *parent) :
     listView = new QListView;
     QTableView* tableViewCamera = new QTableView;
     QPushButton* deleteItem = new QPushButton;
-    QGridLayout* editor_layout = new QGridLayout;  
+    QPushButton* addItem = new QPushButton;
+    QCheckBox* viewFromCamera = new QCheckBox;
+    QGridLayout* editor_layout = new QGridLayout;
+    QWidget* buttons = new QWidget;
+    QHBoxLayout* buttons_layout = new QHBoxLayout;
 
     ui->tabWidget->widget(0)->setLayout(editor_layout);
-    //ui->tabWidget->activateWindow(0);
+    ui->tabWidget->activateWindow();
     editor_layout->addWidget(tableView,0,0);
     editor_layout->addWidget(listView,1,0);
-    editor_layout->addWidget(deleteItem,2,0);
+    editor_layout->addWidget(buttons,2,0);
     editor_layout->addWidget(tableViewCamera,3,0);
     editor_layout->addWidget(glWidget,0,1,4,1);
     editor_layout->setColumnStretch(1,1);
+
+    buttons->setLayout(buttons_layout);
+    buttons_layout->addWidget(deleteItem);
+    buttons_layout->addWidget(addItem);
+    buttons_layout->addWidget(viewFromCamera);
 
     QImage image;
     image.load("google.png");
@@ -76,11 +87,19 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
     connect(deleteItem, SIGNAL(clicked()),this,SLOT(removeRow()));
+    connect(addItem,SIGNAL(clicked()),this,SLOT(addItem()));
 
     tableViewCamera->setModel(camera_model);
     tableViewCamera->resizeRowsToContents();
     tableViewCamera->resizeColumnsToContents();
     deleteItem->setText("Delete");
+    addItem->setText("Add");
+}
+
+void MainWindow::addItem()
+{
+    AddItemDialog* add_dialog = new AddItemDialog();
+    add_dialog->show();
 }
 
 void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)

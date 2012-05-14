@@ -33,6 +33,7 @@ public slots:
 private slots:
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
     void removeRow();
+    void addItem();
 };
 
 #endif // MAINWINDOW_H
