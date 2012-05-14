@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage lensimg;
     lensimg.load("smalllens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, 0.2, 1.5));
+    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(20, 20), 0.2, 1.5));
 
     Scene::Instance().addCamera(new CameraStub(Point3D(1, -3, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
                                                Point3D(5, -2, 0), QSize(500, 300)));

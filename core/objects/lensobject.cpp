@@ -3,9 +3,10 @@
 #include <QColor>
 #include <QDebug>
 
-LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, double height, double refractiveIndex)
+LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, const QSize &picsize, double height, double refractiveIndex)
     : m_rectangle(point, v1, v2), m_matrix(v1, v2, v2.crossProduct(v1).unit()),
-      m_heightMap1(heightMap1), m_heightMap2(heightMap2),
+      m_heightMap1(heightMap1.scaled(picsize)),
+      m_heightMap2(heightMap2.scaled(picsize)),
       m_height(height), m_refractiveIndex(refractiveIndex),
       m_perpendicular(v2.crossProduct(v1).unit()*height),
 
@@ -16,10 +17,9 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_topPolygon(point-m_perpendicular, v1, m_perpendicular*2),
       m_bottomPolygon(point-m_perpendicular+v2, m_perpendicular*2, v1),
 
-      m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
-      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1),
-      m_frontPolygons(m_frontSize.width(), m_frontSize.height()),
-      m_backPolygons(m_backSize.width(), m_backSize.height())
+      m_size(picsize + QSize(1, 1)),
+      m_frontPolygons(m_size.width(), m_size.height()),
+      m_backPolygons(m_size.width(), m_size.height())
 
 {
     triangulateSurfaces();
@@ -32,7 +32,7 @@ LensObject::~LensObject()
 double LensObject::getFrontHeight(int i, int j)
 {
     double value = 0;
-    if ((i > 0) && (i < m_frontSize.width()) && (j > 0) && (j < m_frontSize.height())) {
+    if ((i > 0) && (i < m_size.width()) && (j > 0) && (j < m_size.height())) {
         QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
         value = c.blackF();
     }
@@ -42,7 +42,7 @@ double LensObject::getFrontHeight(int i, int j)
 double LensObject::getBackHeight(int i, int j)
 {
     double value = 0;
-    if ((i > 0) && (i < m_backSize.width()) && (j > 0) && (j < m_backSize.height())) {
+    if ((i > 0) && (i < m_size.width()) && (j > 0) && (j < m_size.height())) {
         QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
         value = c.blackF();
     }
@@ -51,33 +51,28 @@ double LensObject::getBackHeight(int i, int j)
 
 Point3D LensObject::frontPoint(int i, int j)
 {
-    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_frontSize.width())
-                              +m_rectangle.verticalVect()*(double(j)/m_frontSize.height())
+    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_size.width())
+                              +m_rectangle.verticalVect()*(double(j)/m_size.height())
                               +m_perpendicular*getFrontHeight(i, j);
 }
 
 Point3D LensObject::backPoint(int i, int j)
 {
-    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_backSize.width())
-                              +m_rectangle.verticalVect()*(double(j)/m_backSize.height())
+    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_size.width())
+                              +m_rectangle.verticalVect()*(double(j)/m_size.height())
                               +m_perpendicular*getBackHeight(i, j);
 }
 
 void LensObject::triangulateSurfaces()
 {
-    for (int i = 0; i < m_frontSize.width(); i++) {
-        for (int j = 0; j < m_frontSize.height(); j++) {
+    for (int i = 0; i < m_size.width(); i++) {
+        for (int j = 0; j < m_size.height(); j++) {
             m_frontPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(frontPoint(i, j),
                                                                       frontPoint(i+1, j),
                                                                       frontPoint(i, j+1));
             m_frontPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(frontPoint(i+1, j),
                                                                       frontPoint(i+1, j+1),
                                                                       frontPoint(i, j+1));
-        }
-    }
-
-    for (int i = 0; i < m_backSize.width(); i++) {
-        for (int j = 0; j < m_backSize.height(); j++) {
             m_backPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(backPoint(i, j),
                                                                       backPoint(i+1, j),
                                                                       backPoint(i, j+1));
@@ -105,9 +100,9 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     Point3D* minpoint = 0;
     double mindist = -1;
 
-    for (int i = 0; i < m_frontSize.width(); i++)
-        for (int j = 0; j < m_frontSize.height(); j++)
-            for (int k = 0; k < 2; k++)
+    for (int i = 0; i < m_size.width(); i++)
+        for (int j = 0; j < m_size.height(); j++)
+            for (int k = 0; k < 2; k++) {
                 if ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
                         minpoint = p1;
@@ -115,9 +110,6 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
                     } else
                         delete p1;
                 }
-    for (int i = 0; i < m_backSize.width(); i++)
-        for (int j = 0; j < m_backSize.height(); j++)
-            for (int k = 0; k < 2; k++)
                 if ((p1 = m_backPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
                         minpoint = p1;
@@ -125,6 +117,7 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
                     } else
                         delete p1;
                 }
+            }
     return minpoint;
 }
 
@@ -138,8 +131,8 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
     Point3D* helperPoint = 0;
     PhysicalTrianglePolygon* helperPolygon = 0;
     if (newvector.z > 0) {
-        int coordx = newvector.x*m_frontSize.width();
-        int coordy = newvector.y*m_frontSize.height();
+        int coordx = newvector.x*m_size.width();
+        int coordy = newvector.y*m_size.height();
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 for (int k = 0; k < 2; k++) {
@@ -153,8 +146,8 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
                     }
                 }
     } else {
-        int coordx = newvector.x*m_backSize.width();
-        int coordy = newvector.y*m_backSize.height();
+        int coordx = newvector.x*m_size.width();
+        int coordy = newvector.y*m_size.height();
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 for (int k = 0; k < 2; k++)

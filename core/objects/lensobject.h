@@ -26,7 +26,7 @@ class LensObject : public Virtual3DObject
 public:
     LensObject(const Point3D& point, const Vector3D& v1, const Vector3D& v2,
                const QImage &heightMap1, const QImage &heightMap2,
-               double height, double refractiveIndex);
+               const QSize &picsize, double height, double refractiveIndex);
     ~LensObject();
 
     Point3D* intercrossWithRay(const Ray3D &ray);
@@ -36,8 +36,7 @@ public:
 
     Point3D frontPoint(int i, int j);
     Point3D backPoint(int i, int j);
-    const QSize& frontSize() { return m_frontSize; }
-    const QSize& backSize() { return m_backSize; }
+    const QSize& size() { return m_size; }
 private:
     double getFrontHeight(int i, int j);
     double getBackHeight(int i, int j);
@@ -53,7 +52,7 @@ private:
     RectanglePolygon m_frontPolygon, m_backPolygon, m_leftPolygon, m_rightPolygon, m_topPolygon, m_bottomPolygon;
 
     // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
-    QSize m_frontSize, m_backSize;
+    QSize m_size;
     TrianglePolygonSurface<PhysicalTrianglePolygon> m_frontPolygons, m_backPolygons;
 };
 

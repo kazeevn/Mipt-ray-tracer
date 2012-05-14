@@ -99,6 +99,7 @@ void Scene::createObjectsFromStubs()
         LensObjectStub *lstub = dynamic_cast<LensObjectStub*>(obj);
         if (lstub)
             addObject(lstub->name(), new LensObject(lstub->point(), lstub->horizontalVect(), lstub->verticalVect(),
-                                                    lstub->heightMap1(), lstub->heightMap2(), lstub->height(), lstub->refractiveIndex()));
+                                                    lstub->heightMap1(), lstub->heightMap2(),
+                                                    lstub->size(), lstub->height(), lstub->refractiveIndex()));
     }
 }

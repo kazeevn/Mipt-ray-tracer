@@ -50,11 +50,6 @@ void GLWidget::initializeGL()
     glEnable (GL_BLEND); //enabling alpha
 
     glFrontFace(GL_CCW);
-
-    QImage lensimg;
-    lensimg.load("smalllens.png");
-     objl = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
-                                          lensimg, lensimg, 0.2, 1.1);
 }
 
 void GLWidget::paintGL()
