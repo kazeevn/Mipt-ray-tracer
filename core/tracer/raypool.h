@@ -2,7 +2,7 @@
 #define RAYPOOL_H
 
 #include <QObject>
-#include <QList>
+#include <QStack>
 #include <QMutex>
 #include "core/geometry/ray3d.h"
 #include "core/tracer/physicalray.h"
@@ -25,7 +25,7 @@ signals:
     void exhausted();
 private:
     RayPool(QObject *parent = 0);
-    QList<Ray3D*> m_rays;
+    QStack<Ray3D*> m_rays;
     QMutex m_mutex;
 };
 

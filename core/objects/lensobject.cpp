@@ -17,10 +17,7 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_bottomPolygon(point-m_perpendicular+v2, m_perpendicular*2, v1),
 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
-      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1),
-
-      m_frontdx(v1 / m_frontSize.width()), m_frontdy(v2 / m_frontSize.height()), m_frontdz(m_perpendicular.unit()),
-      m_backdx(v1 / m_backSize.width()), m_backdy(v2 / m_backSize.height()), m_backdz(m_perpendicular.unit()*(-1))
+      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1)
 
 {
     triangulateSurfaces();
@@ -54,7 +51,7 @@ double LensObject::getFrontHeight(int i, int j)
         QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
         value = c.blackF()+0.01;
     }
-    return value * m_height;
+    return value;
 }
 
 double LensObject::getBackHeight(int i, int j)
@@ -64,17 +61,21 @@ double LensObject::getBackHeight(int i, int j)
         QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
         value = c.blackF()+0.01;
     }
-    return value * m_height;
+    return value;
 }
 
 Point3D LensObject::frontPoint(int i, int j)
 {
-    return m_rectangle.point()+m_frontdx*i+m_frontdy*j+m_frontdz*getFrontHeight(i, j);
+    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_frontSize.width())
+                              +m_rectangle.verticalVect()*(double(j)/m_frontSize.height())
+                              +m_perpendicular*getFrontHeight(i, j);
 }
 
 Point3D LensObject::backPoint(int i, int j)
 {
-    return m_rectangle.point()+m_backdx*i+m_backdy*j+m_backdz*getBackHeight(i, j);
+    return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_backSize.width())
+                              +m_rectangle.verticalVect()*(double(j)/m_backSize.height())
+                              +m_perpendicular*getBackHeight(i, j);
 }
 
 void LensObject::triangulateSurfaces()

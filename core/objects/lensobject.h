@@ -53,7 +53,6 @@ private:
 
     // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
     QSize m_frontSize, m_backSize;
-    Vector3D m_frontdx, m_frontdy, m_frontdz, m_backdx, m_backdy, m_backdz;
     PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
 };
 

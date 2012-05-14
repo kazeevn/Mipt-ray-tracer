@@ -17,11 +17,12 @@ RenderingHelper::~RenderingHelper()
 
 void RenderingHelper::run()
 {
-    Vector3D dx = m_screen.horizontalVect() / m_size.width();
-    Vector3D dy = m_screen.verticalVect() / m_size.height();
     for (int i = 0; i < m_size.width(); i++)
         for (int j = 0; j < m_size.height(); j++)
-            RayPool::Instance().pushRay(new PhysicalRay(m_cameraPos, m_screen.point_m()+dx*i+dy*j, i, j, 1.0f));
+            RayPool::Instance().pushRay(new PhysicalRay(m_cameraPos,
+                                                        m_screen.point()+(m_screen.horizontalVect())*(double(i) / (m_size.width()-1))+
+                                                                         (m_screen.verticalVect())*(double(j) / (m_size.height()-1)),
+                                                        i, j, 1.0f));
 
     for (int i = 0; i < m_workerThreadPool.maxThreadCount(); i++)
         m_workerThreadPool.start(new WorkerObject());
