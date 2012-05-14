@@ -7,8 +7,8 @@
 #include "core/tracer/physicalray.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
-#include "core/stubs/pictureobject_stub.h"
-#include "core/stubs/lensobjectstub.h"
+#include "core/objects/stubs/pictureobjectstub.h"
+#include "core/objects/stubs/lensobjectstub.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),

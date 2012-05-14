@@ -1,8 +1,8 @@
 #ifndef LENSMODEL_H
 #define LENSMODEL_H
-#include"core/stubs/lensobjectstub.h"
-#include<QAbstractTableModel>
-#include<QGLWidget>
+#include "core/objects/stubs/lensobjectstub.h"
+#include <QAbstractTableModel>
+#include <QGLWidget>
 
 class LensModel : public QAbstractTableModel
 {

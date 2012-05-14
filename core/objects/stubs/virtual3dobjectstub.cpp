@@ -1,4 +1,4 @@
-#include "virtual3dobject_stub.h"
+#include "virtual3dobjectstub.h"
 
 QList<Point3D> Virtual3DObjectStub :: getPoints() {
     QList<Point3D> points;

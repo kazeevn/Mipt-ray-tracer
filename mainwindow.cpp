@@ -5,14 +5,13 @@
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
-#include "core/stubs/pictureobject_stub.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "core/models/model.h"
 #include "core/models/cameramodel.h"
-
-#include "core/stubs/camerastub.h"
-#include "core/stubs/lensobjectstub.h"
+#include "core/objects/stubs/pictureobjectstub.h"
+#include "core/objects/stubs/camerastub.h"
+#include "core/objects/stubs/lensobjectstub.h"
 
 #include <QMessageBox>
 #include <QStandardItemModel>
@@ -49,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage lensimg;
     lensimg.load("lens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(50, 50), 0.2, 1.5));
+    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(30, 30), 0.2, 1.5));
 
     Scene::Instance().addCamera(new CameraStub(Point3D(1, -3, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
                                                Point3D(5, -2, 0), QSize(500, 300)));

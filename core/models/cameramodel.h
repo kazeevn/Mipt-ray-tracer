@@ -2,7 +2,7 @@
 #define CAMERAMODEL_H
 
 #include "core/tracer/scene.h"
-#include "core/stubs/camerastub.h"
+#include "core/objects/stubs/camerastub.h"
 #include <QAbstractTableModel>
 #include <QTableView>
 #include <QGLWidget>

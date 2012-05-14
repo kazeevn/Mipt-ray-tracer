@@ -7,10 +7,10 @@
 #include <QSize>
 #include <QThreadPool>
 #include "core/objects/virtual3dobject.h"
-#include "core/stubs/virtual3dobject_stub.h"
+#include "core/objects/stubs/virtual3dobjectstub.h"
 #include "core/geometry/ray3d.h"
 #include "core/tracer/renderinghelper.h"
-#include "core/stubs/camerastub.h"
+#include "core/objects/stubs/camerastub.h"
 
 // Singletone object
 class Scene : public QObject

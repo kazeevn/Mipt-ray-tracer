@@ -1,7 +1,7 @@
 #ifndef LENSOBJECTSTUB_H
 #define LENSOBJECTSTUB_H
 
-#include "core/stubs/virtual3dobject_stub.h"
+#include "core/objects/stubs/virtual3dobjectstub.h"
 #include <QImage>
 
 class LensObjectStub : public Virtual3DObjectStub

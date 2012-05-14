@@ -3,7 +3,7 @@
 
 #include <QImage>
 
-#include"core/stubs/virtual3dobject_stub.h"
+#include"core/objects/stubs/virtual3dobjectstub.h"
 
 class PictureObjectStub : public Virtual3DObjectStub {
 public:

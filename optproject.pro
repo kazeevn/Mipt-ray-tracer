@@ -28,12 +28,12 @@ SOURCES += main.cpp \
     core/geometry/rectangle3d.cpp \
     core/models/model.cpp \
     glwidget.cpp \
-    core/stubs/virtual3dobject_stub.cpp \
-    core/stubs/pictureobject_stub.cpp \
-    core/stubs/camerastub.cpp \
+    core/objects/stubs/camerastub.cpp \
     core/models/cameramodel.cpp \
     core/models/lensmodel.cpp \
-    core/stubs/lensobjectstub.cpp
+    core/objects/stubs/lensobjectstub.cpp \
+    core/objects/stubs/pictureobjectstub.cpp \
+    core/objects/stubs/virtual3dobjectstub.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -55,10 +55,10 @@ HEADERS  += mainwindow.h \
     core/geometry/rectangle3d.h \
     core/models/model.h \
     glwidget.h \
-    core/stubs/virtual3dobject_stub.h \
-    core/stubs/pictureobject_stub.h \
-    core/stubs/camerastub.h \
+    core/objects/stubs/camerastub.h \
     core/models/cameramodel.h \
     core/models/lensmodel.h \
-    core/stubs/lensobjectstub.h
+    core/objects/stubs/lensobjectstub.h \
+    core/objects/stubs/pictureobjectstub.h \
+    core/objects/stubs/virtual3dobjectstub.h
 FORMS    += mainwindow.ui

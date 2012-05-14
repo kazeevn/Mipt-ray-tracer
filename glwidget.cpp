@@ -5,6 +5,8 @@
 //#define GL_MULTISAMPLE  0x809D
 //#endif
 
+#include "core/objects/stubs/lensobjectstub.h"
+
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
@@ -83,7 +85,7 @@ void GLWidget::paintGL()
         {
 
             //checking type of object - lense or picture
-            LensStab* n = dynamic_cast<LensStab*>(Scene::Instance().stub_objects()[i]);
+            LensObjectStub* n = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[i]);
             if (n)
             {
                 type = 1; // Lense

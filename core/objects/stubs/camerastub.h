@@ -1,7 +1,7 @@
 #ifndef CAMERASTUB_H
 #define CAMERASTUB_H
-#include"core/stubs/virtual3dobject_stub.h"
-#include<QSize>
+#include "core/objects/stubs/virtual3dobjectstub.h"
+#include <QSize>
 
 class CameraStub : public Virtual3DObjectStub
 {
