@@ -23,7 +23,7 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     Vector3D projection(localPerpendicular*(dotProduct/localPerpendicular.dotProduct(localPerpendicular)));
     // Направление отраженного луча
     Vector3D reflectedDirection(physray->direction() - projection*2);
-    double incidenceAngle = acos(-dotProduct / m_perpendicular.length() / physray->direction().length());
+    double incidenceAngle = acos( fabs(dotProduct) / m_perpendicular.length() / physray->direction().length());
     // Полное внутреннее отражение
     if (sin(incidenceAngle)/localRefractiveIndex >= 1) {
         RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
@@ -45,6 +45,15 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     //double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
     double prefl = tan(incidenceAngle-fractureAngle) / tan(incidenceAngle+fractureAngle);
 
+ /*   qDebug() << "POLYGON" << *this;
+    qDebug() << "RAY" << ray.direction();
+    qDebug() << "PROCESS" << point << "incidence angle:" << incidenceAngle*180/3.1415926535 << "fracture angle:" << fractureAngle*180/3.1415926535;
+    qDebug() << "P-polarization:" << prefl;
+    qDebug() << "S-polarization:" << srefl;
+    qDebug() << "REFLECTED INTENSITY" << (srefl*srefl + prefl*prefl)/2;
+    qDebug() << "THRU INTENSITY" << (2-srefl*srefl-prefl*prefl)/2;
+    qDebug() << " --- ";
+*/
     // Отраженный луч
     RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                 physray->startingX(), physray->startingY(),
