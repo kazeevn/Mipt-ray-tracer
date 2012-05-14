@@ -26,8 +26,10 @@ bool CameraModel::setData(const QModelIndex &index, const QVariant &value, int r
             switch (index.column()){
             case 0:
                 Scene::Instance().camera()->size().setWidth(value.toDouble());
+                break;
             case 1:
                 Scene::Instance().camera()->size().setHeight(value.toDouble());
+                break;
             default:
                 return false;
             }
@@ -57,7 +59,7 @@ QVariant CameraModel::data(const QModelIndex &index, int role) const {
     case 4:
         switch (index.column()) {
         case 0:
-            return QVariant(Scene::Instance().camera()->size().width());
+            return Scene::Instance().camera()->size().width();
         case 1:
             return Scene::Instance().camera()->size().height();
         default:
