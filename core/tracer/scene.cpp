@@ -10,6 +10,7 @@
 #include "core/objects/lensobject.h"
 #include "core/objects/stubs/pictureobjectstub.h"
 #include "core/objects/stubs/lensobjectstub.h"
+#include "core/objects/stubs/thinlensobjectstub.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -105,5 +106,9 @@ void Scene::createObjectsFromStubs()
             addObject(lstub->name(), new LensObject(lstub->point(), lstub->horizontalVect(), lstub->verticalVect(),
                                                     lstub->heightMap1(), lstub->heightMap2(),
                                                     lstub->size(), lstub->height(), lstub->refractiveIndex()));
+        ThinLensObjectStub *tlstub = dynamic_cast<ThinLensObjectStub*>(obj);
+        if (tlstub)
+            addObject(tlstub->name(), new ThinLensObject(tlstub->point(), tlstub->horizontalVect(), tlstub->verticalVect(),
+                                                         tlstub->bitmask(), tlstub->focus()));
     }
 }
