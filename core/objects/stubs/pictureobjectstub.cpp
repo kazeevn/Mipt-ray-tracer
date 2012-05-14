@@ -5,5 +5,14 @@ PictureObjectStub::PictureObjectStub(const Point3D &point, const Vector3D &v1, c
 {
 }
 
+bool PictureObjectStub::isValid()
+{
+    if (!Virtual3DObjectStub::isValid())
+        return false;
+    if (m_image.isNull())
+        return false;
+    return true;
+}
+
 
 

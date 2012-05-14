@@ -12,6 +12,8 @@ public:
     Point3D& summit() {return m_summit;}
     QSize& size() {return m_size;}
     bool set_size(QSize size);
+
+    bool isValid();
 private:
     Point3D m_summit;
     QSize m_size;

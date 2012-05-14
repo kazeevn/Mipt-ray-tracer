@@ -15,6 +15,8 @@ public:
     QSize& size() { return m_size; }
     QImage& heightMap1() { return m_heightMap1; }
     QImage& heightMap2() { return m_heightMap2; }
+
+    bool isValid();
 private:
     QImage m_heightMap1, m_heightMap2;
     QSize m_size;

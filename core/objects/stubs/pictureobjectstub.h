@@ -10,6 +10,8 @@ public:
     PictureObjectStub(const Point3D& point, const Vector3D& v1, const Vector3D& v2, const QImage &image);
     void setImage(const QImage &image) { m_image = image; }
     QImage& image() { return m_image; }
+
+    bool isValid();
 private:
     QImage m_image;
 };

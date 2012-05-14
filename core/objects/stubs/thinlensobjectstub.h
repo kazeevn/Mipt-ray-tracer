@@ -12,6 +12,8 @@ public:
     void setBitmask(const QImage &bitmask) { m_bitmask = bitmask; }
     QImage& bitmask() { return m_bitmask; }
     double& focus() { return m_focus; }
+
+    bool isValid();
 private:
     QImage m_bitmask;
     double m_focus;

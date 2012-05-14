@@ -15,6 +15,8 @@ public:
     bool selected() {return m_selected;}
     void select() {m_selected=true;}
     void deselect() {m_selected=false;}
+
+    virtual bool isValid();
 private:
     QString m_name;
     bool m_selected;

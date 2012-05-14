@@ -6,3 +6,18 @@ LensObjectStub::LensObjectStub(const Point3D &point, const Vector3D &v1, const V
       m_size(size), m_height(height),m_refractiveIndex(refractiveIndex)
 {
 }
+
+bool LensObjectStub::isValid()
+{
+    if (!Virtual3DObjectStub::isValid())
+        return false;
+    if (m_heightMap1.isNull() || m_heightMap2.isNull())
+        return false;
+    if (m_size.isEmpty() || m_size.isNull())
+        return false;
+    if (m_height < 1e-2)
+        return false;
+    if (m_refractiveIndex < 1e-2)
+        return false;
+    return true;
+}
