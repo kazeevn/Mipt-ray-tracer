@@ -26,6 +26,7 @@ private:
     RayPool(QObject *parent = 0);
     QStack<PhysicalRay*> m_rays;
     QMutex m_mutex;
+    int m_totalCount;
 };
 
 #endif // RAYPOOL_H

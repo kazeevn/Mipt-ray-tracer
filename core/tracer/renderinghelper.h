@@ -23,6 +23,9 @@ private:
     Rectangle3D m_screen;
     QSize m_size;
     QThreadPool m_workerThreadPool;
+
+    static int THREAD_COUNT;
+    static int RAYS_PER_DOT;
 };
 
 #endif // RENDERINGHELPER_H

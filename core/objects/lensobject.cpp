@@ -103,7 +103,6 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     if (p1 == NULL)
         return NULL;
     delete p1;
-
     // После эвристик - честный пробег по всем полигонам
     Point3D* minpoint = 0;
     double mindist = -1;
@@ -113,7 +112,6 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
                 if ((m_frontPolygons.at(i, j, k) != NULL) && \
                         ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL)) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
-                        minpoint = p1;
                         mindist = p1->dist(ray.point());
                     } else
                         delete p1;

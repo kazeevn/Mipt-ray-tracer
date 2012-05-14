@@ -1,5 +1,7 @@
 #include "trianglepolygon.h"
 
+#include <cfloat>
+
 TrianglePolygon::TrianglePolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3)
     : p1(p1), p2(p2), p3(p3), plane(p1, p2, p3)
 {
@@ -17,7 +19,8 @@ bool TrianglePolygon::isPointsInSamePlanePart(double x1, double y1, double x2, d
     double C = x2*y1 - x1*y2;
     double v1 = A*cx1 + B*cy1 + C;
     double v2 = A*cx2 + B*cy2 + C;
-    return (((v1 >= 0) && (v2 >= 0)) || ((v1 <= 0)&&(v2 <= 0)));
+    return (((v1 >= -DBL_EPSILON) && (v2 >= -DBL_EPSILON)) || ((v1 <= DBL_EPSILON) && (v2 <= DBL_EPSILON)));
+
 }
 
 bool TrianglePolygon::isPointInTriangle2D(double x1, double y1, double x2, double y2, double x3, double y3, double cx, double cy)
