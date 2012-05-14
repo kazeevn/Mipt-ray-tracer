@@ -124,7 +124,9 @@ void MainWindow::showPic() {
 void MainWindow::savePic()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-        tr("Save Image"), ".", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    if (fileName.isEmpty())
+        return;
     bool saved = RenderedImage::Instance().image().save(fileName);
     if (saved)
         QMessageBox::information(this, "Give it yourself, Igor!", QString("Saved image to '%1'").arg(fileName));

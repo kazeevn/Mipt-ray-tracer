@@ -1,5 +1,7 @@
 #include "virtual3dobjectstub.h"
 
+#include <cfloat>
+
 QList<Point3D> Virtual3DObjectStub :: getPoints() {
     QList<Point3D> points;
 
@@ -10,4 +12,12 @@ QList<Point3D> Virtual3DObjectStub :: getPoints() {
     points.append(point()+v2());
 
     return points;
+}
+
+
+bool Virtual3DObjectStub::isValid()
+{
+    if (v1().crossProduct(v2()).length() < DBL_EPSILON)
+        return false;
+    return true;
 }

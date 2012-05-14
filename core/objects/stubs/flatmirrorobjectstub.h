@@ -11,6 +11,8 @@ public:
     void setBitmask(const QImage &bitmask) { m_bitmask = bitmask; }
     QImage& bitmask() { return m_bitmask; }
     double& reflcoef() { return m_reflcoef; }
+
+    bool isValid();
 private:
     QImage m_bitmask;
     double m_reflcoef;
