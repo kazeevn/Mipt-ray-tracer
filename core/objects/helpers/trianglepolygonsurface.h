@@ -3,6 +3,7 @@
 
 #include <cstring>
 #include <QDebug>
+#include <QSize>
 
 template <typename T>
 class TrianglePolygonSurface
@@ -11,8 +12,15 @@ public:
     TrianglePolygonSurface(int hsize, int vsize)
         : m_hsize(hsize), m_vsize(vsize)
     {
-        m_polygons = new T*[hsize*vsize*2];
-        memset(m_polygons, 0, hsize*vsize*2*sizeof(T*));
+        m_polygons = new T*[m_hsize*m_vsize*2];
+        memset(m_polygons, 0, m_hsize*m_vsize*2*sizeof(T*));
+    }
+
+    TrianglePolygonSurface(const QSize& size)
+        : m_hsize(size.width()), m_vsize(size.height())
+    {
+        m_polygons = new T*[m_hsize*m_vsize*2];
+        memset(m_polygons, 0, m_hsize*m_vsize*2*sizeof(T*));
     }
 
     ~TrianglePolygonSurface()

@@ -18,8 +18,7 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_bottomPolygon(point-m_perpendicular+v2, m_perpendicular*2, v1),
 
       m_size(picsize + QSize(1, 1)),
-      m_frontPolygons(m_size.width(), m_size.height()),
-      m_backPolygons(m_size.width(), m_size.height())
+      m_frontPolygons(m_size), m_backPolygons(m_size)
 
 {
     triangulateSurfaces();
