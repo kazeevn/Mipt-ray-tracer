@@ -143,8 +143,7 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 for (int k = 0; k < 2; k++) {
-                    if ((coordx+i >= 0) && (coordx+i < m_frontSize.width()) && \
-                            (coordy+j >= 0) && (coordy+j < m_frontSize.height()) && \
+                    if (m_frontPolygons.inside(coordx+i, coordy+j, k) && \
                             ((helperPolygon = m_frontPolygons.at(coordx+i, coordy+j, k)) != NULL)) {
                         helperPoint = helperPolygon->intercrossWithRay(ray);
                         if (helperPoint) {
@@ -159,8 +158,7 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 for (int k = 0; k < 2; k++)
-                    if ((coordx+i >= 0) && (coordx+i < m_backSize.width()) && \
-                            (coordy+j >= 0) && (coordy+j < m_backSize.height()) && \
+                    if (m_backPolygons.inside(coordx+i, coordy+j, k) && \
                             ((helperPolygon = m_backPolygons.at(coordx+i, coordy+j, k)) != NULL)) {
                         helperPoint = helperPolygon->intercrossWithRay(ray);
                         if (helperPoint) {

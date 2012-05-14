@@ -2,6 +2,7 @@
 #define TRIANGLEPOLYGONSURFACE_H
 
 #include <cstring>
+#include <QDebug>
 
 template <typename T>
 class TrianglePolygonSurface
@@ -22,6 +23,11 @@ public:
                     if (at(i, j, k) != NULL)
                         delete at(i, j, k);
         delete[] m_polygons;
+    }
+
+    bool inside(int x, int y, int k)
+    {
+        return ((x >= 0) && (x < m_hsize) && (y >= 0) && (y < m_vsize) && (k >= 0) && (k < 2));
     }
 
     T*& at(int x, int y, int k)
