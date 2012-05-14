@@ -135,36 +135,40 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
     // На самом деле это трехмерный вектор, с координатами от 0 до 1 по (x, y)
     // И с высотой над поверхностью по z
     Vector3D newvector = m_matrix.transformVector(oldvector);
+    Point3D* helperPoint = 0;
+    PhysicalTrianglePolygon* helperPolygon = 0;
     if (newvector.z > 0) {
         int coordx = newvector.x*m_frontSize.width();
         int coordy = newvector.y*m_frontSize.height();
-        Point3D *helper = 0;
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
-                for (int k = 0; k < 2; k++)
+                for (int k = 0; k < 2; k++) {
                     if ((coordx+i >= 0) && (coordx+i < m_frontSize.width()) && \
-                            (coordy+j >= 0) && (coordy+j < m_frontSize.height())) {
-                        helper = m_frontPolygons.at(coordx+i, coordy+j, k)->intercrossWithRay(ray);
-                        if (helper) {
-                            delete helper;
-                            m_frontPolygons.at(coordx+i, coordy+j, k)->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                            (coordy+j >= 0) && (coordy+j < m_frontSize.height()) && \
+                            ((helperPolygon = m_frontPolygons.at(coordx+i, coordy+j, k)) != NULL)) {
+                        helperPoint = helperPolygon->intercrossWithRay(ray);
+                        if (helperPoint) {
+                            delete helperPoint;
+                            helperPolygon->processPhysicalIntersection(ray, point, m_refractiveIndex);
                         }
                     }
+                }
     } else {
         int coordx = newvector.x*m_backSize.width();
         int coordy = newvector.y*m_backSize.height();
-        Point3D *helper = 0;
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
                 for (int k = 0; k < 2; k++)
                     if ((coordx+i >= 0) && (coordx+i < m_backSize.width()) && \
-                            (coordy+j >= 0) && (coordy+j < m_backSize.height())) {
-                        helper = m_backPolygons.at(coordx+i, coordy+j, k)->intercrossWithRay(ray);
-                        if (helper) {
-                            delete helper;
-                            m_backPolygons.at(coordx+i, coordy+j, k)->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                            (coordy+j >= 0) && (coordy+j < m_backSize.height()) && \
+                            ((helperPolygon = m_backPolygons.at(coordx+i, coordy+j, k)) != NULL)) {
+                        helperPoint = helperPolygon->intercrossWithRay(ray);
+                        if (helperPoint) {
+                            delete helperPoint;
+                            helperPolygon->processPhysicalIntersection(ray, point, m_refractiveIndex);
                         }
                     }
+
     }
 }
 
