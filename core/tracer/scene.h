@@ -27,7 +27,7 @@ public:
     void startRendering();
     const QList<Virtual3DObject*>& objects() const {return m_objects;}
     // Stub
-    const QList<Virtual3DObjectStub*>& stub_objects() const {return m_stubs;}
+    QList<Virtual3DObjectStub*>& stub_objects() {return m_stubs;}
     void addStubObject(const QString& name, Virtual3DObjectStub* object);
     CameraStub* camera() {return m_camera;}
     void addCamera(CameraStub* camera) {m_camera=camera;}

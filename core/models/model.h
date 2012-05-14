@@ -15,6 +15,7 @@ public:
     int rowCount( const QModelIndex & parent = QModelIndex() ) const;
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+    bool removeRow(int row, const QModelIndex &parent= QModelIndex());
 };
 
 class Virtual3DObjectDelegate : public QItemDelegate

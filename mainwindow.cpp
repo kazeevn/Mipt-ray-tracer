@@ -36,16 +36,18 @@ MainWindow::MainWindow(QWidget *parent) :
 
     glWidget = new GLWidget;
     QTableView* tableView = new QTableView;
-    QListView* listView = new QListView;
+    listView = new QListView;
     QTableView* tableViewCamera = new QTableView;
-    QGridLayout* editor_layout = new QGridLayout;
+    QPushButton* deleteItem = new QPushButton;
+    QGridLayout* editor_layout = new QGridLayout;  
 
     ui->tabWidget->widget(0)->setLayout(editor_layout);
     //ui->tabWidget->activateWindow(0);
     editor_layout->addWidget(tableView,0,0);
     editor_layout->addWidget(listView,1,0);
-    editor_layout->addWidget(tableViewCamera,2,0);
-    editor_layout->addWidget(glWidget,0,1,3,1);
+    editor_layout->addWidget(deleteItem,2,0);
+    editor_layout->addWidget(tableViewCamera,3,0);
+    editor_layout->addWidget(glWidget,0,1,4,1);
     editor_layout->setColumnStretch(1,1);
 
     QImage image;
@@ -65,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(1, 0, -3), Vector3D(1, -5, 0),
                                                Point3D(5, -2, 3), QSize(300, 500)));
 
-    SceneModel *scene_model=new SceneModel;
+    scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
     Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(tableView, glWidget);
     listView->setModel(scene_model);
@@ -73,10 +75,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QItemSelectionModel *selectionModel = listView->selectionModel();
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
+    connect(deleteItem, SIGNAL(clicked()),this,SLOT(removeRow()));
 
     tableViewCamera->setModel(camera_model);
     tableViewCamera->resizeRowsToContents();
     tableViewCamera->resizeColumnsToContents();
+    deleteItem->setText("Delete");
 }
 
 void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
@@ -85,6 +89,13 @@ void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const
         Scene::Instance().stub_objects()[index.row()]->select();
     foreach(const QModelIndex& index, oldSelection.indexes())
         Scene::Instance().stub_objects()[index.row()]->deselect();
+    glWidget->updateGL();
+}
+
+void MainWindow::removeRow()
+{
+    foreach(const QModelIndex& index, listView->selectionModel()->selectedRows())
+        scene_model->removeRow(index.row());
     glWidget->updateGL();
 }
 
