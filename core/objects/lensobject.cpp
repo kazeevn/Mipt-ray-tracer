@@ -26,6 +26,27 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
     triangulateSurfaces();
 }
 
+LensObject::~LensObject()
+{
+    if (m_frontPolygons) {
+        for (int i = 0; i < m_frontSize.width(); i++) {
+            for (int j = 0; j < m_frontSize.height(); j++)
+                delete m_frontPolygons[i][j];
+            delete[] m_frontPolygons[i];
+        }
+        delete[] m_frontPolygons;
+    }
+
+    if (m_backPolygons) {
+        for (int i = 0; i < m_backSize.width(); i++) {
+            for (int j = 0; j < m_backSize.height(); j++)
+                delete m_backPolygons[i][j];
+            delete[] m_backPolygons[i];
+        }
+        delete[] m_backPolygons;
+    }
+}
+
 double LensObject::getFrontHeight(int i, int j)
 {
     double value = 0;

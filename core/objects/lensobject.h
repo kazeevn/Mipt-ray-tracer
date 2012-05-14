@@ -26,6 +26,7 @@ public:
     LensObject(const Point3D& point, const Vector3D& v1, const Vector3D& v2,
                const QImage &heightMap1, const QImage &heightMap2,
                double height, double refractiveIndex);
+    ~LensObject();
 
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const Ray3D &ray, const Point3D &point);
