@@ -1,5 +1,7 @@
 #include "core/models/model.h"
 #include "core/models/lensmodel.h"
+#include "core/models/flatmirrormodel.h"
+
 #include <QTableView>
 #include <QtGlobal>
 
@@ -142,6 +144,11 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
         LensObjectStub* lens = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
         if (lens!=NULL)
             m_parent->setModel(new LensModel(lens, gl_widget));
+        else {
+            FlatMirrorObjectStub* mirror =dynamic_cast<FlatMirrorObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+            if (mirror)
+                m_parent->setModel(new FlatMirrorModel(mirror, gl_widget));
+        }
         // TODO(kazeevn) What about an exception?
     }
 
