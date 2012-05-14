@@ -22,10 +22,10 @@ void RenderedImage::rayTraceResult(const Ray3D &ray, QRgb color)
     /* Средневзвешенное цветов упершихся лучей с весами в интенсивность */
     QColor prevcolor(m_image.pixel(physray->startingX(), physray->startingY()));
     QColor deltaColor(color);
-    QColor newcolor = QColor::fromRgbF(prevcolor.redF()+deltaColor.redF()*physray->intensity(),
-                                       prevcolor.greenF()+deltaColor.greenF()*physray->intensity(),
-                                       prevcolor.blueF()+deltaColor.blueF()*physray->intensity());
-/*    qDebug() << "Point" << physray->startingX() << physray->startingY() << \
+    QColor newcolor = QColor::fromRgbF(qMin(prevcolor.redF()+deltaColor.redF()*physray->intensity(), 1.0),
+                                       qMin(prevcolor.greenF()+deltaColor.greenF()*physray->intensity(), 1.0),
+                                       qMin(prevcolor.blueF()+deltaColor.blueF()*physray->intensity(), 1.0));
+    /*    qDebug() << "Point" << physray->startingX() << physray->startingY() << \
                 "Switched from" << prevcolor.name() << "TO" << newcolor.name() << \
                 "because of" << physray->intensity() << QColor(color).name();*/
     m_image.setPixel(physray->startingX(), physray->startingY(),
