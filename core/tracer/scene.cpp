@@ -8,6 +8,7 @@
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
 #include "core/stubs/pictureobject_stub.h"
+#include "core/stubs/lensobjectstub.h"
 
 Scene::Scene(QObject *parent) :
     QObject(parent),
@@ -95,5 +96,9 @@ void Scene::createObjectsFromStubs()
         PictureObjectStub *pstub = dynamic_cast<PictureObjectStub*>(obj);
         if (pstub)
             addObject(pstub->name(), new PictureObject(pstub->point(), pstub->horizontalVect(), pstub->verticalVect(), pstub->image()));
+        LensObjectStub *lstub = dynamic_cast<LensObjectStub*>(obj);
+        if (lstub)
+            addObject(lstub->name(), new LensObject(lstub->point(), lstub->horizontalVect(), lstub->verticalVect(),
+                                                    lstub->heightMap1(), lstub->heightMap2(), lstub->height(), lstub->refractiveIndex()));
     }
 }

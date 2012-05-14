@@ -1,13 +1,13 @@
 #include "core/models/lensmodel.h"
 
-Qt::ItemFlags LenseModel::flags(const QModelIndex &index) const
+Qt::ItemFlags LensModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return Qt::ItemIsEnabled;
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 };
 
-bool LenseModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+bool LensModel::setData(const QModelIndex &index, const QVariant &value, int role) {
     if (index.isValid() && role == Qt::EditRole && index.column()<4) {
         switch (index.row()) {
         case 0:
@@ -38,7 +38,7 @@ bool LenseModel::setData(const QModelIndex &index, const QVariant &value, int ro
     return false;
 };
 
-QVariant LenseModel::data(const QModelIndex &index, int role) const {
+QVariant LensModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole) {
     switch (index.row()){
     case 0:
@@ -67,7 +67,7 @@ QVariant LenseModel::data(const QModelIndex &index, int role) const {
         return QVariant();
 }
 
-QVariant LenseModel::headerData(int section, Qt::Orientation orientation, int role) const
+QVariant LensModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();

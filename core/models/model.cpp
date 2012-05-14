@@ -125,9 +125,9 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
     if (picture != NULL)
         m_parent->setModel(new PictureModel(picture, gl_widget));
     else {
-        LenseObjectStub* lense = dynamic_cast<LenseObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
-        if (lense!=NULL)
-            m_parent->setModel(new LenseModel(lense, gl_widget));
+        LensObjectStub* lens = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+        if (lens!=NULL)
+            m_parent->setModel(new LensModel(lens, gl_widget));
         // TODO(kazeevn) What about an exception?
     }
 
