@@ -37,6 +37,10 @@ Point3D* ThinLensObject::intercrossWithRay(const Ray3D &ray)
 
 void ThinLensObject::processIntersection(const PhysicalRay &ray, const Point3D &point)
 {
+    if (ray.startingX() == 154 && ray.startingY() == 363) {
+        qDebug() << "OH HAI";
+        qDebug() << ray.point() << point;
+    }
     Point3D *p = 0;
     Ray3D helperRay(opticalCentre, ray.direction());
     if (((p = m_frontFocalPlane.intercrossWithRay(helperRay)) != NULL) ||

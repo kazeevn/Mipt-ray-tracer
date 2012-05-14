@@ -19,7 +19,7 @@ public:
      */
     RectanglePolygon(const Point3D& point, const Vector3D& v1, const Vector3D& v2);
 
-    Point3D* intercrossWithRay(const Ray3D &ray);
+    virtual Point3D* intercrossWithRay(const Ray3D &ray);
     virtual void processIntersection(const PhysicalRay &ray, const Point3D &point)
     {
         Q_UNUSED(ray)
