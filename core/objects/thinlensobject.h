@@ -12,6 +12,7 @@ public:
     ThinLensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage& bitmask, double focus);
     Point3D* intercrossWithRay(const Ray3D &ray);
     void processIntersection(const PhysicalRay &ray, const Point3D &point);
+
 private:
     Point3D opticalCentre;
     QImage m_bitmask;

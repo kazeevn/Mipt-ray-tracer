@@ -33,6 +33,9 @@ public:
     void addCamera(CameraStub* camera) {m_camera=camera;}
 
     void createObjectsFromStubs();
+
+    void saveStubsToFile(const QString& filename);
+    void loadStubsFromFile(const QString& filename);
 signals:
     void renderingFinished();
 private:
