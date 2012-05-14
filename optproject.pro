@@ -39,7 +39,8 @@ SOURCES += main.cpp \
     core/objects/flatmirrorobject.cpp \
     core/objects/stubs/flatmirrorobjectstub.cpp \
     additemdialog.cpp \
-    core/models/flatmirrormodel.cpp
+    core/models/flatmirrormodel.cpp \
+    core/models/thinlensmodel.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -72,6 +73,7 @@ HEADERS  += mainwindow.h \
     core/objects/flatmirrorobject.h \
     core/objects/stubs/flatmirrorobjectstub.h \
     additemdialog.h \
-    core/models/flatmirrormodel.h
+    core/models/flatmirrormodel.h \
+    core/models/thinlensmodel.h
 FORMS    += mainwindow.ui \
     additemdialog.ui
