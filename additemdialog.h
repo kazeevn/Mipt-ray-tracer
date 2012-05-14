@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QItemSelectionModel>
+#include <QImage>
+#include <QGraphicsScene>
 
 #include "core/objects/stubs/virtual3dobjectstub.h"
 
@@ -21,10 +23,13 @@ public:
 private:
     Ui::AddItemDialog *ui;
     Virtual3DObjectStub* current_object;
+    QImage m_image;
+    QGraphicsScene out_image;
 
 private slots:
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
-
+    void on_pushButtonOK_clicked();
+    void on_loadImage_clicked();
 };
 
 #endif // ADDITEMDIALOG_H

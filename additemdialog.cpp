@@ -1,3 +1,6 @@
+#include<QPixmap>
+#include<QFileDialog>
+
 #include "additemdialog.h"
 #include "ui_additemdialog.h"
 #include "core/objects/stubs/pictureobjectstub.h"
@@ -48,4 +51,23 @@ void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, co
 AddItemDialog::~AddItemDialog()
 {
     delete ui;
+}
+
+void AddItemDialog::on_pushButtonOK_clicked()
+{
+    if (ui->listWidget->selectedItems().length()==0) return;
+    const QString& selected = ui->listWidget->selectedItems()[0]->text();
+    if (selected=="Picture") {
+        if (!current_object->isValid()) return;
+        Scene::Instance().addStubObject(ui->editName->text(), current_object);
+    }
+}
+
+void AddItemDialog::on_loadImage_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    m_image.load(fileName);
+    out_image.addPixmap(QPixmap::fromImage(m_image));
+    ui->graphicsView->setScene(&out_image);
 }
