@@ -4,6 +4,7 @@
 #include "core/objects/virtual3dobject.h"
 #include "core/objects/rectanglepolygon.h"
 #include "core/objects/physicalpolygons.h"
+#include "core/objects/helpers/trianglepolygonsurface.h"
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"
 #include "core/geometry/point3d.h"
@@ -53,7 +54,7 @@ private:
 
     // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
     QSize m_frontSize, m_backSize;
-    PhysicalTetragonPolygon ***m_frontPolygons, ***m_backPolygons;
+    TrianglePolygonSurface<PhysicalTrianglePolygon> m_frontPolygons, m_backPolygons;
 };
 
 #endif // LENSOBJECT_H

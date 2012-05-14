@@ -1,4 +1,4 @@
-#include "physicalpolygons.h"
+#include "physicaltrianglepolygon.h"
 #include "core/tracer/physicalray.h"
 #include "core/tracer/raypool.h"
 
@@ -45,7 +45,8 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     //double pfrac = 2*cos(incidenceAngle)*sin(fractureAngle) / sin(incidenceAngle+fractureAngle) / cos(incidenceAngle - fractureAngle);
     double prefl = tan(incidenceAngle-fractureAngle) / tan(incidenceAngle+fractureAngle);
 
- /*   qDebug() << "POLYGON" << *this;
+ /*
+    qDebug() << "POLYGON" << *this;
     qDebug() << "RAY" << ray.direction();
     qDebug() << "PROCESS" << point << "incidence angle:" << incidenceAngle*180/3.1415926535 << "fracture angle:" << fractureAngle*180/3.1415926535;
     qDebug() << "P-polarization:" << prefl;
@@ -63,30 +64,4 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const Ray3D &ray, cons
     RayPool::Instance().pushRay(new PhysicalRay(point, fractureDirection,
                                                 physray->startingX(), physray->startingY(),
                                                 (2-srefl*srefl-prefl*prefl)/2 * physray->intensity()));
-}
-
-
-PhysicalTetragonPolygon::PhysicalTetragonPolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3, const Point3D &p4)
-    : m_poly1(p1, p2, p4), m_poly2(p2, p3, p4)
-{
-    //qDebug() << "created polygon" << p1 << p2 << p3 << p4;
-}
-
-Point3D* PhysicalTetragonPolygon::intercrossWithRay(const Ray3D &ray)
-{
-    Point3D* p = m_poly1.intercrossWithRay(ray);
-    if (p) return p;
-    p = m_poly2.intercrossWithRay(ray);
-    if (p) return p;
-    return NULL;
-}
-
-void PhysicalTetragonPolygon::processPhysicalIntersection(const Ray3D &ray, const Point3D &point, double refractiveIndex)
-{
-    Point3D* p = m_poly1.intercrossWithRay(ray);
-    if (p && (p->dist(point) < DBL_EPSILON)) {
-        delete p;
-        m_poly1.processPhysicalIntersection(ray, point, refractiveIndex);
-    } else
-        m_poly2.processPhysicalIntersection(ray, point, refractiveIndex);
 }

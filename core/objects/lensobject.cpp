@@ -17,7 +17,9 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_bottomPolygon(point-m_perpendicular+v2, m_perpendicular*2, v1),
 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
-      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1)
+      m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1),
+      m_frontPolygons(m_frontSize.width(), m_frontSize.height()),
+      m_backPolygons(m_backSize.width(), m_backSize.height())
 
 {
     triangulateSurfaces();
@@ -25,23 +27,6 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
 
 LensObject::~LensObject()
 {
-    if (m_frontPolygons) {
-        for (int i = 0; i < m_frontSize.width(); i++) {
-            for (int j = 0; j < m_frontSize.height(); j++)
-                delete m_frontPolygons[i][j];
-            delete[] m_frontPolygons[i];
-        }
-        delete[] m_frontPolygons;
-    }
-
-    if (m_backPolygons) {
-        for (int i = 0; i < m_backSize.width(); i++) {
-            for (int j = 0; j < m_backSize.height(); j++)
-                delete m_backPolygons[i][j];
-            delete[] m_backPolygons[i];
-        }
-        delete[] m_backPolygons;
-    }
 }
 
 double LensObject::getFrontHeight(int i, int j)
@@ -49,7 +34,7 @@ double LensObject::getFrontHeight(int i, int j)
     double value = 0;
     if ((i > 0) && (i < m_frontSize.width()) && (j > 0) && (j < m_frontSize.height())) {
         QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
-        value = c.blackF()+0.01;
+        value = c.blackF();
     }
     return value;
 }
@@ -59,7 +44,7 @@ double LensObject::getBackHeight(int i, int j)
     double value = 0;
     if ((i > 0) && (i < m_backSize.width()) && (j > 0) && (j < m_backSize.height())) {
         QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
-        value = c.blackF()+0.01;
+        value = c.blackF();
     }
     return value;
 }
@@ -80,20 +65,26 @@ Point3D LensObject::backPoint(int i, int j)
 
 void LensObject::triangulateSurfaces()
 {
-    m_frontPolygons = new PhysicalTetragonPolygon**[m_frontSize.width()];
     for (int i = 0; i < m_frontSize.width(); i++) {
-        m_frontPolygons[i] = new PhysicalTetragonPolygon*[m_frontSize.height()];
-        for (int j = 0; j < m_frontSize.height(); j++)
-            m_frontPolygons[i][j] = new PhysicalTetragonPolygon(frontPoint(i, j), frontPoint(i+1, j),
-                                                                frontPoint(i+1, j+1), frontPoint(i, j+1));
+        for (int j = 0; j < m_frontSize.height(); j++) {
+            m_frontPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(frontPoint(i, j),
+                                                                      frontPoint(i+1, j),
+                                                                      frontPoint(i, j+1));
+            m_frontPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(frontPoint(i+1, j),
+                                                                      frontPoint(i+1, j+1),
+                                                                      frontPoint(i, j+1));
+        }
     }
 
-    m_backPolygons = new PhysicalTetragonPolygon**[m_backSize.width()];
     for (int i = 0; i < m_backSize.width(); i++) {
-        m_backPolygons[i] = new PhysicalTetragonPolygon*[m_backSize.height()];
-        for (int j = 0; j < m_backSize.height(); j++)
-            m_backPolygons[i][j] = new PhysicalTetragonPolygon(backPoint(i, j), backPoint(i+1, j),
-                                                               backPoint(i+1, j+1), backPoint(i+1, j));
+        for (int j = 0; j < m_backSize.height(); j++) {
+            m_backPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(backPoint(i, j),
+                                                                      backPoint(i+1, j),
+                                                                      backPoint(i, j+1));
+            m_backPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(backPoint(i+1, j),
+                                                                      backPoint(i+1, j+1),
+                                                                      backPoint(i, j+1));
+        }
     }
 }
 
@@ -116,22 +107,24 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
 
     for (int i = 0; i < m_frontSize.width(); i++)
         for (int j = 0; j < m_frontSize.height(); j++)
-            if ((p1 = m_frontPolygons[i][j]->intercrossWithRay(ray)) != NULL) {
-                if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
-                    minpoint = p1;
-                    mindist = p1->dist(ray.point());
-                } else
-                    delete p1;
-            }
+            for (int k = 0; k < 2; k++)
+                if ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
+                    if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                        minpoint = p1;
+                        mindist = p1->dist(ray.point());
+                    } else
+                        delete p1;
+                }
     for (int i = 0; i < m_backSize.width(); i++)
         for (int j = 0; j < m_backSize.height(); j++)
-            if ((p1 = m_backPolygons[i][j]->intercrossWithRay(ray)) != NULL) {
-                if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
-                    minpoint = p1;
-                    mindist = p1->dist(ray.point());
-                } else
-                    delete p1;
-            }
+            for (int k = 0; k < 2; k++)
+                if ((p1 = m_backPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
+                    if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                        minpoint = p1;
+                        mindist = p1->dist(ray.point());
+                    } else
+                        delete p1;
+                }
     return minpoint;
 }
 
@@ -148,28 +141,30 @@ void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
         Point3D *helper = 0;
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
-                if ((coordx+i >= 0) && (coordx+i < m_frontSize.width()) && \
-                        (coordy+j >= 0) && (coordy+j < m_frontSize.height())) {
-                    helper = m_frontPolygons[coordx+i][coordy+j]->intercrossWithRay(ray);
-                    if (helper) {
-                        delete helper;
-                        m_frontPolygons[coordx+i][coordy+j]->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                for (int k = 0; k < 2; k++)
+                    if ((coordx+i >= 0) && (coordx+i < m_frontSize.width()) && \
+                            (coordy+j >= 0) && (coordy+j < m_frontSize.height())) {
+                        helper = m_frontPolygons.at(coordx+i, coordy+j, k)->intercrossWithRay(ray);
+                        if (helper) {
+                            delete helper;
+                            m_frontPolygons.at(coordx+i, coordy+j, k)->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                        }
                     }
-                }
     } else {
         int coordx = newvector.x*m_backSize.width();
         int coordy = newvector.y*m_backSize.height();
         Point3D *helper = 0;
         for (int i = -1; i <= 1; i++)
             for (int j = -1; j <= 1; j++)
-                if ((coordx+i >= 0) && (coordx+i < m_backSize.width()) && \
-                        (coordy+j >= 0) && (coordy+j < m_backSize.height())) {
-                    helper = m_backPolygons[coordx+i][coordy+j]->intercrossWithRay(ray);
-                    if (helper) {
-                        delete helper;
-                        m_backPolygons[coordx+i][coordy+j]->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                for (int k = 0; k < 2; k++)
+                    if ((coordx+i >= 0) && (coordx+i < m_backSize.width()) && \
+                            (coordy+j >= 0) && (coordy+j < m_backSize.height())) {
+                        helper = m_backPolygons.at(coordx+i, coordy+j, k)->intercrossWithRay(ray);
+                        if (helper) {
+                            delete helper;
+                            m_backPolygons.at(coordx+i, coordy+j, k)->processPhysicalIntersection(ray, point, m_refractiveIndex);
+                        }
                     }
-                }
     }
 }
 
