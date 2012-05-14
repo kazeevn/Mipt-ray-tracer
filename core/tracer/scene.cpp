@@ -130,6 +130,7 @@ void Scene::createObjectsFromStubs()
 void Scene::saveStubsToFile(const QString &filename)
 {
     QSettings sfile(filename, QSettings::IniFormat);
+    sfile.clear();
     Q_FOREACH(Virtual3DObjectStub* obj, m_stubs) {
         sfile.beginGroup(obj->name());
         sfile.setValue("PointX", obj->point().x);

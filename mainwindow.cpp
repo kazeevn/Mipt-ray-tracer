@@ -30,37 +30,17 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {    
+    /* UI STUFF */
     ui->setupUi(this);
-
+    QSplitter *splitter = new QSplitter(Qt::Horizontal, ui->edit);
+    glWidget = new GLWidget(splitter);
+    splitter->addWidget(ui->toolBox);
+    splitter->addWidget(glWidget);
+    QVBoxLayout* layout = new QVBoxLayout(ui->edit);
+    layout->addWidget(splitter);
+    /* Initialization */
     RenderedImage::init(QSize(0, 0));
-
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(showPic()));
-
-    glWidget = new GLWidget;
-    QTableView* tableView = new QTableView;
-    listView = new QListView;
-    QTableView* tableViewCamera = new QTableView;
-    QPushButton* deleteItem = new QPushButton;
-    QPushButton* addItem = new QPushButton;
-    QCheckBox* viewFromCamera = new QCheckBox;
-    QGridLayout* editor_layout = new QGridLayout;
-    QWidget* buttons = new QWidget;
-    QHBoxLayout* buttons_layout = new QHBoxLayout;
-
-    ui->tabWidget->widget(0)->setLayout(editor_layout);
-    ui->tabWidget->activateWindow();
-    editor_layout->addWidget(tableView,0,0);
-    editor_layout->addWidget(listView,1,0);
-    editor_layout->addWidget(buttons,2,0);
-    editor_layout->addWidget(tableViewCamera,3,0);
-    editor_layout->addWidget(glWidget,0,1,4,1);
-    editor_layout->setColumnStretch(1,1);
-
-    buttons->setLayout(buttons_layout);
-    buttons_layout->addWidget(deleteItem);
-    buttons_layout->addWidget(addItem);
-    buttons_layout->addWidget(viewFromCamera);
-
     QImage image;
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
@@ -72,28 +52,21 @@ MainWindow::MainWindow(QWidget *parent) :
     thinlensimg.load("thinlens.png");
     Scene::Instance().addStubObject("Thin lens", new ThinLensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, -0.5));
     Scene::Instance().addStubObject("Flat mirror", new FlatMirrorObjectStub(Point3D(-1, -1, -2), Vector3D(0, -1, 0), Vector3D(2, 0, -1), thinlensimg, 0.9));
-
-
-
     Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(1, 0, -3), Vector3D(1, -5, 0),
                                                Point3D(5, 0, 3), QSize(300, 500)));
 
+    /* Models */
     scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
-    Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(tableView, glWidget);
-    listView->setModel(scene_model);
-    listView->setItemDelegate(pic_delegate);
-    QItemSelectionModel *selectionModel = listView->selectionModel();
+    Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(ui->objectsTableView, glWidget);
+    ui->objectsListView->setModel(scene_model);
+    ui->objectsListView->setItemDelegate(pic_delegate);
+    QItemSelectionModel *selectionModel = ui->objectsListView->selectionModel();
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
-    connect(deleteItem, SIGNAL(clicked()),this,SLOT(removeRow()));
-    connect(addItem,SIGNAL(clicked()),this,SLOT(addItem()));
-
-    tableViewCamera->setModel(camera_model);
-    tableViewCamera->resizeRowsToContents();
-    tableViewCamera->resizeColumnsToContents();
-    deleteItem->setText("Delete");
-    addItem->setText("Add");
+    ui->cameraTableView->setModel(camera_model);
+    ui->cameraTableView->resizeRowsToContents();
+    ui->cameraTableView->resizeColumnsToContents();
 }
 
 void MainWindow::addItem()
@@ -113,7 +86,7 @@ void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const
 
 void MainWindow::removeRow()
 {
-    foreach(const QModelIndex& index, listView->selectionModel()->selectedRows())
+    foreach(const QModelIndex& index, ui->objectsListView->selectionModel()->selectedRows())
         scene_model->removeRow(index.row());
     glWidget->updateGL();
 }

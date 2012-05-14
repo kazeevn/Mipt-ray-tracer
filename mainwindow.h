@@ -24,8 +24,6 @@ private:
     Ui::MainWindow *ui;
     GLWidget* glWidget;
     SceneModel* scene_model;
-    QListView* listView;
-
 public slots:
     void showPic();
     void doRender();

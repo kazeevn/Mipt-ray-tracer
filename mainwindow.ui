@@ -21,7 +21,7 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -31,6 +31,110 @@
        <attribute name="title">
         <string>Edit</string>
        </attribute>
+       <widget class="QToolBox" name="toolBox">
+        <property name="geometry">
+         <rect>
+          <x>4</x>
+          <y>4</y>
+          <width>274</width>
+          <height>424</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="objPage">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>264</width>
+           <height>360</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>Objects</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Objects list:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QListView" name="objectsListView"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Properties:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTableView" name="objectsTableView"/>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="addObjectBtn">
+              <property name="text">
+               <string>Add object</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteObjectBtn">
+              <property name="text">
+               <string>Delete object</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="cameraPage">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>264</width>
+           <height>360</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>Camera</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QTableView" name="cameraTableView"/>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cameraViewBox">
+            <property name="text">
+             <string>View from camera</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
       </widget>
       <widget class="QWidget" name="render">
        <attribute name="title">
@@ -92,7 +196,7 @@
      <x>0</x>
      <y>0</y>
      <width>1100</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbout">
@@ -143,9 +247,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>addObjectBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>addItem()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>310</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>31</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>deleteObjectBtn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>removeRow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>173</x>
+     <y>300</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>savePic()</slot>
   <slot>doRender()</slot>
+  <slot>addItem()</slot>
+  <slot>removeRow()</slot>
  </slots>
 </ui>
