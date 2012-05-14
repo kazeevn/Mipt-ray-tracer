@@ -130,9 +130,8 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     return minpoint;
 }
 
-void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
+void LensObject::processIntersection(const PhysicalRay &ray, const Point3D &point)
 {
-    Q_UNUSED(ray);
     Vector3D oldvector(m_rectangle.point(), point);
     // На самом деле это трехмерный вектор, с координатами от 0 до 1 по (x, y)
     // И с высотой над поверхностью по z

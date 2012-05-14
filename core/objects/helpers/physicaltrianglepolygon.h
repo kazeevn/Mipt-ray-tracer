@@ -18,7 +18,7 @@ class PhysicalTrianglePolygon : public TrianglePolygon
 public:
     PhysicalTrianglePolygon(const Point3D &p1, const Point3D &p2, const Point3D &p3);
 
-    void processPhysicalIntersection(const Ray3D &ray, const Point3D &point, double refractiveIndex);
+    void processPhysicalIntersection(const PhysicalRay &ray, const Point3D &point, double refractiveIndex);
 private:
     Vector3D m_perpendicular;
 };

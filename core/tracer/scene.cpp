@@ -5,6 +5,7 @@
 #include "core/geometry/point3d.h"
 #include "core/tracer/renderedimage.h"
 #include "core/tracer/physicalray.h"
+#include "core/objects/thinlensobject.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
 #include "core/objects/stubs/pictureobjectstub.h"
@@ -35,7 +36,7 @@ void Scene::addStubObject(const QString &name, Virtual3DObjectStub *object)
     m_stubs.append(object);
 }
 
-void Scene::traceRay(Ray3D *ray)
+void Scene::traceRay(PhysicalRay *ray)
 {
     Point3D *point = 0, *minpoint = 0;
     Virtual3DObject *nearestObj = 0;
@@ -50,6 +51,9 @@ void Scene::traceRay(Ray3D *ray)
         LensObject* lensobj = dynamic_cast<LensObject*>(obj);
         if (lensobj)
             point = lensobj->intercrossWithRay(*ray);
+        ThinLensObject* thinlensobj = dynamic_cast<ThinLensObject*>(obj);
+        if (thinlensobj)
+            point = thinlensobj->intercrossWithRay(*ray);
         if (point != NULL) {
             double dist = point->dist(ray->point());
             if ((minpoint == NULL) || (dist < mindist)) {

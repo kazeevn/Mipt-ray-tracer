@@ -8,16 +8,15 @@ RayPool::RayPool(QObject *parent)
 {
 }
 
-void RayPool::pushRay(Ray3D* ray)
+void RayPool::pushRay(PhysicalRay *ray)
 {
     QMutexLocker locker(&m_mutex);
-    PhysicalRay* pray = dynamic_cast<PhysicalRay*>(ray);
-    if (pray && (pray->intensity() < 4e-3))
+    if (ray->intensity() < 4e-3)
         return;
     m_rays.push(ray);
 }
 
-Ray3D* RayPool::popRay()
+PhysicalRay* RayPool::popRay()
 {
     QMutexLocker locker(&m_mutex);
     if (m_rays.isEmpty()) {

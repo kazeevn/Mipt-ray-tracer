@@ -4,7 +4,7 @@
 #include <QImage>
 #include <QSize>
 #include <QMutex>
-#include "core/geometry/ray3d.h"
+#include "core/tracer/physicalray.h"
 
 /* Класс, собирающий информацию о всех лучах, пришедших куда-либо откуда-либо */
 class RenderedImage
@@ -23,7 +23,7 @@ public:
     const QSize size() const { return m_image.size(); }
     const QImage image() const { return m_image; }
 
-    void rayTraceResult(const Ray3D &ray, QRgb color);
+    void rayTraceResult(const PhysicalRay &ray, QRgb color);
 private:
     RenderedImage(QSize size);
 

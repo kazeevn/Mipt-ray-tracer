@@ -5,6 +5,7 @@
 #include "core/tracer/renderedimage.h"
 #include "core/objects/pictureobject.h"
 #include "core/objects/lensobject.h"
+#include "core/objects/thinlensobject.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
 #include "core/models/model.h"
@@ -44,15 +45,19 @@ MainWindow::MainWindow(QWidget *parent) :
     QImage image;
     image.load("google.png");
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
-    Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image));
+    Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(-1, -3, 0), Vector3D(-1, 0, 1), image));
 
-    QImage lensimg;
-    lensimg.load("lens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(30, 30), 0.2, 1.5));
+//    QImage lensimg;
+//    lensimg.load("lens.png");
+//    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(30, 30), 0.2, 1.5));
 
     Scene::Instance().addCamera(new CameraStub(Point3D(1, -3, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
                                                Point3D(5, -2, 0), QSize(500, 300)));
     Scene::Instance().createObjectsFromStubs();
+
+    QImage thinlensimg;
+    thinlensimg.load("thinlens.png");
+    Scene::Instance().addObject("Thin lens", new ThinLensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, 0.5));
 
     SceneModel *scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);

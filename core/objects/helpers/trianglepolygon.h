@@ -19,7 +19,7 @@ public:
     const Point3D& point3() const { return p3; }
     Point3D *intercrossWithRay(const Ray3D &ray);
     // Just do nothing
-    virtual void processIntersection(const Ray3D &ray, const Point3D &point)
+    virtual void processIntersection(const PhysicalRay &ray, const Point3D &point)
     {
         Q_UNUSED(ray);
         Q_UNUSED(point);

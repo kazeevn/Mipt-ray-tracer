@@ -33,7 +33,8 @@ SOURCES += main.cpp \
     core/models/lensmodel.cpp \
     core/objects/stubs/lensobjectstub.cpp \
     core/objects/stubs/pictureobjectstub.cpp \
-    core/objects/stubs/virtual3dobjectstub.cpp
+    core/objects/stubs/virtual3dobjectstub.cpp \
+    core/objects/thinlensobject.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
@@ -60,5 +61,6 @@ HEADERS  += mainwindow.h \
     core/models/lensmodel.h \
     core/objects/stubs/lensobjectstub.h \
     core/objects/stubs/pictureobjectstub.h \
-    core/objects/stubs/virtual3dobjectstub.h
+    core/objects/stubs/virtual3dobjectstub.h \
+    core/objects/thinlensobject.h
 FORMS    += mainwindow.ui

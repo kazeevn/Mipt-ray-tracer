@@ -1,6 +1,6 @@
 #include "renderedimage.h"
+
 #include <QMutexLocker>
-#include "core/tracer/physicalray.h"
 #include <QColor>
 
 RenderedImage *RenderedImage::theInstance = 0;
@@ -13,21 +13,18 @@ RenderedImage::RenderedImage(QSize size)
     m_image.fill(Qt::black);
 }
 
-void RenderedImage::rayTraceResult(const Ray3D &ray, QRgb color)
+void RenderedImage::rayTraceResult(const PhysicalRay &ray, QRgb color)
 {
     QMutexLocker locker(&m_mutex);
-    const PhysicalRay* physray = dynamic_cast<const PhysicalRay*>(&ray);
-    if (!physray)
-        return;
     /* Средневзвешенное цветов упершихся лучей с весами в интенсивность */
-    QColor prevcolor(m_image.pixel(physray->startingX(), physray->startingY()));
+    QColor prevcolor(m_image.pixel(ray.startingX(), ray.startingY()));
     QColor deltaColor(color);
-    QColor newcolor = QColor::fromRgbF(qMin(prevcolor.redF()+deltaColor.redF()*physray->intensity(), 1.0),
-                                       qMin(prevcolor.greenF()+deltaColor.greenF()*physray->intensity(), 1.0),
-                                       qMin(prevcolor.blueF()+deltaColor.blueF()*physray->intensity(), 1.0));
-    /*    qDebug() << "Point" << physray->startingX() << physray->startingY() << \
+    QColor newcolor = QColor::fromRgbF(qMin(prevcolor.redF()+deltaColor.redF()*ray.intensity(), 1.0),
+                                       qMin(prevcolor.greenF()+deltaColor.greenF()*ray.intensity(), 1.0),
+                                       qMin(prevcolor.blueF()+deltaColor.blueF()*ray.intensity(), 1.0));
+    /*    qDebug() << "Point" << ray.startingX() << ray.startingY() << \
                 "Switched from" << prevcolor.name() << "TO" << newcolor.name() << \
-                "because of" << physray->intensity() << QColor(color).name();*/
-    m_image.setPixel(physray->startingX(), physray->startingY(),
+                "because of" << ray.intensity() << QColor(color).name();*/
+    m_image.setPixel(ray.startingX(), ray.startingY(),
                      newcolor.rgb());
 }

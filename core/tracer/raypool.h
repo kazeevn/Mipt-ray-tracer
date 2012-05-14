@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QStack>
 #include <QMutex>
-#include "core/geometry/ray3d.h"
 #include "core/tracer/physicalray.h"
 
 /* Пул лучей, откуда WorkerObject'ы достают лучи чтобы их оттрассировать
@@ -19,13 +18,13 @@ public:
         return theInstance;
     }
 
-    void pushRay(Ray3D* ray);
-    Ray3D* popRay();
+    void pushRay(PhysicalRay* ray);
+    PhysicalRay *popRay();
 signals:
     void exhausted();
 private:
     RayPool(QObject *parent = 0);
-    QStack<Ray3D*> m_rays;
+    QStack<PhysicalRay*> m_rays;
     QMutex m_mutex;
 };
 

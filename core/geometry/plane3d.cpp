@@ -2,6 +2,11 @@
 #include <cmath>
 #include <cfloat>
 
+Plane3D::Plane3D(const Point3D &p, const Vector3D &v)
+    : A(v.x), B(v.y), C(v.z), D(-A*p.x-B*p.y-C*p.z)
+{
+}
+
 Plane3D::Plane3D(const Point3D &p1, const Point3D &p2, const Point3D &p3)
 {
     calcPlaneCoef(p1, p2, p3);

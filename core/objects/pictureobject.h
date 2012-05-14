@@ -13,7 +13,7 @@ public:
     /* Положение задается как у Rectangle3D */
     PictureObject(const Point3D& point, const Vector3D& v1, const Vector3D& v2, const QImage &image);
 
-    void processIntersection(const Ray3D &ray, const Point3D &point);
+    void processIntersection(const PhysicalRay &ray, const Point3D &point);
 private:
     QImage m_image;
 };

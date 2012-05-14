@@ -12,7 +12,7 @@ WorkerObject::WorkerObject()
 void WorkerObject::run()
 {
     qDebug() << "Worker object" << QThread::currentThreadId() << "is ready to work";
-    Ray3D* curRay = 0;
+    PhysicalRay* curRay = 0;
     while ((curRay = RayPool::Instance().popRay()) != NULL) {
         Scene::Instance().traceRay(curRay);
         delete curRay;

@@ -30,7 +30,7 @@ public:
     ~LensObject();
 
     Point3D* intercrossWithRay(const Ray3D &ray);
-    void processIntersection(const Ray3D &ray, const Point3D &point);
+    void processIntersection(const PhysicalRay &ray, const Point3D &point);
 
     void setRefractiveIndex(double refractiveIndex);
 
