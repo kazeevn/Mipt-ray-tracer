@@ -18,6 +18,16 @@ QVariant SceneModel::data(const QModelIndex &index, int role) const {
 
 };
 
+bool SceneModel::removeRow(int row, const QModelIndex &parent)
+{
+    beginRemoveRows(parent,row,row);
+    delete Scene::Instance().stub_objects()[row];
+    Scene::Instance().stub_objects().takeAt(row);
+    endRemoveRows();
+    return true;
+}
+
+
 Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
