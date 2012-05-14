@@ -23,9 +23,10 @@ private:
     GLWidget* glWidget;
 
 public slots:
+    void showPic();
+    void doRender();
     void savePic();
 private slots:
-    void on_renderButton_clicked();
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
 };
 

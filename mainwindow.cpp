@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {    
     ui->setupUi(this);
 
-    connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(savePic()));
+    connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(showPic()));
     glWidget = new GLWidget;
     QTableView* tableView = new QTableView;
     QListView* listView = new QListView;
@@ -55,8 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
                                                              Point3D(5, -1, 0), QSize(500, 300)));
     Scene::Instance().createObjectsFromStubs();
 
-    // Test code...
-
     SceneModel *scene_model=new SceneModel;
     CameraModel *camera_model = new CameraModel(glWidget);
     Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(tableView, glWidget);
@@ -80,21 +78,27 @@ void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const
     glWidget->updateGL();
 }
 
-void MainWindow::savePic() {
-    QGraphicsScene* out_image = new QGraphicsScene;
-    out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
-    ui->graphicsView->setScene(out_image);
-    RenderedImage::Instance().image().save("result.png");
-    QMessageBox::information(this, "No one gives a fuck", "Rendering finished");
-}
-
 MainWindow::~MainWindow()
 {
     // TODO(kazeevn) properly destroy everything
     delete ui;
 }
 
-void MainWindow::on_renderButton_clicked()
+void MainWindow::doRender()
 {
     Scene::Instance().startRendering();
+}
+
+void MainWindow::showPic() {
+    QGraphicsScene* out_image = new QGraphicsScene;
+    out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
+    ui->graphicsView->setScene(out_image);
+    QMessageBox::information(this, "No one gives a fuck, but...", "Rendering finished!");
+}
+
+void MainWindow::savePic()
+{
+    // TODO: show a save dialog
+    RenderedImage::Instance().image().save("result.png");
+    QMessageBox::information(this, "You should give a fuck!", "Saved image to 'result.png'");
 }
