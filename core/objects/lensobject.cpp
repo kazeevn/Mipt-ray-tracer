@@ -2,6 +2,7 @@
 
 #include <QColor>
 #include <QDebug>
+#include <cfloat>
 
 LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D &v2, const QImage &heightMap1, const QImage &heightMap2, const QSize &picsize, double height, double refractiveIndex)
     : m_rectangle(point, v1, v2), m_matrix(v1, v2, v2.crossProduct(v1).unit()),
@@ -66,18 +67,26 @@ void LensObject::triangulateSurfaces()
 {
     for (int i = 0; i < m_size.width(); i++) {
         for (int j = 0; j < m_size.height(); j++) {
-            m_frontPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(frontPoint(i, j),
-                                                                      frontPoint(i+1, j),
-                                                                      frontPoint(i, j+1));
-            m_frontPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(frontPoint(i+1, j),
-                                                                      frontPoint(i+1, j+1),
-                                                                      frontPoint(i, j+1));
-            m_backPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(backPoint(i, j),
-                                                                      backPoint(i+1, j),
-                                                                      backPoint(i, j+1));
-            m_backPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(backPoint(i+1, j),
-                                                                      backPoint(i+1, j+1),
-                                                                      backPoint(i, j+1));
+            if ((getFrontHeight(i, j) + getBackHeight(i, j) > DBL_EPSILON) ||
+                    (getFrontHeight(i+1, j) + getBackHeight(i+1, j) > DBL_EPSILON) ||
+                    (getFrontHeight(i, j+1) + getBackHeight(i, j+1) > DBL_EPSILON)) {
+                m_frontPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(frontPoint(i, j),
+                                                                          frontPoint(i+1, j),
+                                                                          frontPoint(i, j+1));
+                m_backPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(backPoint(i, j),
+                                                                          backPoint(i+1, j),
+                                                                          backPoint(i, j+1));
+            }
+            if ((getFrontHeight(i+1, j) + getBackHeight(i+1, j) > DBL_EPSILON) ||
+                    (getFrontHeight(i+1, j+1) + getBackHeight(i+1, j+1) > DBL_EPSILON) ||
+                    (getFrontHeight(i, j+1) + getBackHeight(i, j+1) > DBL_EPSILON)) {
+                m_frontPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(frontPoint(i+1, j),
+                                                                          frontPoint(i+1, j+1),
+                                                                          frontPoint(i, j+1));
+                m_backPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(backPoint(i+1, j),
+                                                                         backPoint(i+1, j+1),
+                                                                         backPoint(i, j+1));
+            }
         }
     }
 }
@@ -98,18 +107,19 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     // После эвристик - честный пробег по всем полигонам
     Point3D* minpoint = 0;
     double mindist = -1;
-
     for (int i = 0; i < m_size.width(); i++)
         for (int j = 0; j < m_size.height(); j++)
             for (int k = 0; k < 2; k++) {
-                if ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
+                if ((m_frontPolygons.at(i, j, k) != NULL) && \
+                        ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL)) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
                         minpoint = p1;
                         mindist = p1->dist(ray.point());
                     } else
                         delete p1;
                 }
-                if ((p1 = m_backPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL) {
+                if ((m_backPolygons.at(i, j, k) != NULL) && \
+                        ((p1 = m_backPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL)) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
                         minpoint = p1;
                         mindist = p1->dist(ray.point());

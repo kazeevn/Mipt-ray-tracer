@@ -33,12 +33,12 @@ public:
         delete[] m_polygons;
     }
 
-    bool inside(int x, int y, int k)
+    inline bool inside(int x, int y, int k)
     {
         return ((x >= 0) && (x < m_hsize) && (y >= 0) && (y < m_vsize) && (k >= 0) && (k < 2));
     }
 
-    T*& at(int x, int y, int k)
+    inline T*& at(int x, int y, int k)
     {
         return m_polygons[x*m_vsize*2 + y*2 + k];
     }

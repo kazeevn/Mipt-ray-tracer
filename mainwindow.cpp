@@ -19,7 +19,7 @@
 #include <QStandardItem>
 #include <QTableView>
 #include <QGridLayout>
- #include <QItemSelectionModel>
+#include <QItemSelectionModel>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -49,7 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QImage lensimg;
     lensimg.load("lens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(20, 20), 0.2, 1.5));
+    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(50, 50), 0.2, 1.5));
 
     Scene::Instance().addCamera(new CameraStub(Point3D(1, -3, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
                                                Point3D(5, -2, 0), QSize(500, 300)));
