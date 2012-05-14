@@ -5,7 +5,7 @@
 #include <QList>
 
 class Virtual3DObjectStub : public Rectangle3D
-{
+{    
 public:
     Virtual3DObjectStub(const Point3D& point, const Vector3D& v1, const Vector3D& v2) : Rectangle3D(point, v1, v2) {m_selected=false;}
     virtual ~Virtual3DObjectStub() {}

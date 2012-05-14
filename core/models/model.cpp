@@ -57,7 +57,8 @@ bool PictureModel::setData(const QModelIndex &index, const QVariant &value, int 
             m_object->v2()[index.column()]=value.toDouble();
             break;
     }
-        gl_widget->updateGL();
+        if (gl_widget != NULL)
+            gl_widget->updateGL();
         return true;
     }
     return false;

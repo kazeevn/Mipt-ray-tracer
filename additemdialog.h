@@ -2,6 +2,8 @@
 #define ADDITEMDIALOG_H
 
 #include <QDialog>
+#include <QItemSelectionModel>
+
 #include "core/objects/stubs/virtual3dobjectstub.h"
 
 namespace Ui {
@@ -18,7 +20,10 @@ public:
 
 private:
     Ui::AddItemDialog *ui;
-    Virtual3DObjectStub* object;
+    Virtual3DObjectStub* current_object;
+
+private slots:
+    void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);
 
 };
 
