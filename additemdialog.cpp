@@ -8,10 +8,11 @@
 #include "core/geometry/plane3d.h"
 #include "core/geometry/vector3d.h"
 
-AddItemDialog::AddItemDialog(QWidget *parent) :
+AddItemDialog::AddItemDialog(MainWindow *parent) :
     QDialog(parent),
     ui(new Ui::AddItemDialog)
 {
+    m_window=parent;
     ui->setupUi(this);    
     // TODO(kazeevn) make it python-style for item in {...}
     ui->listWidget->addItem("Picture");
@@ -60,6 +61,8 @@ void AddItemDialog::on_pushButtonOK_clicked()
     if (selected=="Picture") {
         if (!current_object->isValid()) return;
         Scene::Instance().addStubObject(ui->editName->text(), current_object);
+        m_window->refresh();
+        this->close();
     }
 }
 
@@ -70,4 +73,5 @@ void AddItemDialog::on_loadImage_clicked()
     m_image.load(fileName);
     out_image.addPixmap(QPixmap::fromImage(m_image));
     ui->graphicsView->setScene(&out_image);
+    current_object->setImage(m_image);
 }

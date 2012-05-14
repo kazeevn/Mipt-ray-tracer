@@ -6,7 +6,8 @@
 #include <QImage>
 #include <QGraphicsScene>
 
-#include "core/objects/stubs/virtual3dobjectstub.h"
+#include "core/objects/stubs/pictureobjectstub.h"
+#include "mainwindow.h"
 
 namespace Ui {
     class AddItemDialog;
@@ -17,14 +18,15 @@ class AddItemDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit AddItemDialog(QWidget *parent = 0);
+    explicit AddItemDialog(MainWindow *parent = 0);
     ~AddItemDialog();
 
 private:
     Ui::AddItemDialog *ui;
-    Virtual3DObjectStub* current_object;
+    PictureObjectStub* current_object;
     QImage m_image;
     QGraphicsScene out_image;
+    MainWindow* m_window;
 
 private slots:
     void selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection);

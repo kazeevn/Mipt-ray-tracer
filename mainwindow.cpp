@@ -71,8 +71,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::addItem()
 {
-    AddItemDialog* add_dialog = new AddItemDialog();
-    add_dialog->show();
+    AddItemDialog* add_dialog = new AddItemDialog(this);
+    add_dialog->show();    
 }
 
 void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
