@@ -98,7 +98,6 @@ void GLWidget::paintGL()
 
             if (type == 0)
             {
-                glEnable(GL_TEXTURE_2D);
                 shine = 10;
                 refl = 0.5;
                 //textures
@@ -117,9 +116,14 @@ void GLWidget::paintGL()
 
             if (type == 1)
             {
-                glDisable(GL_TEXTURE_2D);
                 shine = 128;
                 refl = 1.0;
+                glEnable(GL_CULL_FACE);
+                glCullFace(GL_FRONT);
+
+                image = convertToGLFormat(n->heightMap1());
+                glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
+                                 GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
 
                 if (Scene::Instance().stub_objects()[i]->selected())
                 {
@@ -149,7 +153,28 @@ void GLWidget::paintGL()
                     glVertex3f( points[3].x, points[3].y, points[3].z);
               glEnd();
 
+              if (type == 1) {
 
+                  glCullFace(GL_BACK);
+
+                  image = convertToGLFormat(n->heightMap2());
+                  glTexImage2D(GL_TEXTURE_2D, 0, 3, (GLsizei)image.width(), (GLsizei)image.height(), 0,
+                                   GL_RGBA, GL_UNSIGNED_BYTE, image.bits());
+
+                  glBegin( GL_QUADS);
+                        //Draw again wi other texture
+                        glTexCoord2f(0, 1);
+                        glVertex3f( points[0].x, points[0].y, points[0].z);
+                        glTexCoord2f(1, 1);
+                        glVertex3f( points[1].x, points[1].y, points[1].z);
+                        glTexCoord2f(1, 0);
+                        glVertex3f( points[2].x, points[2].y, points[2].z);
+                        glTexCoord2f(0, 0);
+                        glVertex3f( points[3].x, points[3].y, points[3].z);
+                  glEnd();
+                  glCullFace(GL_FRONT_AND_BACK);
+                  glDisable(GL_CULL_FACE);
+              }
             //drawing lens
           /*    glDisable(GL_TEXTURE_2D);
               glColor4f(0.8,0.8,0.8,1.0);
