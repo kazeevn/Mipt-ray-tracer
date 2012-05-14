@@ -10,7 +10,7 @@
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    r = 10.0;
+    r = 20.0;
     speed = 0.2;
     teta = 30.0;
     phi = 45.0;
@@ -139,13 +139,13 @@ void GLWidget::paintGL()
               glBegin( GL_QUADS);
                     //Draw normals for lighting TODO
                     //glNormal3f( x, y ,z);
-                    glTexCoord2f(0, 0);
-                    glVertex3f( points[0].x, points[0].y, points[0].z);
-                    glTexCoord2f(1, 0);
-                    glVertex3f( points[1].x, points[1].y, points[1].z);
-                    glTexCoord2f(1, 1);
-                    glVertex3f( points[2].x, points[2].y, points[2].z);
                     glTexCoord2f(0, 1);
+                    glVertex3f( points[0].x, points[0].y, points[0].z);
+                    glTexCoord2f(1, 1);
+                    glVertex3f( points[1].x, points[1].y, points[1].z);
+                    glTexCoord2f(1, 0);
+                    glVertex3f( points[2].x, points[2].y, points[2].z);
+                    glTexCoord2f(0, 0);
                     glVertex3f( points[3].x, points[3].y, points[3].z);
               glEnd();
 
