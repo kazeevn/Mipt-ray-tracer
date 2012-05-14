@@ -67,10 +67,10 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(-1, -3, 0), Vector3D(-1, 0, 1), image));
     QImage lensimg;
     lensimg.load("lens.png");
-    Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(50, 50), 0.5, 3.5));
+    //Scene::Instance().addStubObject("Cool lens", new LensObjectStub(Point3D(1, -1, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), lensimg, lensimg, QSize(50, 50), 0.5, 3.5));
     QImage thinlensimg;
     thinlensimg.load("thinlens.png");
-    Scene::Instance().addStubObject("Thin lens", new ThinLensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, 0.5));
+    Scene::Instance().addStubObject("Thin lens", new ThinLensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), thinlensimg, -0.5));
     Scene::Instance().addStubObject("Flat mirror", new FlatMirrorObjectStub(Point3D(-1, -1, -2), Vector3D(0, -1, 0), Vector3D(2, 0, -1), thinlensimg, 0.9));
 
 
