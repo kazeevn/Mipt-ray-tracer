@@ -49,19 +49,17 @@ MainWindow::MainWindow(QWidget *parent) :
 
     Scene::Instance().addStubObject("GoogleLens", new LenseObjectStub(Point3D(2, 2, 2), Vector3D(0, -3, 0), Vector3D(0, 0, 1), image, image, 0.4, 1.23));
 
-//    QImage lensimg;
-//    lensimg.load("lens.png");
-//    LensObject *obj = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
-//                                     lensimg, lensimg, 0.2, 1.1);
 
 
-//    Scene::Instance().addObject("Lens", obj);
-
-    Scene::Instance().addCamera(new CameraStub(Point3D(1, -1, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
-                                                             Point3D(5, 0, 0), QSize(500, 300)));
+    Scene::Instance().addCamera(new CameraStub(Point3D(1, -2, 2), Vector3D(0, 5, 0), Vector3D(0, 0, -3),
+                                                             Point3D(5, -1, 0), QSize(500, 300)));
     Scene::Instance().createObjectsFromStubs();
 
-    //Scene::Instance().addObject("Lens", PhysicalTrianglePolygon(Point3D(55, 60, 0), Point3D(45, 40, 10), Point3D(45, 40, -10)));
+    QImage lensimg;
+    lensimg.load("smalllens.png");
+    LensObject *obj = new LensObject(Point3D(1, -1, 0.5), Vector3D(0, -1, 0), Vector3D(0, 0, -1),
+                                     lensimg, lensimg, 0.2, 1.1);
+    Scene::Instance().addObject("Lens", obj);
 
     // Test code...
 

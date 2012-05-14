@@ -48,8 +48,7 @@ private:
     double m_height, m_refractiveIndex;
     Vector3D m_perpendicular;
     /* Для эвристик, погружаем сперва линзу в прямоугольный паралелепипед с этими полигонами */
-    RectanglePolygon m_frontPolygon, m_frontLeftPolygon, m_frontRightPolygon, m_frontTopPolygon, m_frontBottomPolygon;
-    RectanglePolygon m_backPolygon, m_backLeftPolygon, m_backRightPolygon, m_backTopPolygon, m_backBottomPolygon;
+    RectanglePolygon m_frontPolygon, m_backPolygon, m_leftPolygon, m_rightPolygon, m_topPolygon, m_bottomPolygon;
 
     // Количество полигонов! Количество точек - эта хрень плюс один; количество пикселей - эта хрень минус один
     QSize m_frontSize, m_backSize;

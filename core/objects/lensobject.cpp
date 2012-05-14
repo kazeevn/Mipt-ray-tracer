@@ -10,16 +10,11 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
       m_perpendicular(v2.crossProduct(v1).unit()*height),
 
       m_frontPolygon(point+m_perpendicular, v1, v2),
-      m_frontLeftPolygon(point, v2, m_perpendicular),
-      m_frontRightPolygon(point+v1, v2, m_perpendicular),
-      m_frontTopPolygon(point, m_perpendicular, v1),
-      m_frontBottomPolygon(point+v2, v1, m_perpendicular),
-
       m_backPolygon(point-m_perpendicular, v2, v1),
-      m_backLeftPolygon(point, m_perpendicular*(-1), v2),
-      m_backRightPolygon(point+v1, v2, m_perpendicular*(-1)),
-      m_backTopPolygon(point, v1, m_perpendicular*(-1)),
-      m_backBottomPolygon(point+v2, m_perpendicular*(-1), v1),
+      m_leftPolygon(point-m_perpendicular, m_perpendicular*2, v2),
+      m_rightPolygon(point-m_perpendicular+v1, v2, m_perpendicular*2),
+      m_topPolygon(point-m_perpendicular, v1, m_perpendicular*2),
+      m_bottomPolygon(point-m_perpendicular+v2, m_perpendicular*2, v1),
 
       m_frontSize(heightMap1.size().width()+1, heightMap1.size().height()+1),
       m_backSize(heightMap2.size().width()+1, heightMap2.size().height()+1),
@@ -51,9 +46,9 @@ void LensObject::triangulateSurfaces()
                                                                 frontPoint(i+1, j+1), frontPoint(i, j+1));
     }
 
-    m_backPolygons = new PhysicalTetragonPolygon**[m_heightMap2.size().width()];
+    m_backPolygons = new PhysicalTetragonPolygon**[m_backSize.width()];
     for (int i = 0; i < m_backSize.width(); i++) {
-        m_backPolygons[i] = new PhysicalTetragonPolygon*[m_heightMap2.size().height()];
+        m_backPolygons[i] = new PhysicalTetragonPolygon*[m_backSize.height()];
         for (int j = 0; j < m_backSize.height(); j++)
             m_backPolygons[i][j] = new PhysicalTetragonPolygon(backPoint(i, j), backPoint(i+1, j),
                                                                backPoint(i+1, j+1), backPoint(i+1, j));
@@ -64,64 +59,59 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
 {
     Point3D* p1 = 0;
     p1 = m_frontPolygon.intercrossWithRay(ray);
-    p1 = (p1 == 0) ? m_frontLeftPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_frontRightPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_frontTopPolygon.intercrossWithRay(ray) : p1;
-    p1 = (p1 == 0) ? m_frontBottomPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_backPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_leftPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_rightPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_topPolygon.intercrossWithRay(ray) : p1;
+    p1 = (p1 == 0) ? m_bottomPolygon.intercrossWithRay(ray) : p1;
+    if (p1 == NULL)
+        return NULL;
+    delete p1;
 
-    Point3D* p2 = 0;
-    p2 = m_backPolygon.intercrossWithRay(ray);
-    p2 = (p2 == 0) ? m_backLeftPolygon.intercrossWithRay(ray) : p2;
-    p2 = (p2 == 0) ? m_backRightPolygon.intercrossWithRay(ray) : p2;
-    p2 = (p2 == 0) ? m_backTopPolygon.intercrossWithRay(ray) : p2;
-    p2 = (p2 == 0) ? m_backBottomPolygon.intercrossWithRay(ray) : p2;
-
-    bool back = false, front = false;
-
-    if ((p1 != NULL) && (p2 != NULL)) {
-        if (p1->dist(ray.point()) > p2->dist(ray.point()))
-            back = true;
-        else
-            front = true;
-        delete p1;
-        delete p2;
-    } else if (p1 != NULL) {
-        delete p1;
-        front = true;
-    } else if (p2 != NULL) {
-        delete p2;
-        back = true;
-    }
     // После эвристик - честный пробег по всем полигонам
-    if (front) {
-        for (int i = 0; i < m_frontSize.width(); i++)
-            for (int j = 0; j < m_frontSize.height(); j++)
-                if ((p1 = m_frontPolygons[i][j]->intercrossWithRay(ray)) != NULL)
-                    return p1;
-    } else if (back) {
-        for (int i = 0; i < m_backSize.width(); i++)
-            for (int j = 0; j < m_backSize.height(); j++)
-                if ((p2 = m_backPolygons[i][j]->intercrossWithRay(ray)) != NULL)
-                    return p2;
-    }
+    Point3D* minpoint = 0;
+    double mindist = -1;
 
-    return NULL;
+    for (int i = 0; i < m_frontSize.width(); i++)
+        for (int j = 0; j < m_frontSize.height(); j++)
+            if ((p1 = m_frontPolygons[i][j]->intercrossWithRay(ray)) != NULL) {
+                if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                    minpoint = p1;
+                    mindist = p1->dist(ray.point());
+                } else
+                    delete p1;
+            }
+    for (int i = 0; i < m_backSize.width(); i++)
+        for (int j = 0; j < m_backSize.height(); j++)
+            if ((p1 = m_backPolygons[i][j]->intercrossWithRay(ray)) != NULL) {
+                if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                    minpoint = p1;
+                    mindist = p1->dist(ray.point());
+                } else
+                    delete p1;
+            }
+    return minpoint;
 }
 
 double LensObject::getFrontHeight(int i, int j)
 {
-    if (i == 0 || i == m_frontSize.width() || j == 0 || j == m_frontSize.height())
-        return 0;
-    else
-        return (QColor(m_heightMap1.pixel(i-1, j-1)).blackF()+1) / 255 * m_height;
+    double value = 0;
+    if ((i > 0) && (i < m_frontSize.width()) && (j > 0) && (j < m_frontSize.height())) {
+        QColor c = QColor(m_heightMap1.pixel(i-1, j-1));
+        value = c.blackF()+0.01;
+    }
+    return value * m_height;
 }
 
 double LensObject::getBackHeight(int i, int j)
 {
-    if (i == 0 || i == m_backSize.width() || j == 0 || j == m_backSize.height())
-        return 0;
-    else
-        return (QColor(m_heightMap2.pixel(i-1, j-1)).blackF()+1) / 255 * m_height;
+    double value = 0;
+    if ((i > 0) && (i < m_backSize.width()) && (j > 0) && (j < m_backSize.height())) {
+        QColor c = QColor(m_heightMap2.pixel(i-1, j-1));
+        value = c.blackF()+0.01;
+    }
+    return value * m_height;
+
 }
 
 void LensObject::processIntersection(const Ray3D &ray, const Point3D &point)
