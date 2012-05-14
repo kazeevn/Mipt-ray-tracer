@@ -2,8 +2,8 @@
 #define LENSOBJECT_H
 
 #include "core/objects/virtual3dobject.h"
-#include "core/objects/rectanglepolygon.h"
-#include "core/objects/physicalpolygons.h"
+#include "core/objects/helpers/rectanglepolygon.h"
+#include "core/objects/helpers/physicaltrianglepolygon.h"
 #include "core/objects/helpers/trianglepolygonsurface.h"
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/ray3d.h"

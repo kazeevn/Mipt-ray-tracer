@@ -1,7 +1,7 @@
 #ifndef PHYSICALTRIANGLEPOLYGON_H
 #define PHYSICALTRIANGLEPOLYGON_H
 
-#include "core/objects/trianglepolygon.h"
+#include "core/objects/helpers/trianglepolygon.h"
 #include "core/geometry/point3d.h"
 
 #include <QDebug>

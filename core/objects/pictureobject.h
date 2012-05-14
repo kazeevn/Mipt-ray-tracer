@@ -3,7 +3,7 @@
 
 #include <QImage>
 #include "core/objects/virtual3dobject.h"
-#include "core/objects/rectanglepolygon.h"
+#include "core/objects/helpers/rectanglepolygon.h"
 #include "core/geometry/vector3d.h"
 #include "core/geometry/point3d.h"
 

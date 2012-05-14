@@ -6,7 +6,7 @@
 #include "core/geometry/rectangle3d.h"
 #include "core/geometry/transformationmatrix.h"
 #include "core/objects/virtual3dobject.h"
-#include "core/objects/trianglepolygon.h"
+#include "core/objects/helpers/trianglepolygon.h"
 
 #include <QDebug>
 

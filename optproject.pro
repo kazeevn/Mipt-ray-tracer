@@ -12,18 +12,19 @@ SOURCES += main.cpp \
     core/geometry/point3d.cpp \
     core/geometry/ray3d.cpp \
     core/objects/virtual3dobject.cpp \
-    core/objects/trianglepolygon.cpp \
+    core/objects/pictureobject.cpp \
+    core/objects/lensobject.cpp \
+    core/objects/helpers/trianglepolygon.cpp \
+    core/objects/helpers/rectanglepolygon.cpp \
+    core/objects/helpers/physicaltrianglepolygon.cpp \
     core/geometry/plane3d.cpp \
     core/tracer/scene.cpp \
     core/tracer/raypool.cpp \
-    core/objects/pictureobject.cpp \
     core/geometry/transformationmatrix.cpp \
     core/tracer/renderedimage.cpp \
     core/tracer/physicalray.cpp \
     core/tracer/workerobject.cpp \
     core/tracer/renderinghelper.cpp \
-    core/objects/lensobject.cpp \
-    core/objects/rectanglepolygon.cpp \
     core/geometry/rectangle3d.cpp \
     core/models/model.cpp \
     glwidget.cpp \
@@ -32,24 +33,25 @@ SOURCES += main.cpp \
     core/stubs/camerastub.cpp \
     core/models/cameramodel.cpp \
     core/models/lensmodel.cpp \
-    core/stubs/lensobjectstub.cpp \
-    core/objects/physicaltrianglepolygon.cpp
+    core/stubs/lensobjectstub.cpp
 HEADERS  += mainwindow.h \
     core/geometry/vector3d.h \
     core/geometry/point3d.h \
     core/geometry/ray3d.h \
     core/objects/virtual3dobject.h \
-    core/objects/trianglepolygon.h \
+    core/objects/helpers/trianglepolygon.h \
+    core/objects/lensobject.h \
+    core/objects/helpers/rectanglepolygon.h \
+    core/objects/pictureobject.h \
+    core/objects/helpers/trianglepolygonsurface.h \
+    core/objects/helpers/physicaltrianglepolygon.h \
     core/geometry/plane3d.h \
     core/tracer/scene.h \
     core/tracer/raypool.h \
-    core/objects/pictureobject.h \
     core/tracer/renderedimage.h \
     core/tracer/physicalray.h \
     core/tracer/workerobject.h \
     core/tracer/renderinghelper.h \
-    core/objects/lensobject.h \
-    core/objects/rectanglepolygon.h \
     core/geometry/rectangle3d.h \
     core/models/model.h \
     glwidget.h \
@@ -58,7 +60,5 @@ HEADERS  += mainwindow.h \
     core/stubs/camerastub.h \
     core/models/cameramodel.h \
     core/models/lensmodel.h \
-    core/stubs/lensobjectstub.h \
-    core/objects/helpers/trianglepolygonsurface.h \
-    core/objects/physicaltrianglepolygon.h
+    core/stubs/lensobjectstub.h
 FORMS    += mainwindow.ui
