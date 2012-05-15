@@ -80,6 +80,7 @@ AddItemDialog::~AddItemDialog()
     delete ui;
 }
 
+#define ValidOrReturn(object) if (!object->isValid()) { delete object; QMessageBox::critical(this, "Invalid data", "Your object is invalid. Thats all we know."); return;}
 void AddItemDialog::on_pushButtonOK_clicked()
 {
     if (ui->listWidget->selectedItems().length()==0) return;
@@ -89,33 +90,26 @@ void AddItemDialog::on_pushButtonOK_clicked()
     }
     const QString& selected = ui->listWidget->selectedItems()[0]->text();
     if (selected=="Picture") {
-        if (!current_object->isValid()) return;
+        if (!current_object->isValid()) {
+            QMessageBox::critical(this, "Invalid data", "Your object is invalid. Thats all we know.");
+            return;
+        }
         Scene::Instance().addStubObject(ui->editName->text(), current_object);
     } else if (selected=="Lens") {
         LensObjectStub* lens_object = new LensObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
                                          m_image,m_image_rear,QSize(ui->spinBox->value(),ui->spinBox_2->value()),
                                          ui->spinBox->value(),ui->spinBox_2->value());
-        if (!current_object->isValid())
-        {
-            delete lens_object;
-            return;
-        }
+        ValidOrReturn(lens_object);
         Scene::Instance().addStubObject(ui->editName->text(), lens_object);
     } else if (selected=="Ideal Lens") {
         ThinLensObjectStub* thin_lens_object = new ThinLensObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
                                                                       m_image,ui->doubleSpinBox_1->value());
-        if (!thin_lens_object->isValid()) {
-            delete thin_lens_object;
-            return;
-        }
+        ValidOrReturn(thin_lens_object);
         Scene::Instance().addStubObject(ui->editName->text(), thin_lens_object);
     } else if (selected=="Flat Mirror") {
         FlatMirrorObjectStub* flat_mirror_object = new FlatMirrorObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
                                                                       m_image,ui->doubleSpinBox_1->value());
-        if (!flat_mirror_object->isValid()) {
-            delete flat_mirror_object;
-            return;
-        }
+        ValidOrReturn(flat_mirror_object);
         Scene::Instance().addStubObject(ui->editName->text(), flat_mirror_object);
     }
     m_window->refresh();
