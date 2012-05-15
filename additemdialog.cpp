@@ -35,6 +35,7 @@ AddItemDialog::AddItemDialog(MainWindow *parent) :
                                                  ui->listWidget->model()->index(0,0)     ,
                                                  ui->listWidget->model()->index(0,0)),
                                              QItemSelectionModel::Select);
+    this->setFixedSize(this->width(),this->height());
 }
 
 void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)

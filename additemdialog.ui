@@ -6,18 +6,30 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>876</width>
+    <width>779</width>
     <height>493</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
   <widget class="QListWidget" name="listWidget">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>260</y>
+     <x>260</x>
+     <y>250</y>
      <width>256</width>
      <height>192</height>
     </rect>
@@ -26,7 +38,7 @@
   <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>30</y>
      <width>256</width>
      <height>192</height>
@@ -36,8 +48,8 @@
   <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>290</y>
+     <x>10</x>
+     <y>300</y>
      <width>62</width>
      <height>27</height>
     </rect>
@@ -52,8 +64,8 @@
   <widget class="QDoubleSpinBox" name="doubleSpinBox_1">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>240</y>
+     <x>10</x>
+     <y>270</y>
      <width>62</width>
      <height>27</height>
     </rect>
@@ -68,9 +80,9 @@
   <widget class="QLabel" name="label_1">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>250</y>
-     <width>67</width>
+     <x>80</x>
+     <y>270</y>
+     <width>151</width>
      <height>17</height>
     </rect>
    </property>
@@ -81,9 +93,9 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>100</x>
+     <x>80</x>
      <y>300</y>
-     <width>67</width>
+     <width>151</width>
      <height>17</height>
     </rect>
    </property>
@@ -94,8 +106,8 @@
   <widget class="QPushButton" name="pushButtonOK">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>350</y>
+     <x>590</x>
+     <y>340</y>
      <width>97</width>
      <height>27</height>
     </rect>
@@ -107,8 +119,8 @@
   <widget class="QLineEdit" name="editName">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>310</y>
+     <x>10</x>
+     <y>230</y>
      <width>113</width>
      <height>27</height>
     </rect>
@@ -117,8 +129,8 @@
   <widget class="QPushButton" name="Cancel">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>380</y>
+     <x>590</x>
+     <y>390</y>
      <width>97</width>
      <height>27</height>
     </rect>
@@ -130,10 +142,10 @@
   <widget class="QGroupBox" name="groupBoxSize">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>340</y>
+     <x>10</x>
+     <y>330</y>
      <width>120</width>
-     <height>80</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="title">
@@ -142,8 +154,8 @@
    <widget class="QSpinBox" name="spinBox_2">
     <property name="geometry">
      <rect>
-      <x>50</x>
-      <y>30</y>
+      <x>60</x>
+      <y>20</y>
       <width>59</width>
       <height>27</height>
      </rect>
@@ -159,7 +171,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>40</y>
+      <y>20</y>
       <width>59</width>
       <height>27</height>
      </rect>
@@ -175,10 +187,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>290</y>
+     <x>130</x>
+     <y>220</y>
      <width>67</width>
-     <height>17</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -188,7 +200,7 @@
   <widget class="QGroupBox" name="groupBoxImage">
    <property name="geometry">
     <rect>
-     <x>590</x>
+     <x>510</x>
      <y>10</y>
      <width>261</width>
      <height>261</height>
@@ -224,8 +236,8 @@
   <widget class="QGroupBox" name="groupBoxImage_2">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>20</y>
+     <x>260</x>
+     <y>10</y>
      <width>261</width>
      <height>251</height>
     </rect>
