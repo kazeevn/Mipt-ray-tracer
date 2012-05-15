@@ -35,6 +35,7 @@ private slots:
     void on_pushButtonOK_clicked();
     void on_loadImage_clicked();
     void on_loadImage2_clicked();
+    void on_Cancel_clicked();
 };
 
 #endif // ADDITEMDIALOG_H

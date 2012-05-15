@@ -129,7 +129,8 @@ void MainWindow::loadScene()
     if (fileName.isEmpty())
         return;
     Scene::Instance().loadStubsFromFile(fileName);
-    QMessageBox::information(this, tr("Scene loaded"), tr("Scene loaded!"));
+    //QMessageBox::information(this, tr("Scene loaded"), tr("Scene loaded!"));
+    this->refresh();
 }
 
 void MainWindow::saveScene()

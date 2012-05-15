@@ -31,7 +31,8 @@ bool SceneModel::removeRow(int row, const QModelIndex &parent)
 }
 
 void SceneModel::refresh() {
-    emit dataChanged(this->createIndex(0,0), this->createIndex(this->rowCount(),0));
+    reset();
+    //emit dataChanged(this->createIndex(0,0), this->createIndex(this->rowCount(),0));
 }
 
 Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
