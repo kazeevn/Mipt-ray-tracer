@@ -20,12 +20,24 @@ bool LensModel::setData(const QModelIndex &index, const QVariant &value, int rol
             m_object->v2()[index.column()]=value.toDouble();
             break;
         case 3:
+            switch (index.column()){
+            case 0:
+                m_object->size().setWidth(value.toDouble());
+                break;
+            case 1:
+                m_object->size().setHeight(value.toDouble());
+                break;
+            default:
+                return false;
+            }
+            break;
+        case 4:
             if (index.column()==0)
                 m_object->height()=value.toDouble();
             else
                 return false;
             break;
-        case 4:
+        case 5:
             if (index.column()==0)
                 m_object->refractiveIndex()=value.toDouble();
             else
@@ -42,20 +54,26 @@ QVariant LensModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole || role == Qt::EditRole) {
     switch (index.row()){
     case 0:
-        return m_object->point_m()[index.column()];
-        break;
+        return m_object->point_m()[index.column()];        
     case 1:
-       return m_object->v1()[index.column()];
-       break;
+       return m_object->v1()[index.column()];       
     case 2:
         return m_object->v2()[index.column()];
-        break;
     case 3:
+        switch (index.column()) {
+        case 0:
+            return m_object->size().width();
+        case 1:
+            return m_object->size().height();
+        default:
+            return QVariant();
+        }
+    case 4:
         if (index.column()==0)
             return m_object->height();
         else
             return QVariant();
-    case 4:
+    case 5:
         if (index.column()==0)
             return m_object->refractiveIndex();
         else
@@ -80,8 +98,10 @@ QVariant LensModel::headerData(int section, Qt::Orientation orientation, int rol
         case 2:
             return "VVector";
         case 3:
-            return "height";
+            return "Size";
         case 4:
+            return "height";
+        case 5:
             return "n";
         }
     } else if (orientation==Qt::Horizontal){
