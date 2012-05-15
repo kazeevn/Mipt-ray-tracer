@@ -15,10 +15,16 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>Optics.png</normaloff>Optics.png</iconset>
+    <normaloff>Optics.svg</normaloff>Optics.svg</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>256</width>
+    <height>256</height>
+   </size>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
