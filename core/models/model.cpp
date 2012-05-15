@@ -93,21 +93,6 @@ QVariant PictureModel::data(const QModelIndex &index, int role) const {
     }
     } else
         return QVariant();
-    if (role==Qt::ToolTipRole) {
-        switch (index.row()){
-        case 0:
-            return "Upper Left rectangle point";
-            break;
-        case 1:
-           return m_object->v1()[index.column()];
-           break;
-        case 2:
-            return m_object->v2()[index.column()];
-            break;
-        default:
-            return QVariant();
-        }
-    }
 }
 
 QVariant PictureModel::headerData(int section, Qt::Orientation orientation, int role) const
