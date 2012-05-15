@@ -9,8 +9,13 @@
 #include "core/objects/thinlensobject.h"
 #include "core/geometry/point3d.h"
 #include "core/geometry/vector3d.h"
+
 #include "core/models/model.h"
 #include "core/models/cameramodel.h"
+#include "core/models/lensmodel.h"
+#include "core/models/flatmirrormodel.h"
+#include "core/models/thinlensmodel.h"
+
 #include "core/objects/stubs/pictureobjectstub.h"
 #include "core/objects/stubs/camerastub.h"
 #include "core/objects/stubs/lensobjectstub.h"
@@ -81,6 +86,11 @@ void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const
         Scene::Instance().stub_objects()[index.row()]->select();
     foreach(const QModelIndex& index, oldSelection.indexes())
         Scene::Instance().stub_objects()[index.row()]->deselect();
+    LensModel* lens_model = dynamic_cast<LensModel*>(ui->objectsTableView->model());
+    if (lens_model)
+        ui->loadImageBack->setEnabled(true);
+    else
+        ui->loadImageBack->setEnabled(false);
     glWidget->updateGL();
 }
 
@@ -140,4 +150,41 @@ void MainWindow::saveScene()
     if (fileName.isEmpty())
         return;
     Scene::Instance().saveStubsToFile(fileName);
+}
+
+void MainWindow::on_loadImageFront_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    PictureModel* pic_model = dynamic_cast<PictureModel*>(ui->objectsTableView->model());
+    if (pic_model) {
+        pic_model->setImage(QImage(fileName));
+        return;
+    }
+    LensModel* lens_model = dynamic_cast<LensModel*>(ui->objectsTableView->model());
+    if (lens_model) {
+        lens_model->setFrontHeightMap(QImage(fileName));
+        return;
+    }
+    ThinLensModel* thin_lens_model = dynamic_cast<ThinLensModel*>(ui->objectsTableView->model());
+    if (thin_lens_model) {
+        thin_lens_model->setImage(QImage(fileName));
+        return;
+    }
+    FlatMirrorModel* mirror_model = dynamic_cast<FlatMirrorModel*>(ui->objectsTableView->model());
+    if (mirror_model) {
+        mirror_model->setImage(QImage(fileName));
+        return;
+    }
+}
+
+void MainWindow::on_loadImageBack_clicked()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+    LensModel* lens_model = dynamic_cast<LensModel*>(ui->objectsTableView->model());
+    if (lens_model) {
+        lens_model->setBackHeightMap(QImage(fileName));
+        return;
+    }
 }

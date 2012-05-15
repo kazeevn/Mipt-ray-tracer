@@ -43,6 +43,7 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    bool setImage(const QImage& image);
 private:
     PictureObjectStub* m_object;
     QGLWidget* gl_widget;

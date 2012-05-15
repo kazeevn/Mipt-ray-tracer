@@ -80,3 +80,9 @@ QVariant ThinLensModel::headerData(int section, Qt::Orientation orientation, int
     }
     return QVariant();
 }
+
+bool ThinLensModel::setImage(const QImage &image)
+{
+    m_object->setBitmask(image);
+    return true;
+}

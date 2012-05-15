@@ -164,3 +164,9 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
     m_parent->resizeColumnsToContents();
 
 }
+
+bool PictureModel::setImage(const QImage &image)
+{
+    m_object->setImage(image);
+    return true;
+}

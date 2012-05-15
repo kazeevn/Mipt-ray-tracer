@@ -96,3 +96,15 @@ QVariant LensModel::headerData(int section, Qt::Orientation orientation, int rol
     }
     return QVariant();
 }
+
+bool LensModel::setFrontHeightMap(const QImage &image)
+{
+    m_object->heightMap1()=image;
+    return true;
+}
+
+bool LensModel::setBackHeightMap(const QImage &image)
+{
+    m_object->heightMap2()=image;
+    return true;
+}

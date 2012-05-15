@@ -15,6 +15,8 @@ public:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
+    bool setFrontHeightMap(const QImage& image);
+    bool setBackHeightMap(const QImage& image);
 private:
     LensObjectStub* m_object;
     QGLWidget* gl_widget;
