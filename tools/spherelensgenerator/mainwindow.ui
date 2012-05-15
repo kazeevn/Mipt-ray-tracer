@@ -20,7 +20,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QWidget" name="">
+      <widget class="QWidget" name="layoutWidget">
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QFormLayout" name="formLayout">
@@ -33,6 +33,12 @@
           </item>
           <item row="0" column="1">
            <widget class="QDoubleSpinBox" name="radiusBox">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="singleStep">
+             <double>0.100000000000000</double>
+            </property>
             <property name="value">
              <double>1.000000000000000</double>
             </property>
@@ -47,6 +53,12 @@
           </item>
           <item row="1" column="1">
            <widget class="QDoubleSpinBox" name="lensHeightBox">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="singleStep">
+             <double>0.010000000000000</double>
+            </property>
             <property name="value">
              <double>0.300000000000000</double>
             </property>
