@@ -83,6 +83,10 @@ AddItemDialog::~AddItemDialog()
 void AddItemDialog::on_pushButtonOK_clicked()
 {
     if (ui->listWidget->selectedItems().length()==0) return;
+    if (ui->editName->text().length()==0) {
+        QMessageBox::critical(this, "Invalid data", "Name cannot be empty.");
+        return;
+    }
     const QString& selected = ui->listWidget->selectedItems()[0]->text();
     if (selected=="Picture") {
         if (!current_object->isValid()) return;
