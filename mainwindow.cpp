@@ -163,7 +163,7 @@ void MainWindow::savePic()
 
 void MainWindow::loadScene()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load scene"), "", tr("Scene Files (*.scene)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load scene"), "scenes/", tr("Scene Files (*.scene)"));
     if (fileName.isEmpty())
         return;
     Scene::Instance().loadStubsFromFile(fileName);
