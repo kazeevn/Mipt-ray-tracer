@@ -74,6 +74,14 @@ MainWindow::MainWindow(QWidget *parent) :
 
    render_shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Render")),this);
    connect(render_shortcut, SIGNAL(activated()), this, SLOT(doRender()));
+   save_image = new QShortcut(QKeySequence(tr("Ctrl+S", "Save Image")), ui->tabWidget->widget(1));
+   connect(save_image, SIGNAL(activated()), SLOT(savePic()));
+   save_scene = new QShortcut(QKeySequence(tr("Ctrl+S", "Save Scene")), ui->tabWidget->widget(0));
+   connect(save_scene, SIGNAL(activated()), SLOT(saveScene()));
+   load_scene = new QShortcut(QKeySequence(tr("Ctrl+O", "Open Scene")), ui->tabWidget->widget(0));
+   connect(load_scene, SIGNAL(activated()), SLOT(loadScene()));
+   toogle_from_camera = new QShortcut(QKeySequence(tr("Alt+C", "View from camera")), ui->tabWidget->widget(0));
+   connect(toogle_from_camera, SIGNAL(activated()), SLOT(toogle_camera_view()));
 }
 
 void MainWindow::addItem()
@@ -151,14 +159,14 @@ void MainWindow::showPic() {
 void MainWindow::savePic()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
-        tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Save Image"), "gallery/", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     if (fileName.isEmpty())
         return;
     bool saved = RenderedImage::Instance().image().save(fileName);
     if (saved)
-        QMessageBox::information(this, "Give it yourself, Igor!", QString("Saved image to '%1'").arg(fileName));
+        QMessageBox::information(this, "Information", QString("Saved image to '%1'").arg(fileName));
     else
-        QMessageBox::information(this,"Error saving file", "Probably your filename is wrong.");
+        QMessageBox::critical(this,"Error saving file", "Probably your filename is wrong.");
 }
 
 void MainWindow::loadScene()
@@ -172,7 +180,7 @@ void MainWindow::loadScene()
 
 void MainWindow::saveScene()
 {
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save scene"), "", tr("Scene Files (*.scene)"));
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save scene"), "scenes/", tr("Scene Files (*.scene)"));
     if (fileName.isEmpty())
         return;
     Scene::Instance().saveStubsToFile(fileName);
@@ -222,4 +230,9 @@ void MainWindow::on_cameraViewBox_stateChanged(int arg1)
     else
         glWidget->normalView();
     glWidget->updateGL();
+}
+
+void MainWindow::toogle_camera_view()
+{
+    ui->cameraViewBox->toggle();
 }
