@@ -55,7 +55,7 @@ void GLWidget::initializeGL()
 
 void GLWidget::paintGL()
 {
-    int i, type;
+    int i;
     QList<Point3D> points;
     QImage image;
     //Set backgroung
@@ -79,22 +79,18 @@ void GLWidget::paintGL()
         glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 
 
+        float refl;
+        int shine;
+
+        //need to draw pictures then objects
+
+
+        //Drawing images
         for( i = 0; i < Scene::Instance().stub_objects().size(); i++)
         {
-
             //checking type of object - lense or picture
             LensObjectStub* n = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[i]);
-            if (n)
-            {
-                type = 1; // Lense
-            } else {
-                type = 0; // Picture
-            }
-
-            float refl;
-            int shine;
-
-            if (type == 0)
+            if (!(n))
             {
                 shine = 10;
                 refl = 0.5;
@@ -110,11 +106,39 @@ void GLWidget::paintGL()
                 } else {
                     glColor4f( 1.0, 1.0, 1.0, 1.0);
                 }
+
+                float specref[] = { refl, refl, refl};
+                glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, specref);
+                glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, shine); //0..128 - reflection
+
+                points = Scene::Instance().stub_objects()[i]->getPoints();
+                //qDebug() << points;
+                //Drawing pictures
+                  glBegin( GL_QUADS);
+                        //Draw normals for lighting TODO
+                        //glNormal3f( x, y ,z);
+                        glTexCoord2f(0, 1);
+                        glVertex3f( points[0].x, points[0].y, points[0].z);
+                        glTexCoord2f(1, 1);
+                        glVertex3f( points[1].x, points[1].y, points[1].z);
+                        glTexCoord2f(1, 0);
+                        glVertex3f( points[2].x, points[2].y, points[2].z);
+                        glTexCoord2f(0, 0);
+                        glVertex3f( points[3].x, points[3].y, points[3].z);
+                  glEnd();
             }
 
-            if (type == 1)
+        }
+
+        //Drawing lenses
+        for( i = 0; i < Scene::Instance().stub_objects().size(); i++)
+        {
+
+            //checking type of object - lense or picture
+            LensObjectStub* n = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[i]);
+            if (n)
             {
-                //if new object is lense
+
                 shine = 128;
                 refl = 1.0;
                 glEnable(GL_CULL_FACE);
@@ -130,30 +154,28 @@ void GLWidget::paintGL()
                 } else {
                     glColor4f( 1.0, 1.0, 1.0, 0.5);
                 }
-            }
 
-            float specref[] = { refl, refl, refl};
-            glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, specref);
-            glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, shine); //0..128 - reflection
+                float specref[] = { refl, refl, refl};
+                glMaterialfv( GL_FRONT_AND_BACK, GL_SPECULAR, specref);
+                glMaterialf( GL_FRONT_AND_BACK, GL_SHININESS, shine); //0..128 - reflection
 
-            points = Scene::Instance().stub_objects()[i]->getPoints();
-            //qDebug() << points;
-            //Drawing pictures
-              glBegin( GL_QUADS);
-                    //Draw normals for lighting TODO
-                    //glNormal3f( x, y ,z);
-                    glTexCoord2f(0, 1);
-                    glVertex3f( points[0].x, points[0].y, points[0].z);
-                    glTexCoord2f(1, 1);
-                    glVertex3f( points[1].x, points[1].y, points[1].z);
-                    glTexCoord2f(1, 0);
-                    glVertex3f( points[2].x, points[2].y, points[2].z);
-                    glTexCoord2f(0, 0);
-                    glVertex3f( points[3].x, points[3].y, points[3].z);
-              glEnd();
+                points = Scene::Instance().stub_objects()[i]->getPoints();
+                //qDebug() << points;
+                //Drawing pictures
+                  glBegin( GL_QUADS);
+                        //Draw normals for lighting TODO
+                        //glNormal3f( x, y ,z);
+                        glTexCoord2f(0, 1);
+                        glVertex3f( points[0].x, points[0].y, points[0].z);
+                        glTexCoord2f(1, 1);
+                        glVertex3f( points[1].x, points[1].y, points[1].z);
+                        glTexCoord2f(1, 0);
+                        glVertex3f( points[2].x, points[2].y, points[2].z);
+                        glTexCoord2f(0, 0);
+                        glVertex3f( points[3].x, points[3].y, points[3].z);
+                  glEnd();
 
-              if (type == 1) {
-                  //if new object is lense - draw back with diff texture
+                  //draw back with diff texture
                   glCullFace(GL_BACK);
 
                   image = convertToGLFormat(n->heightMap2());
@@ -173,9 +195,10 @@ void GLWidget::paintGL()
                   glEnd();
                   glCullFace(GL_FRONT_AND_BACK);
                   glDisable(GL_CULL_FACE);
-              }
 
-        }
+            }
+
+         }
 
         /*glPushMatrix();
             glBegin(GL_LINES);
