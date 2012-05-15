@@ -15,10 +15,16 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>Optics.png</normaloff>Optics.png</iconset>
+    <normaloff>Optics.svg</normaloff>Optics.svg</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>256</width>
+    <height>256</height>
+   </size>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
@@ -253,6 +259,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -260,23 +267,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-  </widget>
-  <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1100</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuAbout">
-    <property name="title">
-     <string>About</string>
-    </property>
-   </widget>
-   <addaction name="menuAbout"/>
   </widget>
   <action name="actionAbout">
    <property name="text">

@@ -121,7 +121,7 @@ void AddItemDialog::on_pushButtonOK_clicked()
 void AddItemDialog::on_loadImage_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     m_image.load(fileName);
     out_image.addPixmap(QPixmap::fromImage(m_image));
     ui->graphicsView->setScene(&out_image);
@@ -131,7 +131,7 @@ void AddItemDialog::on_loadImage_clicked()
 void AddItemDialog::on_loadImage2_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     m_image_rear.load(fileName);
     out_image_rear.addPixmap(QPixmap::fromImage(m_image_rear));
     ui->graphicsView_2->setScene(&out_image_rear);

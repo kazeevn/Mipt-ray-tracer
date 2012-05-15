@@ -30,6 +30,7 @@
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
 #include <QFileDialog>
+#include <QShortcut>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -70,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cameraTableView->setModel(camera_model);
     ui->cameraTableView->resizeRowsToContents();
     ui->cameraTableView->resizeColumnsToContents();
+
+   render_shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Render")),this);
+   connect(render_shortcut, SIGNAL(activated()), this, SLOT(doRender()));
 }
 
 void MainWindow::addItem()
@@ -136,6 +140,7 @@ void MainWindow::doRender()
 }
 
 void MainWindow::showPic() {
+    //ui->tabWidget->setCurrentWidget(ui->tabWidget->widget(1));
     ui->renderButton->setEnabled(true);
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
@@ -158,7 +163,7 @@ void MainWindow::savePic()
 
 void MainWindow::loadScene()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Load scene"), "", tr("Scene Files (*.scene)"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Load scene"), "scenes/", tr("Scene Files (*.scene)"));
     if (fileName.isEmpty())
         return;
     Scene::Instance().loadStubsFromFile(fileName);
@@ -176,7 +181,7 @@ void MainWindow::saveScene()
 void MainWindow::on_loadImageFront_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp *jpeg)"));
     PictureModel* pic_model = dynamic_cast<PictureModel*>(ui->objectsTableView->model());
     if (pic_model) {
         pic_model->setImage(QImage(fileName));
@@ -202,7 +207,7 @@ void MainWindow::on_loadImageFront_clicked()
 void MainWindow::on_loadImageBack_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp *.jpeg)"));
     LensModel* lens_model = dynamic_cast<LensModel*>(ui->objectsTableView->model());
     if (lens_model) {
         lens_model->setBackHeightMap(QImage(fileName));
