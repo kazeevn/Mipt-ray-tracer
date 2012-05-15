@@ -47,8 +47,8 @@ MainWindow::MainWindow(QWidget *parent) :
     Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
     Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(-1, -3, 0), Vector3D(-1, 0, 1), image));
     QImage gplus;
-    gplus.load("wtflens.png");
-    Scene::Instance().addStubObject("Google lens wtf", new LensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), gplus, gplus, QSize(20, 20), 0.3, 1.5));
+    gplus.load("sphere.png");
+    Scene::Instance().addStubObject("sphere ball", new LensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), gplus, gplus, QSize(50, 50), 0.5, 1.5));
     qDebug() << "DAFUQ";
     //QImage thinlensimg;
     //thinlensimg.load("thinlens.png");
