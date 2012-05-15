@@ -5,11 +5,13 @@
 #include <QtOpenGL>
 #include <QList>
 #include <QWheelEvent>
+#include <QKeyEvent>
 
 #include <math.h>
 
 #include "core/objects/stubs/pictureobjectstub.h"
 #include "core/tracer/scene.h"
+#include "core/geometry/vector3d.h"
 
 class GLWidget : public QGLWidget
 {
@@ -21,6 +23,9 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
+
+    void cameraView();
+    void normalView();
 
 /*
     void setXRotation(int angle);
@@ -46,11 +51,20 @@ private:
     float speed; //Camera sensetivity
     float teta;
     float phi; //coords of camera
+    float cam_x, cam_y, cam_z;
+
+    //For perspective (changing camera/normal view)
+    double fovy;
+    double zNear;
+    double zFar;
+
+    int widget_width;
+    int widget_height;
 
     //Private methods
     void drawGround( float fExtent, float fStep, float y);
     void drawCamera();
-    void gluPerspective(double fovy,double aspect, double zNear, double zFar);
+    void gluPerspective();
     void rotateCamera();
 };
 
