@@ -91,7 +91,7 @@ void AddItemDialog::on_pushButtonOK_clicked()
     const QString& selected = ui->listWidget->selectedItems()[0]->text();
     if (selected=="Picture") {
         if (!current_object->isValid()) {
-            QMessageBox::critical(this, "Invalid data", "Your object is invalid. Thats all we know.");
+            QMessageBox::critical(this, "Invalid data", "Your object is invalid. That's all we know.");
             return;
         }
         Scene::Instance().addStubObject(ui->editName->text(), current_object);
