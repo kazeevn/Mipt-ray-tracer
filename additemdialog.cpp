@@ -22,10 +22,6 @@ AddItemDialog::AddItemDialog(MainWindow *parent) :
     ui->listWidget->addItem("Lens");
     ui->listWidget->addItem("Ideal Lens");
     ui->listWidget->addItem("Flat Mirror");
-    ui->listWidget->selectionModel()->select(QItemSelection(
-                                                 ui->listWidget->model()->index(0,0)     ,
-                                                 ui->listWidget->model()->index(0,0)),
-                                             QItemSelectionModel::Select);
 
     current_object = new PictureObjectStub(Point3D(0,0,0),Vector3D(0,0,0), Vector3D(0,0,0), QImage());
     ui->tableView->setModel(new PictureModel(dynamic_cast<PictureObjectStub*>(current_object)));
@@ -35,6 +31,10 @@ AddItemDialog::AddItemDialog(MainWindow *parent) :
     QItemSelectionModel *selectionModel = ui->listWidget->selectionModel();
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
+    ui->listWidget->selectionModel()->select(QItemSelection(
+                                                 ui->listWidget->model()->index(0,0)     ,
+                                                 ui->listWidget->model()->index(0,0)),
+                                             QItemSelectionModel::Select);
 }
 
 void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
@@ -46,31 +46,31 @@ void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, co
     if (selected=="Picture") {
         ui->doubleSpinBox_1->setEnabled(false);
         ui->doubleSpinBox_2->setEnabled(false);
-        ui->spinBox->setEnabled(false);
-        ui->spinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
         ui->label_1->setText("");
         ui->label_2->setText("");
+        ui->groupBoxImage_2->setEnabled(false);
     } else if (selected=="Lens") {
         ui->doubleSpinBox_1->setEnabled(true);
         ui->doubleSpinBox_2->setEnabled(true);
-        ui->spinBox->setEnabled(true);
-        ui->spinBox_2->setEnabled(true);
+        ui->groupBoxSize->setEnabled(true);
         ui->label_1->setText("Height");
         ui->label_2->setText("Refractive Index");
+        ui->groupBoxImage_2->setEnabled(true);
     } else if (selected=="Ideal Lens") {
         ui->doubleSpinBox_1->setEnabled(true);
         ui->doubleSpinBox_2->setEnabled(false);
-        ui->spinBox->setEnabled(false);
-        ui->spinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
         ui->label_1->setText("Focus");
+        ui->groupBoxImage_2->setEnabled(false);
         ui->label_2->setText("");
     } else if (selected=="Flat Mirror") {
         ui->doubleSpinBox_1->setEnabled(true);
         ui->doubleSpinBox_2->setEnabled(false);
-        ui->spinBox->setEnabled(false);
-        ui->spinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
         ui->label_1->setText("Reflection Index");
         ui->label_2->setText("");
+        ui->groupBoxImage_2->setEnabled(false);
     }
 }
 
