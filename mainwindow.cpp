@@ -72,9 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->cameraTableView->resizeRowsToContents();
     ui->cameraTableView->resizeColumnsToContents();
 
-   /* shortcut = new QShortcut(QKeySequence(tr("Ctrl+O", "File|Open")),
-                             parent);*/
-
+   render_shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Render")),this);
+   connect(render_shortcut, SIGNAL(activated()), this, SLOT(doRender()));
 }
 
 void MainWindow::addItem()
@@ -141,6 +140,7 @@ void MainWindow::doRender()
 }
 
 void MainWindow::showPic() {
+    //ui->tabWidget->setCurrentWidget(ui->tabWidget->widget(1));
     ui->renderButton->setEnabled(true);
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));

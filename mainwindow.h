@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QListView>
 #include <QItemSelectionModel>
+#include <QShortcut>
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ private:
     GLWidget* glWidget;
     SceneModel* scene_model;
     Virtual3DObjectStub* selected_object;
+    QShortcut* render_shortcut;
 public slots:
     void showPic();
     void doRender();
