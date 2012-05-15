@@ -1,5 +1,8 @@
 #include "core/models/model.h"
 #include "core/models/lensmodel.h"
+#include "core/models/flatmirrormodel.h"
+#include "core/models/thinlensmodel.h"
+
 #include <QTableView>
 #include <QtGlobal>
 
@@ -136,15 +139,26 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
     Q_UNUSED(editor);
     delete m_parent->model();
     PictureObjectStub* picture = dynamic_cast<PictureObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
-    if (picture != NULL)
+    if (picture) {
         m_parent->setModel(new PictureModel(picture, gl_widget));
-    else {
-        LensObjectStub* lens = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
-        if (lens!=NULL)
-            m_parent->setModel(new LensModel(lens, gl_widget));
-        // TODO(kazeevn) What about an exception?
+        return;
     }
-
+    LensObjectStub* lens = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (lens) {
+        m_parent->setModel(new LensModel(lens, gl_widget));
+        return;
+    }
+    FlatMirrorObjectStub* mirror =dynamic_cast<FlatMirrorObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (mirror){
+        m_parent->setModel(new FlatMirrorModel(mirror, gl_widget));
+        return;
+    }
+    ThinLensObjectStub* thin_lens = dynamic_cast<ThinLensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (thin_lens){
+        m_parent->setModel(new ThinLensModel(thin_lens, gl_widget));
+        return;
+    }
+        // TODO(kazeevn) What about an exception?
     m_parent->resizeRowsToContents();
     m_parent->resizeColumnsToContents();
 

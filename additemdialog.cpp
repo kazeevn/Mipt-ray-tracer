@@ -5,6 +5,8 @@
 #include "ui_additemdialog.h"
 #include "core/objects/stubs/pictureobjectstub.h"
 #include "core/objects/stubs/lensobjectstub.h"
+#include "core/objects/stubs/thinlensobjectstub.h"
+#include "core/objects/stubs/flatmirrorobjectstub.h"
 #include "core/models/model.h"
 #include "core/geometry/plane3d.h"
 #include "core/geometry/vector3d.h"
@@ -62,8 +64,6 @@ void AddItemDialog::on_pushButtonOK_clicked()
     if (selected=="Picture") {
         if (!current_object->isValid()) return;
         Scene::Instance().addStubObject(ui->editName->text(), current_object);
-        m_window->refresh();
-        this->close();
     } else if (selected=="Lens") {
         LensObjectStub* lens_object = new LensObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
                                          m_image,m_image_rear,QSize(ui->spinBox->value(),ui->spinBox_2->value()),
@@ -74,9 +74,25 @@ void AddItemDialog::on_pushButtonOK_clicked()
             return;
         }
         Scene::Instance().addStubObject(ui->editName->text(), lens_object);
-        m_window->refresh();
-        this->close();
+    } else if (selected=="Ideal Lens") {
+        ThinLensObjectStub* thin_lens_object = new ThinLensObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
+                                                                      m_image,ui->doubleSpinBox_1->value());
+        if (!thin_lens_object->isValid()) {
+            delete thin_lens_object;
+            return;
+        }
+        Scene::Instance().addStubObject(ui->editName->text(), thin_lens_object);
+    } else if (selected=="Flat Mirror") {
+        FlatMirrorObjectStub* flat_mirror_object = new FlatMirrorObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
+                                                                      m_image,ui->doubleSpinBox_1->value());
+        if (!flat_mirror_object->isValid()) {
+            delete flat_mirror_object;
+            return;
+        }
+        Scene::Instance().addStubObject(ui->editName->text(), flat_mirror_object);
     }
+    m_window->refresh();
+    this->close();
 }
 
 void AddItemDialog::on_loadImage_clicked()
