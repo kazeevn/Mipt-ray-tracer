@@ -82,6 +82,14 @@ void AddItemDialog::on_pushButtonOK_clicked()
             return;
         }
         Scene::Instance().addStubObject(ui->editName->text(), thin_lens_object);
+    } else if (selected=="Flat Mirror") {
+        FlatMirrorObjectStub* flat_mirror_object = new FlatMirrorObjectStub(current_object->point(), current_object->v1(), current_object->v2(),
+                                                                      m_image,ui->doubleSpinBox_1->value());
+        if (!flat_mirror_object->isValid()) {
+            delete flat_mirror_object;
+            return;
+        }
+        Scene::Instance().addStubObject(ui->editName->text(), flat_mirror_object);
     }
     m_window->refresh();
     this->close();
