@@ -4,7 +4,7 @@
 #include "core/tracer/workerobject.h"
 #include "core/tracer/renderedimage.h"
 
-int RenderingHelper::RAYS_PER_DOT = 2;
+int RenderingHelper::RAYS_PER_DOT = 1;
 int RenderingHelper::THREAD_COUNT = 4;
 
 
