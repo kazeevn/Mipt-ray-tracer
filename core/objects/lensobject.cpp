@@ -23,6 +23,7 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
 
 {
     triangulateSurfaces();
+    qDebug() << "Lens perpendicular" << m_perpendicular;
 }
 
 LensObject::~LensObject()

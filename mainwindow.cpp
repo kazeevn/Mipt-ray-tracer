@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //QImage thinlensimg;
     //thinlensimg.load("thinlens.png");
     Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(0, 0, -3), Vector3D(0, -3, 0),
-                                               Point3D(5, 0, 0), QSize(500, 500)));
+                                               Point3D(5, 0, 0), QSize(200, 200)));
 
     /* Models */
     scene_model=new SceneModel;

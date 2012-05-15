@@ -23,6 +23,9 @@ void PhysicalTrianglePolygon::processPhysicalIntersection(const PhysicalRay &ray
     double incidenceAngle = acos( fabs(dotProduct) / m_perpendicular.length() / ray.direction().length());
     // Полное внутреннее отражение
     if (sin(incidenceAngle)/localRefractiveIndex >= 1) {
+        qDebug() << "TOTAL INTERNAL REFLECTION" << ray.point() << point << m_perpendicular;
+        qDebug() << "Incidence angle:" << incidenceAngle*180/M_PI;
+        qDebug() << "Refractive index:" << localRefractiveIndex;
         RayPool::Instance().pushRay(new PhysicalRay(point, reflectedDirection,
                                                     ray.startingX(), ray.startingY(), ray.intensity()));
         return;
