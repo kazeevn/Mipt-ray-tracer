@@ -34,7 +34,7 @@ void FlatMirrorObject::processIntersection(const PhysicalRay &ray, const Point3D
 {
     Vector3D projection = m_perpendicular*(ray.direction().dotProduct(m_perpendicular) / m_perpendicular.dotProduct(m_perpendicular));
     Vector3D newDirection = ray.direction() - projection*2;
-    RayPool::Instance().pushRay(new PhysicalRay(point, newDirection, ray.startingX(), ray.startingY(), ray.intensity()*m_reflcoef));
+    RayPool::Instance().pushRay(new PhysicalRay(point, newDirection, ray.startingX(), ray.startingY(), ray.reflcount()+1, ray.intensity()*m_reflcoef));
 }
 
 

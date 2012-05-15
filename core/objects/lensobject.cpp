@@ -23,7 +23,6 @@ LensObject::LensObject(const Point3D &point, const Vector3D &v1, const Vector3D 
 
 {
     triangulateSurfaces();
-    qDebug() << "Lens perpendicular" << m_perpendicular;
 }
 
 LensObject::~LensObject()
@@ -61,7 +60,7 @@ Point3D LensObject::backPoint(int i, int j)
 {
     return m_rectangle.point()+m_rectangle.horizontalVect()*(double(i)/m_size.width())
                               +m_rectangle.verticalVect()*(double(j)/m_size.height())
-                              +m_perpendicular*getBackHeight(i, j);
+                              -m_perpendicular*getBackHeight(i, j);
 }
 
 void LensObject::triangulateSurfaces()
@@ -72,8 +71,8 @@ void LensObject::triangulateSurfaces()
                     (getFrontHeight(i+1, j) + getBackHeight(i+1, j) > DBL_EPSILON) ||
                     (getFrontHeight(i, j+1) + getBackHeight(i, j+1) > DBL_EPSILON)) {
                 m_frontPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(frontPoint(i, j),
-                                                                          frontPoint(i+1, j),
-                                                                          frontPoint(i, j+1));
+                                                                          frontPoint(i, j+1),
+                                                                          frontPoint(i+1, j));
                 m_backPolygons.at(i, j, 0) = new PhysicalTrianglePolygon(backPoint(i, j),
                                                                           backPoint(i+1, j),
                                                                           backPoint(i, j+1));
@@ -82,8 +81,8 @@ void LensObject::triangulateSurfaces()
                     (getFrontHeight(i+1, j+1) + getBackHeight(i+1, j+1) > DBL_EPSILON) ||
                     (getFrontHeight(i, j+1) + getBackHeight(i, j+1) > DBL_EPSILON)) {
                 m_frontPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(frontPoint(i+1, j),
-                                                                          frontPoint(i+1, j+1),
-                                                                          frontPoint(i, j+1));
+                                                                          frontPoint(i, j+1),
+                                                                          frontPoint(i+1, j+1));
                 m_backPolygons.at(i, j, 1) = new PhysicalTrianglePolygon(backPoint(i+1, j),
                                                                          backPoint(i+1, j+1),
                                                                          backPoint(i, j+1));
@@ -103,6 +102,7 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
     p1 = (p1 == 0) ? m_bottomPolygon.intercrossWithRay(ray) : p1;
     if (p1 == NULL)
         return NULL;
+
     delete p1;
     // После эвристик - честный пробег по всем полигонам
     Point3D* minpoint = 0;
@@ -113,6 +113,8 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
                 if ((m_frontPolygons.at(i, j, k) != NULL) && \
                         ((p1 = m_frontPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL)) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                        //qDebug() << "CROSSED WITH FRONT" << *p1;
+                        minpoint = p1;
                         mindist = p1->dist(ray.point());
                     } else
                         delete p1;
@@ -120,6 +122,7 @@ Point3D* LensObject::intercrossWithRay(const Ray3D &ray)
                 if ((m_backPolygons.at(i, j, k) != NULL) && \
                         ((p1 = m_backPolygons.at(i, j, k)->intercrossWithRay(ray)) != NULL)) {
                     if ((minpoint == NULL) || (p1->dist(ray.point()) < mindist)) {
+                        //qDebug() << "CROSSED WITH BACK" << *p1;
                         minpoint = p1;
                         mindist = p1->dist(ray.point());
                     } else

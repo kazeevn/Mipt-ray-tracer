@@ -4,7 +4,7 @@
 #include "core/tracer/workerobject.h"
 #include "core/tracer/renderedimage.h"
 
-int RenderingHelper::RAYS_PER_DOT = 1;
+int RenderingHelper::RAYS_PER_DOT = 2;
 int RenderingHelper::THREAD_COUNT = 4;
 
 
@@ -25,7 +25,7 @@ void RenderingHelper::run()
             RayPool::Instance().pushRay(new PhysicalRay(m_cameraPos,
                                                         m_screen.point()+(m_screen.horizontalVect())*(double(i) / RenderingHelper::RAYS_PER_DOT / (m_size.width()-1))+
                                                                          (m_screen.verticalVect())*(double(j) / RenderingHelper::RAYS_PER_DOT / (m_size.height()-1)),
-                                                        i / RenderingHelper::RAYS_PER_DOT, j / RenderingHelper::RAYS_PER_DOT,
+                                                        i / RenderingHelper::RAYS_PER_DOT, j / RenderingHelper::RAYS_PER_DOT, 0,
                                                         1.0 / RenderingHelper::RAYS_PER_DOT / RenderingHelper::RAYS_PER_DOT));
 
     for (int i = 0; i < m_workerThreadPool.maxThreadCount(); i++)

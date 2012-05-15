@@ -66,7 +66,7 @@ void Scene::traceRay(PhysicalRay *ray)
             point = flatmirrorobj->intercrossWithRay(*ray);
         if (point != NULL) {
             double dist = point->dist(ray->point());
-            if ((minpoint == NULL) || (dist < mindist)) {
+            if ((dist > 1e-5) && ((minpoint == NULL) || (dist < mindist))) {
                 if (minpoint != NULL)
                     delete minpoint;
                 minpoint = point;
@@ -95,7 +95,6 @@ void Scene::startRendering(const Point3D &cameraPos, const Rectangle3D &screen, 
 
 void Scene::startRendering()
 {
-    qDebug() << m_camera->summit();
     startRendering(m_camera->summit(), *m_camera, m_camera->size());
 }
 

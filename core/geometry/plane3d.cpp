@@ -43,6 +43,6 @@ Point3D *Plane3D::intercrossWithRay(const Ray3D &ray)
     double t = -(A*p.x + B*p.y + C*p.z + D)/denom;
     // Do not intercross with plane if the starting point is already on the plane
     if (t < 1e-6)
-        return 0;
+        return NULL;
     return new Point3D(p.x + t*v.x, p.y + t*v.y, p.z + t*v.z);
 }

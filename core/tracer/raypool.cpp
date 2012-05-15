@@ -12,7 +12,7 @@ RayPool::RayPool(QObject *parent)
 void RayPool::pushRay(PhysicalRay *ray)
 {
     QMutexLocker locker(&m_mutex);
-    if (ray->intensity() < 4e-3)
+    if (ray->intensity() < 4e-3 || ray->reflcount() > 10)
         return;
     m_totalCount++;
     m_rays.push(ray);

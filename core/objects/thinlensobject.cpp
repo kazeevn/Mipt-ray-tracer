@@ -42,9 +42,9 @@ void ThinLensObject::processIntersection(const PhysicalRay &ray, const Point3D &
     if (((p = m_frontFocalPlane.intercrossWithRay(helperRay)) != NULL) ||
             ((p = m_backFocalPlane.intercrossWithRay(helperRay)) != NULL)) {
         if (m_focus > 0)
-            RayPool::Instance().pushRay(new PhysicalRay(point, Point3D(*p), ray.startingX(), ray.startingY(), ray.intensity()));
+            RayPool::Instance().pushRay(new PhysicalRay(point, Point3D(*p), ray.startingX(), ray.startingY(), ray.reflcount()+1, ray.intensity()));
         else
-            RayPool::Instance().pushRay(new PhysicalRay(point, Vector3D(*p, point), ray.startingX(), ray.startingY(), ray.intensity()));
+            RayPool::Instance().pushRay(new PhysicalRay(point, Vector3D(*p, point), ray.startingX(), ray.startingY(), ray.reflcount()+1, ray.intensity()));
         delete p;
     }
 }
