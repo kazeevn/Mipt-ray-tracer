@@ -80,6 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
    connect(save_scene, SIGNAL(activated()), SLOT(saveScene()));
    load_scene = new QShortcut(QKeySequence(tr("Ctrl+O", "Open Scene")), ui->tabWidget->widget(0));
    connect(load_scene, SIGNAL(activated()), SLOT(loadScene()));
+   toogle_from_camera = new QShortcut(QKeySequence(tr("Alt+C", "View from camera")), ui->tabWidget->widget(0));
+   connect(toogle_from_camera, SIGNAL(activated()), SLOT(toogle_camera_view()));
 }
 
 void MainWindow::addItem()
@@ -228,4 +230,9 @@ void MainWindow::on_cameraViewBox_stateChanged(int arg1)
     else
         glWidget->normalView();
     glWidget->updateGL();
+}
+
+void MainWindow::toogle_camera_view()
+{
+    ui->cameraViewBox->toggle();
 }

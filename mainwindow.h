@@ -31,6 +31,7 @@ private:
     QShortcut* save_image;
     QShortcut* save_scene;
     QShortcut* load_scene;
+    QShortcut* toogle_from_camera;
 public slots:
     void showPic();
     void doRender();
@@ -45,6 +46,7 @@ private slots:
     void on_loadImageFront_clicked();
     void on_loadImageBack_clicked();
     void on_cameraViewBox_stateChanged(int arg1);
+    void toogle_camera_view();
 };
 
 #endif // MAINWINDOW_H
