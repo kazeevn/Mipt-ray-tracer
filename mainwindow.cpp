@@ -99,15 +99,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::doRender()
 {
+    ui->renderButton->setEnabled(false);
     Scene::Instance().createObjectsFromStubs();
     Scene::Instance().startRendering();
 }
 
 void MainWindow::showPic() {
+    ui->renderButton->setEnabled(true);
     QGraphicsScene* out_image = new QGraphicsScene;
     out_image->addPixmap(QPixmap::fromImage(RenderedImage::Instance().image()));
     ui->graphicsView->setScene(out_image);
-    QMessageBox::information(this, "No one gives a fuck, but...", "Rendering finished!");
+    QMessageBox::information(this, "Information", "Rendering finished!");
 }
 
 void MainWindow::savePic()
@@ -129,7 +131,6 @@ void MainWindow::loadScene()
     if (fileName.isEmpty())
         return;
     Scene::Instance().loadStubsFromFile(fileName);
-    //QMessageBox::information(this, tr("Scene loaded"), tr("Scene loaded!"));
     this->refresh();
 }
 
