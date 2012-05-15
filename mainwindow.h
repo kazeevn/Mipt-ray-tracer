@@ -30,6 +30,7 @@ private:
     QShortcut* render_shortcut;
     QShortcut* save_image;
     QShortcut* save_scene;
+    QShortcut* load_scene;
 public slots:
     void showPic();
     void doRender();
