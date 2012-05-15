@@ -10,13 +10,8 @@
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    r = 20.0;
+
     speed = 0.2;
-    teta = 30.0;
-    phi = 45.0;
-    cam_x = 0;
-    cam_y = 0;
-    cam_z = 0;
     widget_width = width();
     widget_height = height();
 
@@ -496,6 +491,11 @@ void GLWidget::normalView()
     fovy = 30.0f;
     zNear = 0.1;
     zFar = 400.0;
-
+    teta = 30.0;
+    phi = 45.0;
+    r = 20.0;
+    cam_x = 0;
+    cam_y = 0;
+    cam_z = 0;
     gluPerspective();
 }
