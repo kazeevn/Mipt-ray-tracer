@@ -15,7 +15,10 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../media/DATA/Pictures/Icons_Win/Xbox.ico</normaloff>../../../media/DATA/Pictures/Icons_Win/Xbox.ico</iconset>
+    <normaloff>Optics.png</normaloff>Optics.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
   </property>
   <property name="dockNestingEnabled">
    <bool>false</bool>
