@@ -31,7 +31,8 @@ bool SceneModel::removeRow(int row, const QModelIndex &parent)
 }
 
 void SceneModel::refresh() {
-    emit dataChanged(this->createIndex(0,0), this->createIndex(this->rowCount(),0));
+    reset();
+    //emit dataChanged(this->createIndex(0,0), this->createIndex(this->rowCount(),0));
 }
 
 Qt::ItemFlags PictureModel::flags(const QModelIndex &index) const
@@ -162,4 +163,10 @@ void Virtual3DObjectDelegate::setEditorData(QWidget *editor, const QModelIndex &
     m_parent->resizeRowsToContents();
     m_parent->resizeColumnsToContents();
 
+}
+
+bool PictureModel::setImage(const QImage &image)
+{
+    m_object->setImage(image);
+    return true;
 }

@@ -80,3 +80,9 @@ QVariant FlatMirrorModel::headerData(int section, Qt::Orientation orientation, i
     }
     return QVariant();
 }
+
+bool FlatMirrorModel::setImage(const QImage &image)
+{
+    m_object->setBitmask(image);
+    return true;
+}

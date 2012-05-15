@@ -10,13 +10,12 @@
 GLWidget::GLWidget(QWidget *parent)
     : QGLWidget(QGLFormat(QGL::SampleBuffers), parent)
 {
-    r = 20.0;
-    speed = 0.2;
-    teta = 30.0;
-    phi = 45.0;
 
-    //qtGreen = QColor::fromCmykF(0.40, 0.0, 1.0, 0.0);
-    //qtPurple = QColor::fromCmykF(0.39, 0.39, 0.0, 0.0);
+    speed = 0.2;
+    widget_width = width();
+    widget_height = height();
+
+    normalView(); //set normal camera view
 }
 
 GLWidget::~GLWidget()
@@ -59,7 +58,6 @@ void GLWidget::paintGL()
     int i, type;
     QList<Point3D> points;
     QImage image;
-
     //Set backgroung
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -116,6 +114,7 @@ void GLWidget::paintGL()
 
             if (type == 1)
             {
+                //if new object is lense
                 shine = 128;
                 refl = 1.0;
                 glEnable(GL_CULL_FACE);
@@ -154,7 +153,7 @@ void GLWidget::paintGL()
               glEnd();
 
               if (type == 1) {
-
+                  //if new object is lense - draw back with diff texture
                   glCullFace(GL_BACK);
 
                   image = convertToGLFormat(n->heightMap2());
@@ -175,32 +174,15 @@ void GLWidget::paintGL()
                   glCullFace(GL_FRONT_AND_BACK);
                   glDisable(GL_CULL_FACE);
               }
-            //drawing lens
-          /*    glDisable(GL_TEXTURE_2D);
-              glColor4f(0.8,0.8,0.8,1.0);
-
-                int x, y;
-                for ( y = 0; y < objl->frontSize().height(); y ++) {
-                    glBegin(GL_TRIANGLE_STRIP);
-                    for (x = 0; x < objl->frontSize().width(); x++) {
-                        glVertex3f(objl->frontPoint(x,y).x, objl->frontPoint(x,y).y, objl->frontPoint(x,y).z);
-                        glVertex3f(objl->frontPoint(x,y+1).x, objl->frontPoint(x,y+1).y,objl->frontPoint(x,y+1).z);
-                    }
-                    glEnd();
-                }
-
-                for ( y = 0; y < objl->backSize().height(); y ++) {
-                    glBegin(GL_TRIANGLE_STRIP);
-                    for (x = 0; x < objl->backSize().width(); x++) {
-                        glVertex3f(objl->backPoint(x,y).x, objl->backPoint(x,y).y, objl->backPoint(x,y).z);
-                        glVertex3f(objl->backPoint(x,y+1).x, objl->backPoint(x,y+1).y,objl->backPoint(x,y+1).z);
-                    }
-                    glEnd();
-                }*/
 
         }
-        //glDepthMask( GL_FALSE/TRUE) - turn off depth check for a moment
 
+        /*glPushMatrix();
+            glBegin(GL_LINES);
+            glVertex3f(8, -9, 5);
+            glVertex3f(0, 0, 0);
+            glEnd();
+            glPopMatrix();*/
     glPopMatrix();
 
     drawCamera();
@@ -208,8 +190,9 @@ void GLWidget::paintGL()
     swapBuffers();
 }
 
-void GLWidget::gluPerspective(double fovy,double aspect, double zNear, double zFar)
+void GLWidget::gluPerspective()
 {
+    float aspect = widget_width/widget_height;
     // Start in projection mode.
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -219,21 +202,18 @@ void GLWidget::gluPerspective(double fovy,double aspect, double zNear, double zF
     xmin = ymin * aspect;
     xmax = ymax * aspect;
     glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
+    glMatrixMode(GL_MODELVIEW);
 }
 
 void GLWidget::resizeGL(int width, int height)
 {
-    //int side = qMin(width, height);
-    //glViewport((width - side) / 2, (height - side) / 2, side, side);
-
     //set view area like window: place to draw
     glViewport( 0, 0, width, height);
+    widget_width = width;
+    widget_height = height;
 
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(30.0f, width/height, 0.1, 100.0);
+    gluPerspective();
 
-    glMatrixMode(GL_MODELVIEW);
 }
 
 void GLWidget::wheelEvent(QWheelEvent *event)
@@ -256,7 +236,7 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
 
     if (event->buttons() & Qt::LeftButton) {
         if (phi + speed * dx < 0)
-            phi = 360 - phi;
+            phi = 360 + phi;
         if (phi + speed * dx > 360)
             phi = phi - 360;
 
@@ -266,9 +246,16 @@ void GLWidget::mouseMoveEvent(QMouseEvent *event)
             teta += speed * dy;
         }
     } else if (event->buttons() & Qt::RightButton) {
-        if (r + speed * 0.1 * dy > 0) {
-            r += speed * 0.1 * dy;
-        };
+        if (teta > 0) {
+            cam_x += dy * sin(-phi*M_PI/180) * 0.0009 * r;
+            cam_z += dy * cos(-phi*M_PI/180) * 0.0009 * r; //qDebug()<<phi;
+        } else {
+            cam_x -= dy * sin(-phi*M_PI/180) * 0.0009 * r;
+            cam_z -= dy * cos(-phi*M_PI/180) * 0.0009 * r; //qDebug()<<phi;
+        }
+        cam_z += - dx * sin(-phi*M_PI/180) *0.0009 * r;
+        cam_x += dx * cos(-phi*M_PI/180) * 0.0009 * r;
+
     }
     lastPos = event->pos();
     updateGL();
@@ -278,9 +265,11 @@ void GLWidget::rotateCamera()
 {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef( 0.0f, 0.0f, -r);
+
+    glTranslatef( 0.0, 0.0, -r);
     glRotatef( teta, 1.0f, 0.0f, 0.0f);
     glRotatef( phi, 0.0f, 1.0f, 0.0f);
+    glTranslatef( cam_x, cam_y, cam_z);
 }
 
 void GLWidget::drawGround( float fExtent, float fStep, float y)
@@ -423,4 +412,90 @@ void GLWidget::drawCamera()
 
         glEnd();
     glPopMatrix();
+}
+
+void GLWidget::cameraView()
+{
+    Point3D p1 = Scene::Instance().camera()->point() + Scene::Instance().camera()->horizontalVect();
+    Point3D p2 = Scene::Instance().camera()->point() + Scene::Instance().camera()->verticalVect();
+    Point3D p3 = Scene::Instance().camera()->point() + Scene::Instance().camera()->horizontalVect()
+                                                             + Scene::Instance().camera()->verticalVect();
+    cam_x = -(Scene::Instance().camera()->point().x + p3.x)/2;
+    cam_y = -(Scene::Instance().camera()->point().y + p3.y)/2;
+    cam_z = -(Scene::Instance().camera()->point().z + p3.z)/2;
+
+    /* get smaller side of quad of camera
+     * then count angle between center vector from summit
+     *
+     * fovy - camera pyramid angle
+     */
+    Vector3D v1( Scene::Instance().camera()->point(), Scene::Instance().camera()->summit());
+    Vector3D v2( p1, Scene::Instance().camera()->summit());
+    Vector3D v3( p2, Scene::Instance().camera()->summit());
+    Vector3D v4( p3, Scene::Instance().camera()->summit());
+
+    Vector3D smaller_v(1,1,1);
+    if ((v1-v2).length() > (v2-v3).length())
+    {
+        smaller_v = v3 + v2;
+    } else {
+        smaller_v = v2 + v1;
+    }
+
+    Vector3D middle_v = v2 + v3;
+
+    fovy = acos( (v1 + v3).dotProduct( smaller_v) / ( (v1 + v3).length() * smaller_v.length())) * 180/M_PI;
+
+    r = (middle_v).length()/2;
+
+    //rotate camera according to summit
+    if ( middle_v.z != 0) {
+        if (middle_v.x > 0 && middle_v.z > 0) {
+            phi = - atan( fabs(middle_v.x/middle_v.z));
+        }
+        if (middle_v.x >= 0 && middle_v.z < 0) {
+            phi = M_PI + atan( fabs(middle_v.x/middle_v.z));
+        }
+        if (middle_v.x <= 0 && middle_v.z > 0) {
+            phi = atan( fabs(middle_v.x/middle_v.z));
+        }
+        if (middle_v.x < 0 && middle_v.z < 0) {
+            phi = M_PI - atan( fabs(middle_v.x/middle_v.z));
+        }
+    } else {
+        if (middle_v.z>0)
+        {
+            phi = M_PI/2;
+        } else {
+            phi = -M_PI/2;
+        }
+    }
+    if (sqrt(middle_v.x * middle_v.z) != 0) {
+        teta = atan(middle_v.y/sqrt(middle_v.x*middle_v.x + middle_v.z * middle_v.z)) * 180/M_PI;
+    } else {
+        if (middle_v.y > 0) {
+            teta = M_PI/2;
+        } else {
+            teta = -M_PI/2;
+        }
+    }
+
+    qDebug()<<middle_v;
+    phi = phi*180/M_PI; qDebug()<<middle_v;
+
+    gluPerspective();
+}
+
+void GLWidget::normalView()
+{
+    fovy = 30.0f;
+    zNear = 0.1;
+    zFar = 400.0;
+    teta = 30.0;
+    phi = 45.0;
+    r = 20.0;
+    cam_x = 0;
+    cam_y = 0;
+    cam_z = 0;
+    gluPerspective();
 }

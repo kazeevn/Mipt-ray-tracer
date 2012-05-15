@@ -31,6 +31,11 @@ AddItemDialog::AddItemDialog(MainWindow *parent) :
     QItemSelectionModel *selectionModel = ui->listWidget->selectionModel();
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
+    ui->listWidget->selectionModel()->select(QItemSelection(
+                                                 ui->listWidget->model()->index(0,0)     ,
+                                                 ui->listWidget->model()->index(0,0)),
+                                             QItemSelectionModel::Select);
+    this->setFixedSize(this->width(),this->height());
 }
 
 void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
@@ -42,13 +47,31 @@ void AddItemDialog::selectionChangedSlot(const QItemSelection & newSelection, co
     if (selected=="Picture") {
         ui->doubleSpinBox_1->setEnabled(false);
         ui->doubleSpinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
         ui->label_1->setText("");
         ui->label_2->setText("");
+        ui->groupBoxImage_2->setEnabled(false);
     } else if (selected=="Lens") {
         ui->doubleSpinBox_1->setEnabled(true);
         ui->doubleSpinBox_2->setEnabled(true);
+        ui->groupBoxSize->setEnabled(true);
         ui->label_1->setText("Height");
         ui->label_2->setText("Refractive Index");
+        ui->groupBoxImage_2->setEnabled(true);
+    } else if (selected=="Ideal Lens") {
+        ui->doubleSpinBox_1->setEnabled(true);
+        ui->doubleSpinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
+        ui->label_1->setText("Focus");
+        ui->groupBoxImage_2->setEnabled(false);
+        ui->label_2->setText("");
+    } else if (selected=="Flat Mirror") {
+        ui->doubleSpinBox_1->setEnabled(true);
+        ui->doubleSpinBox_2->setEnabled(false);
+        ui->groupBoxSize->setEnabled(false);
+        ui->label_1->setText("Reflection Index");
+        ui->label_2->setText("");
+        ui->groupBoxImage_2->setEnabled(false);
     }
 }
 
@@ -98,7 +121,7 @@ void AddItemDialog::on_pushButtonOK_clicked()
 void AddItemDialog::on_loadImage_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     m_image.load(fileName);
     out_image.addPixmap(QPixmap::fromImage(m_image));
     ui->graphicsView->setScene(&out_image);
@@ -108,8 +131,13 @@ void AddItemDialog::on_loadImage_clicked()
 void AddItemDialog::on_loadImage2_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-        tr("Save Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
+        tr("Load Image"), "", tr("Image Files (*.png *.jpg *.bmp)"));
     m_image_rear.load(fileName);
     out_image_rear.addPixmap(QPixmap::fromImage(m_image_rear));
     ui->graphicsView_2->setScene(&out_image_rear);
+}
+
+void AddItemDialog::on_Cancel_clicked()
+{
+    this->close();
 }
