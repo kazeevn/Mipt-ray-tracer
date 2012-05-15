@@ -82,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
    connect(load_scene, SIGNAL(activated()), SLOT(loadScene()));
    toogle_from_camera = new QShortcut(QKeySequence(tr("Alt+C", "View from camera")), ui->tabWidget->widget(0));
    connect(toogle_from_camera, SIGNAL(activated()), SLOT(toogle_camera_view()));
+
 }
 
 void MainWindow::addItem()
@@ -122,6 +123,10 @@ void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const
     }
         // TODO(kazeevn) What about an exception?
     }
+    /*connect(ui->objectsTableView->model(),
+            SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+            SLOT(ui->objectsTableView->resizeColumnsToContents()));*/
+
     ui->objectsTableView->resizeRowsToContents();
     ui->objectsTableView->resizeColumnsToContents();
     glWidget->updateGL();
@@ -142,9 +147,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::doRender()
 {
-    ui->renderButton->setEnabled(false);
-    Scene::Instance().createObjectsFromStubs();
-    Scene::Instance().startRendering();
+    if (ui->renderButton->isEnabled())
+    {
+        ui->renderButton->setEnabled(false);
+        Scene::Instance().createObjectsFromStubs();
+        Scene::Instance().startRendering();
+    }
 }
 
 void MainWindow::showPic() {
