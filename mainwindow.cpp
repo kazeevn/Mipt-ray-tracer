@@ -29,7 +29,7 @@
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QItemSelectionModel>
- #include <QFileDialog>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -47,18 +47,17 @@ MainWindow::MainWindow(QWidget *parent) :
     RenderedImage::init(QSize(0, 0));
     connect(&Scene::Instance(), SIGNAL(renderingFinished()), this, SLOT(showPic()));
 
-    QImage image;
-    image.load("google.png");
-    Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(0, -3, 0), Vector3D(0, 0, -1), image));
-    Scene::Instance().addStubObject("pewpewpew", new PictureObjectStub(Point3D(0, 0, 0), Vector3D(-1, -3, 0), Vector3D(-1, 0, 1), image));
-    QImage gplus;
-    gplus.load("sphere.png");
-    Scene::Instance().addStubObject("sphere ball", new LensObjectStub(Point3D(1, 0, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), gplus, gplus, QSize(50, 50), 0.5, 1.5));
-    qDebug() << "DAFUQ";
+//    QImage image;
+//    image.load("picture.png");
+//    Scene::Instance().addStubObject("Google", new PictureObjectStub(Point3D(0, 2, 2), Vector3D(0, -4, 0), Vector3D(0, 0, -4), image));
+//    QImage gplus;
+//    gplus.load("sphere.png");
+//    Scene::Instance().addStubObject("sphere ball", new LensObjectStub(Point3D(2, 1, 1), Vector3D(0, -1, 0), Vector3D(0, 0, -1), gplus, gplus, QSize(50, 50), 0.5, 1.5));
+//    qDebug() << "DAFUQ";
     //QImage thinlensimg;
     //thinlensimg.load("thinlens.png");
-    Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(1, 0, -3), Vector3D(1, -5, 0),
-                                               Point3D(5, 0, 3), QSize(300, 500)));
+    Scene::Instance().addCamera(new CameraStub(Point3D(0, 2, 2), Vector3D(0, 0, -3), Vector3D(0, -3, 0),
+                                               Point3D(5, 0, 0), QSize(500, 500)));
 
     /* Models */
     scene_model=new SceneModel;
