@@ -28,6 +28,8 @@ private:
     SceneModel* scene_model;
     Virtual3DObjectStub* selected_object;
     QShortcut* render_shortcut;
+    QShortcut* save_image;
+    QShortcut* save_scene;
 public slots:
     void showPic();
     void doRender();

@@ -74,6 +74,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
    render_shortcut = new QShortcut(QKeySequence(tr("Ctrl+R", "Render")),this);
    connect(render_shortcut, SIGNAL(activated()), this, SLOT(doRender()));
+   save_image = new QShortcut(QKeySequence(tr("Ctrl+S", "Save Image")), ui->tabWidget->widget(1));
+   connect(save_image, SIGNAL(activated()), SLOT(savePic()));
 }
 
 void MainWindow::addItem()
