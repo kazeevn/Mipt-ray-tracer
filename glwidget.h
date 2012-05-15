@@ -6,6 +6,8 @@
 #include <QList>
 #include <QWheelEvent>
 #include <QKeyEvent>
+#include <QString>
+#include <QFont>
 
 #include <math.h>
 

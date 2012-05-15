@@ -328,6 +328,10 @@ void GLWidget::drawGround( float fExtent, float fStep, float y)
                 glVertex3f(-0.1, -0.1, 0.0);
                 glVertex3f(0.0, 0.0, 0.3);
             glEnd();
+            QString str = "X";
+            QFont f("Arial");
+            f.setWeight(75);
+            renderText ( 0, 0, 0.5, str, f );
         glPopMatrix();
         glPushMatrix();
             glColor3f( 0.0, 1.0, 0.0);
@@ -343,6 +347,8 @@ void GLWidget::drawGround( float fExtent, float fStep, float y)
                 glVertex3f(-0.1, -0.1, 0.0);
                 glVertex3f(0.0, 0.0, 0.3);
             glEnd();
+            str = "Y";
+            renderText ( 0, 0, 0.5, str, f );
         glPopMatrix();
         glPushMatrix();
             glColor3f( 0.0, 0.0, 1.0);
@@ -358,6 +364,8 @@ void GLWidget::drawGround( float fExtent, float fStep, float y)
                 glVertex3f(-0.1, -0.1, 0.0);
                 glVertex3f(0.0, 0.0, 0.3);
             glEnd();
+            str = "Z";
+            renderText ( 0, 0, 0.5, str, f );
         glPopMatrix();
 
     glPopAttrib();
