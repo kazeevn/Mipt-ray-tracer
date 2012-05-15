@@ -188,3 +188,12 @@ void MainWindow::on_loadImageBack_clicked()
         return;
     }
 }
+
+void MainWindow::on_cameraViewBox_stateChanged(int arg1)
+{
+    if (arg1)
+        glWidget->cameraView();
+    else
+        glWidget->normalView();
+    glWidget->updateGL();
+}

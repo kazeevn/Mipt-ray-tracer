@@ -39,6 +39,7 @@ private slots:
     void addItem();
     void on_loadImageFront_clicked();
     void on_loadImageBack_clicked();
+    void on_cameraViewBox_stateChanged(int arg1);
 };
 
 #endif // MAINWINDOW_H
