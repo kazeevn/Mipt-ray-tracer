@@ -33,7 +33,7 @@ bool FlatMirrorModel::setData(const QModelIndex &index, const QVariant &value, i
 };
 
 QVariant FlatMirrorModel::data(const QModelIndex &index, int role) const {
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::DisplayRole || role == Qt::EditRole) {
     switch (index.row()){
     case 0:
         return m_object->point_m()[index.column()];

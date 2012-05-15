@@ -77,7 +77,7 @@ int PictureModel::columnCount(const QModelIndex &parent) const {
 };
 
 QVariant PictureModel::data(const QModelIndex &index, int role) const {
-    if (role == Qt::DisplayRole) {
+    if (role == Qt::EditRole || role == Qt::DisplayRole) {
     switch (index.row()){
     case 0:
         return m_object->point_m()[index.column()];
