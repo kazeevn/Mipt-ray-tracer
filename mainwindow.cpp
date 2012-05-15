@@ -62,10 +62,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Models */
     scene_model=new SceneModel;
-    CameraModel *camera_model = new CameraModel(glWidget);
-    Virtual3DObjectDelegate *pic_delegate = new Virtual3DObjectDelegate(ui->objectsTableView, glWidget);
+    CameraModel *camera_model = new CameraModel(glWidget);    
     ui->objectsListView->setModel(scene_model);
-    ui->objectsListView->setItemDelegate(pic_delegate);
+    //ui->objectsListView->setItemDelegate(pic_delegate);
     QItemSelectionModel *selectionModel = ui->objectsListView->selectionModel();
     connect(selectionModel, SIGNAL(selectionChanged (const QItemSelection &, const QItemSelection &)),
             this, SLOT(selectionChangedSlot(const QItemSelection &, const QItemSelection &)));
@@ -82,15 +81,38 @@ void MainWindow::addItem()
 
 void MainWindow::selectionChangedSlot(const QItemSelection & newSelection, const QItemSelection & oldSelection)
 {
-    foreach(const QModelIndex& index, newSelection.indexes())
-        Scene::Instance().stub_objects()[index.row()]->select();
     foreach(const QModelIndex& index, oldSelection.indexes())
         Scene::Instance().stub_objects()[index.row()]->deselect();
-    LensModel* lens_model = dynamic_cast<LensModel*>(ui->objectsTableView->model());
-    if (lens_model)
+    foreach(const QModelIndex& index, newSelection.indexes()) {
+        Scene::Instance().stub_objects()[index.row()]->select();
+
+    delete ui->objectsTableView->model();
+    LensObjectStub* lens = dynamic_cast<LensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (lens) {
+        ui->objectsTableView->setModel(new LensModel(lens, glWidget));
         ui->loadImageBack->setEnabled(true);
-    else
-        ui->loadImageBack->setEnabled(false);
+        break;
+    }
+    ui->loadImageBack->setEnabled(false);
+    PictureObjectStub* picture = dynamic_cast<PictureObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (picture) {
+        ui->objectsTableView->setModel(new PictureModel(picture, glWidget));
+        break;
+    }
+    FlatMirrorObjectStub* mirror =dynamic_cast<FlatMirrorObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (mirror){
+        ui->objectsTableView->setModel(new FlatMirrorModel(mirror, glWidget));
+        break;
+    }
+    ThinLensObjectStub* thin_lens = dynamic_cast<ThinLensObjectStub*>(Scene::Instance().stub_objects()[index.row()]);
+    if (thin_lens){
+        ui->objectsTableView->setModel(new ThinLensModel(thin_lens, glWidget));
+        break;
+    }
+        // TODO(kazeevn) What about an exception?
+    }
+    ui->objectsTableView->resizeRowsToContents();
+    ui->objectsTableView->resizeColumnsToContents();
     glWidget->updateGL();
 }
 

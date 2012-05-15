@@ -8,13 +8,21 @@
 
 #include <typeinfo>
 
+bool SceneModel::setData(const QModelIndex &index, const QVariant &value, int role) {
+    if (role == Qt::EditRole) {
+        Scene::Instance().stub_objects().at(index.row())->setName(value.toString());
+        return true;
+    } else
+        return false;
+}
+
 int SceneModel::rowCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
     return Scene::Instance().stub_objects().length();
 };
 
 QVariant SceneModel::data(const QModelIndex &index, int role) const {
-    if (role == Qt::DisplayRole)
+    if (role == Qt::DisplayRole || role==Qt::EditRole)
         return QVariant(Scene::Instance().stub_objects().at(index.row())->name());
     else
         return QVariant();
